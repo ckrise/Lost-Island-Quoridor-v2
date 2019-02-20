@@ -297,7 +297,7 @@ public class AIBoard
     //Otherwise it will return the number of moves it would take to reach the end goal
     //for each respective player.
     //TODO: optimize by checking each square found for the direct path(would save tons of time early game).
-    public int EstimateShortestPath(bool isPlayerOne)
+    public int EstimateShortestPath(bool isPlayerOne, int maxDepth)
     {
         Queue<SearchNode> spaces = new Queue<SearchNode>();
         int result = -1;
@@ -323,8 +323,8 @@ public class AIBoard
             }
 
             //If it reaches distance of 8 estimate remaining distance with direct distance.
-            if (currentNode.GetDepth() == 6) {
-                return 6 + FindDirectDistance(currentNode.GetSpace(), isPlayerOne);
+            if (currentNode.GetDepth() == maxDepth) {
+                return maxDepth + FindDirectDistance(currentNode.GetSpace(), isPlayerOne);
             }
 
             //Check the different end conditions for respective players.
