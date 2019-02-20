@@ -340,7 +340,7 @@ public class GUIController : MonoBehaviour
             inputText.text = "";
             UpdateChat(message);
             //NEW CHANGE
-            networkController.onMessageToSend(messageToSend);
+            GameData.NetworkController.onMessageToSend(messageToSend);
         }
     }
 

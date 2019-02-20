@@ -24,7 +24,7 @@ public class NetworkController : MonoBehaviour
     {
         networkController = this;
         gameController = GameController.GCInstance;
-      
+        guiController = GUIController.GUIReference;
 
     }
 
@@ -60,7 +60,14 @@ public class NetworkController : MonoBehaviour
     private void OnJoinedLobby()
     {
         menuController.MultiPlayer();
+        //listRooms();
         Debug.Log("joined"); 
+    }
+
+    private void OnRecievedRoomListUpdate()
+    {
+        Debug.Log("This was called");
+        listRooms();
     }
 
     public bool isConnectedToServer()
@@ -135,10 +142,12 @@ public class NetworkController : MonoBehaviour
     #region Join Rooms
     public void onClickJoinRoom()
     {
+
         string joiningRoom = "Joining Room...";
         string roomToJoin = EventSystem.current.currentSelectedGameObject.name;
-        Debug.Log(roomToJoin);
+        Debug.Log(joinRoomInput.text);
         PhotonNetwork.JoinRoom(joinRoomInput.text);
+        //PhotonNetwork.JoinRoom(roomName);
         menuController.changeLoadingText(joiningRoom);
     }
 
@@ -275,6 +284,7 @@ public class NetworkController : MonoBehaviour
 
     public void onMessageToSend(string message)
     {
+        Debug.Log(message);
         photonView.RPC("chatMessage", PhotonTargets.Others, message);
     }
 
