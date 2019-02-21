@@ -53,6 +53,7 @@ public class GUIController : MonoBehaviour
         { 8, 14.75f },
         { 9, 16.75f },
     };
+    private Stack<GameObject> opponentWallPoolStack, playerWallPoolStack;
     private string playerMove;
     private void Start()
     {
@@ -61,6 +62,10 @@ public class GUIController : MonoBehaviour
             chatButton.gameObject.SetActive(false);
         }
         FindInactiveObject(GameData.Scene).SetActive(true);
+
+        //initialize wall pool stacks
+        playerWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("PlayerWallPool"));
+        opponentWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("OpponentWallPool"));
     }
 
     ////Calculate what is being clicked
@@ -138,6 +143,8 @@ public class GUIController : MonoBehaviour
         //should make the mage do a little move before placing a wall
         MageBehavior.Reference.Summon();
         Debug.Log("summon should have been called");
+
+        TakeFromWallPool(false);
         GameObject newWall = Instantiate(wall);
         Vector3 position = FindInactiveObject(coordinate).transform.position;
         float rotation;
@@ -160,6 +167,7 @@ public class GUIController : MonoBehaviour
     {
         if (playerTurn)
         {
+            TakeFromWallPool(true);
             DeactivateGhostWall();
             GameObject newWall = Instantiate(wall);
             newWall.transform.rotation = ghostWall.transform.rotation;
@@ -179,7 +187,8 @@ public class GUIController : MonoBehaviour
     }
 
     public void MovePlayerPawn(GameObject ghost)
-    {        
+    {
+        DestroyGhostMoves();
         Vector3 position = ghost.transform.position;
         playerPawn.GetComponent<PawnAnimation>().SetDestination(position, true);
         playerMove = FindCoordinate(position.x, position.z);
@@ -261,7 +270,7 @@ public class GUIController : MonoBehaviour
     //changes player bool
     private void EndTurn(string move)
     {
-        DestroyGhostMoves();
+        //DestroyGhostMoves();
         DeactivateHoverPads();
         playerTurn = false;
         pawnClicked = false;
@@ -323,6 +332,18 @@ public class GUIController : MonoBehaviour
         {
             SceneManager.LoadScene("MainMenu");
         });
+    }
+
+    private void TakeFromWallPool(bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            playerWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
+        }
+        else
+        {
+            opponentWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
+        }
     }
 
     public void ReceiveMessage(string message)
