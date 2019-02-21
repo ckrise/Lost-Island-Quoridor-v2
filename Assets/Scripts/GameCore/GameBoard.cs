@@ -561,7 +561,7 @@ namespace GameCore4.GameCore
                     }
                     else if (currentPosition.Column == enemyPosition.Column)
                     {
-                        if (enemyPosition.Row < currentPosition.Column)
+                        if (enemyPosition.Row < currentPosition.Row)
                         {
                             up = true;
                         }
