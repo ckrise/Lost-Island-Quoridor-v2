@@ -12,7 +12,7 @@ public class MenuController : MonoBehaviour
         joinRoom, createRoom, roomListingPrefab;
     public GameObject mainPanel, multiplayerPanel, settingsPanel,
         helpPanel, storyPanel, quickplayPanel, lobbyPanel, 
-        connectingPanel, continuePanel;
+        connectingPanel, continuePanel, nameEntryPanel;
     public InputField createRoomField, joinRoomField;
     public Text lobbyText, connectingText;
     public ScrollRect roomScrollView;
@@ -30,6 +30,7 @@ public class MenuController : MonoBehaviour
     public void ClickToContinue()
     {
         continuePanel.SetActive(false);
+        //nameEntryPanel.SetActive(true);
         mainPanel.SetActive(true);
     }
     void Back()
