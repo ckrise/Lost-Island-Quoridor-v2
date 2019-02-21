@@ -9,10 +9,15 @@ public class WallAnimation : MonoBehaviour
     public float startdepth = 2;
     private bool isPlayer = false;
 
+    private void Awake()
+    {
+        destination = transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (destination != gameObject.transform.position)
+        if (destination != transform.position)
         {
             IncrementPosition();
         }
@@ -24,7 +29,7 @@ public class WallAnimation : MonoBehaviour
         float delta = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(
             transform.position, destination, delta);
-        if (isPlayer && destination == gameObject.transform.position)
+        if (isPlayer && destination == transform.position)
         {
             GUIController.GUIReference.AnimationCompleted();
         }
@@ -38,5 +43,10 @@ public class WallAnimation : MonoBehaviour
         transform.position = start;
         destination = value;
     }
-
+    public void RemoveWall()
+    {
+        Vector3 end = transform.position;
+        end.y -= startdepth;
+        destination = end;
+    }
 }

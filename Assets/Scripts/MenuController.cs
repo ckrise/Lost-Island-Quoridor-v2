@@ -11,7 +11,8 @@ public class MenuController : MonoBehaviour
         settingsButton, helpButton, backButton, easyButton, hardButton,
         joinRoom, createRoom, roomListingPrefab;
     public GameObject mainPanel, multiplayerPanel, settingsPanel,
-        helpPanel, storyPanel, quickplayPanel, lobbyPanel, connectingPanel;
+        helpPanel, storyPanel, quickplayPanel, lobbyPanel, 
+        connectingPanel, continuePanel;
     public InputField createRoomField, joinRoomField;
     public Text lobbyText, connectingText;
     public ScrollRect roomScrollView;
@@ -25,6 +26,11 @@ public class MenuController : MonoBehaviour
         settingsButton.onClick.AddListener(Settings);
         helpButton.onClick.AddListener(Help);
         backButton.onClick.AddListener(Back);
+    }
+    public void ClickToContinue()
+    {
+        continuePanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
     void Back()
     {
