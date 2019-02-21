@@ -115,13 +115,8 @@ public class NetworkController : MonoBehaviour
     public void onClickCreateRoom()
     {
         string creatingRoom = "Creating Room...";
-        if (createRoomInput.text.Length >= 1)
-        {
-            PhotonNetwork.CreateRoom(createRoomInput.text, new RoomOptions() { MaxPlayers = 2 }, null);
-            
+            PhotonNetwork.CreateRoom(PlayerPrefs.GetString("PlayerName"), new RoomOptions() { MaxPlayers = 2 }, null);
             menuController.changeLoadingText(creatingRoom);
-        }
-        
     }
 
     private void OnCreatedRoom()
