@@ -25,7 +25,7 @@ public class NetworkController : MonoBehaviour
         networkController = this;
         gameController = GameController.GCInstance;
         guiController = GUIController.GUIReference;
-
+        
     }
 
     public void getGameReference(GameController gameControllerReference)
@@ -60,6 +60,7 @@ public class NetworkController : MonoBehaviour
     private void OnJoinedLobby()
     {
         menuController.MultiPlayer();
+        GameData.NetworkController = this;
         //listRooms();
         Debug.Log("joined"); 
     }
@@ -140,15 +141,11 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region Join Rooms
-    public void onClickJoinRoom()
+    public void onClickJoinRoom(string name)
     {
-
-        string joiningRoom = "Joining Room...";
-        string roomToJoin = EventSystem.current.currentSelectedGameObject.name;
-        Debug.Log(joinRoomInput.text);
-        PhotonNetwork.JoinRoom(joinRoomInput.text);
+        Debug.Log(name);
+        PhotonNetwork.JoinRoom(name);
         //PhotonNetwork.JoinRoom(roomName);
-        menuController.changeLoadingText(joiningRoom);
     }
 
     private void OnJoinedRoom()
@@ -240,7 +237,7 @@ public class NetworkController : MonoBehaviour
         //NEW CHANGE
         guiController = GUIController.GUIReference;
         playingNetworkGame = true;
-        GameData.NetworkController = this;
+        
         GameData.IsAIGame = false;
         playingNetworkGame = true;
 

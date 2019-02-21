@@ -4,16 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class MenuController : MonoBehaviour
 {
     public static MenuController menu;
     public Button storyButton, quickPlayButton, multiplayerButton, 
         settingsButton, helpButton, backButton, easyButton, hardButton,
-        joinRoom, createRoom, roomListingPrefab;
+        joinRoom, createRoom;
     public GameObject mainPanel, multiplayerPanel, settingsPanel,
         helpPanel, storyPanel, quickplayPanel, lobbyPanel, 
-        connectingPanel, continuePanel, nameEntryPanel;
-    public InputField createRoomField, joinRoomField;
+        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab;
+    public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText;
     public ScrollRect roomScrollView;
     // Start is called before the first frame update
@@ -30,9 +31,17 @@ public class MenuController : MonoBehaviour
     public void ClickToContinue()
     {
         continuePanel.SetActive(false);
-        //nameEntryPanel.SetActive(true);
-        mainPanel.SetActive(true);
+        nameEntryPanel.SetActive(true);
+        //mainPanel.SetActive(true);
     }
+    public void NameEntered()
+    {
+        PlayerPrefs.SetString("PlayerName", nameEntryField.text);
+        nameEntryPanel.SetActive(false);
+        mainPanel.SetActive(true);
+        
+    }
+
     void Back()
     {
         if (lobbyPanel.activeSelf)
@@ -127,20 +136,12 @@ public class MenuController : MonoBehaviour
         mainPanel.SetActive(false);
         connectingPanel.SetActive(false);
         multiplayerPanel.SetActive(true);
-        joinRoom.onClick.AddListener(JoiningRoom);
         createRoom.onClick.AddListener(CreatingRoom);
     }
 
     public void SetLobbyName(string name)
     {
         lobbyText.text = name;
-    }
-    
-    public void JoiningRoom()
-    {
-        multiplayerPanel.SetActive(false);
-        connectingPanel.SetActive(true);
-        changeLoadingText("Joining Room...");
     }
 
     public void CreatingRoom()
@@ -150,7 +151,7 @@ public class MenuController : MonoBehaviour
         changeLoadingText("Creating Room...");
     }
 
-    public void JoinRoom()
+    public void MultiplayerToLobby()
     {
         multiplayerPanel.SetActive(false);
         connectingPanel.SetActive(false);
@@ -166,21 +167,26 @@ public class MenuController : MonoBehaviour
 
     public void AddRoomsToList(List<string> roomNames)
     {
-        if(roomNames.Count == 0)
-        {
-            Debug.Log("empty");
-        }
-        else
-        {
-            Debug.Log("not empty");
-        }
-        Debug.Log(roomNames[0]);
+        
         foreach (var room in roomNames)
         {
-            Button newRoomListing = Instantiate<Button>(roomListingPrefab, roomScrollView.content);
+            GameObject newRoomListing = Instantiate<GameObject>(roomListingPrefab, roomScrollView.content);
             newRoomListing.name = room;
             newRoomListing.GetComponentInChildren<Text>().text = room;
+            newRoomListing.GetComponentInChildren<Button>().onClick.AddListener(delegate{
+                Debug.Log("In Delegate");
+                JoinRoom(newRoomListing.name);
+            });
         }
+    }
+
+    void JoinRoom(string name)
+    {
+        Debug.Log("Join room called");
+        multiplayerPanel.SetActive(false);
+        connectingPanel.SetActive(true);
+        changeLoadingText("Joining Room...");
+        GameData.NetworkController.onClickJoinRoom(name);
     }
     #endregion
 }
