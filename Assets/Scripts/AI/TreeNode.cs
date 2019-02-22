@@ -29,10 +29,27 @@ public class TreeNode
         List<TreeNode> children = new List<TreeNode>();
         List<string> moves = board.GetWallMoves();
         moves.AddRange(board.GetPawnMoves());
+        SetNodesOfInterest(ref moves);
         foreach (string move in moves) {
             children.Add(new TreeNode(new AIBoard(board), move));
         }     
         return children;
+    }
+
+    private void SetNodesOfInterest(ref List<string> moves) {
+        int p1 = board.GetPlayerOnePos()[0];
+        int p2 = board.GetPlayerTwoPos()[0];
+        List<int> columnsOfInterest = new List<int> { p1 - 1, p1, p1 + 1, p2 - 1, p2, p2 + 1 };
+        List<string> toBeRemoved = new List<string>();
+
+        foreach (string move in moves) {
+            if (!columnsOfInterest.Contains(move[0])) {
+                toBeRemoved.Add(move);
+            }
+        }
+        foreach (string move in toBeRemoved) {
+            moves.Remove(move);
+        }
     }
 
     public string GetMoveMade() {
