@@ -13,7 +13,7 @@ public class MenuController : MonoBehaviour
         joinRoom, createRoom;
     public GameObject mainPanel, multiplayerPanel, settingsPanel,
         helpPanel, storyPanel, quickplayPanel, lobbyPanel, 
-        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab;
+        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab, navigationHelpPanel;
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText;
     public ScrollRect roomScrollView;
@@ -27,6 +27,11 @@ public class MenuController : MonoBehaviour
         settingsButton.onClick.AddListener(Settings);
         helpButton.onClick.AddListener(Help);
         backButton.onClick.AddListener(Back);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
     public void ClickToContinue()
     {
@@ -115,6 +120,14 @@ public class MenuController : MonoBehaviour
         helpPanel.SetActive(true);
         backButton.gameObject.SetActive(true);
     }
+    #region Help
+    public void showNavigationPanel()
+    {
+        //shut off other help panels
+        navigationHelpPanel.SetActive(true);
+    }
+
+    #endregion
 
     #region Networking
 
