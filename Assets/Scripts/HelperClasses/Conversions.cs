@@ -215,7 +215,7 @@ namespace GameCore4.HelperClasses
                 else
                 {
                     column = Convert.ToChar(((coord1.Column - 1) / 2) + 'a').ToString();
-                    switch (coord1.Row)
+                    switch (coord3.Row)
                     {
                         case 16:
                             row = "1";

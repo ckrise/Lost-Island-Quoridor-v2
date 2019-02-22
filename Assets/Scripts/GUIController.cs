@@ -268,6 +268,7 @@ public class GUIController : MonoBehaviour
     //changes player bool
     private void EndTurn(string move)
     {
+        DestroyGhostMoves();
         DeactivateHoverPads();
         playerTurn = false;
         pawnClicked = false;
