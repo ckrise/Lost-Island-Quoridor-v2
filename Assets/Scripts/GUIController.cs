@@ -165,6 +165,7 @@ public class GUIController : MonoBehaviour
     {
         if (playerTurn && cameraAnimationFinished)
         {
+            playerTurn = false;
             TakeFromWallPool(true);
             DeactivateGhostWall();
             GameObject newWall = Instantiate(wall);
@@ -172,7 +173,6 @@ public class GUIController : MonoBehaviour
             newWall.SetActive(true);
             newWall.GetComponent<WallAnimation>().SetDestination(ghostWall.transform.position, true);
             playerMove = move;
-            //EndTurn(move);
         }
     }
 
@@ -186,11 +186,11 @@ public class GUIController : MonoBehaviour
 
     public void MovePlayerPawn(GameObject ghost)
     {
+        playerTurn = false;
         DestroyGhostMoves();
         Vector3 position = ghost.transform.position;
         playerPawn.GetComponent<PawnAnimation>().SetDestination(position, true);
         playerMove = FindCoordinate(position.x, position.z);
-        //EndTurn(FindCoordinate(position.x, position.z));
     }
 
     private void ActivateHoverPads(List<string> coordinates)
@@ -268,7 +268,6 @@ public class GUIController : MonoBehaviour
     //changes player bool
     private void EndTurn(string move)
     {
-        //DestroyGhostMoves();
         DeactivateHoverPads();
         playerTurn = false;
         pawnClicked = false;
