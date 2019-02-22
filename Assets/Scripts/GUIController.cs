@@ -17,7 +17,7 @@ public class GUIController : MonoBehaviour
 
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
-        ghostWall, wall, hoverpadMaster, winPanel, chatPanel,
+        ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
         settingsPanel, helpPanel;
     public Text winText, messageText, inputText;
     public Button winButton, chatButton;
@@ -119,7 +119,7 @@ public class GUIController : MonoBehaviour
         pawnClicked = false;
         playerTurn = false;
         ghostPlayerMoves = new List<GameObject>();
-        //networkController = NetworkController.GetInstance();
+        
     }
 
     public void StartPlayerTurn(string move, List<string> validWalls, List<string> validMoves)
@@ -326,12 +326,23 @@ public class GUIController : MonoBehaviour
         {
             MoveOpponentPawn(move);
         }
-        winPanel.SetActive(true);
-        winText.text = isWinner ? WIN_TEXT : LOSE_TEXT;
-        winButton.onClick.AddListener(delegate ()
+        
+        if(isWinner)
         {
-            SceneManager.LoadScene("MainMenu");
-        });
+            winPanel.SetActive(true);
+        }
+        else
+        {
+            losePanel.SetActive(true);
+        }
+        
+    }
+
+    public void ReturnToMainMenu()
+    {
+        //TODO:
+        //reset GUI and GameBoard class to be ready to play another game.
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void TakeFromWallPool(bool isPlayer)
@@ -385,5 +396,14 @@ public class GUIController : MonoBehaviour
     {
         settingsPanel.SetActive(!settingsPanel.activeSelf);
     }
-    
+
+    #region Menus
+    public void LeaveGame()
+    {
+        //TODO:
+        //if multiplayer game notify opponent of forfeit
+        ReturnToMainMenu();
+    }
+    #endregion
+
 }
