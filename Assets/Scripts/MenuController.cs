@@ -13,10 +13,11 @@ public class MenuController : MonoBehaviour
         joinRoom, createRoom;
     public GameObject mainPanel, multiplayerPanel, settingsPanel,
         helpPanel, storyPanel, quickplayPanel, lobbyPanel, 
-        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab, navigationHelpPanel;
+        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab;
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText;
     public ScrollRect roomScrollView;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -26,7 +27,7 @@ public class MenuController : MonoBehaviour
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
         settingsButton.onClick.AddListener(Settings);
         helpButton.onClick.AddListener(Help);
-        backButton.onClick.AddListener(Back);
+       
     }
 
     public void QuitGame()
@@ -37,7 +38,7 @@ public class MenuController : MonoBehaviour
     {
         continuePanel.SetActive(false);
         nameEntryPanel.SetActive(true);
-        //mainPanel.SetActive(true);
+       
     }
     public void NameEntered()
     {
@@ -47,7 +48,7 @@ public class MenuController : MonoBehaviour
         
     }
 
-    void Back()
+    public void Back()
     {
         if (lobbyPanel.activeSelf)
         {
@@ -61,7 +62,8 @@ public class MenuController : MonoBehaviour
             storyPanel.SetActive(false);
             settingsPanel.SetActive(false);
             helpPanel.SetActive(false);
-            backButton.gameObject.SetActive(false);
+            quickplayPanel.SetActive(false);
+           
         }
     }
 
@@ -70,7 +72,7 @@ public class MenuController : MonoBehaviour
         PlayerPrefs.SetString("PLAY_MODE", "STORY");
         mainPanel.SetActive(false);
         storyPanel.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        
     }
 
     void QuickPlay()
@@ -111,20 +113,30 @@ public class MenuController : MonoBehaviour
     {
         mainPanel.SetActive(false);
         settingsPanel.SetActive(true);
-        backButton.gameObject.SetActive(true);
+       
     }
 
     void Help()
     {
         mainPanel.SetActive(false);
         helpPanel.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        
     }
+
     #region Help
-    public void showNavigationPanel()
+    public GameObject gamePlayHelpPanel, navigationHelpPanel;
+
+    public void showNavigationHelpPanel()
     {
         //shut off other help panels
+        gamePlayHelpPanel.SetActive(false);
         navigationHelpPanel.SetActive(true);
+    }
+
+    public void showGamePlayHelpPanel()
+    {
+        navigationHelpPanel.SetActive(false);
+        gamePlayHelpPanel.SetActive(true);
     }
 
     #endregion
@@ -141,7 +153,7 @@ public class MenuController : MonoBehaviour
         PlayerPrefs.SetString("PLAY_MODE", "NETWORK");
         mainPanel.SetActive(false);
         connectingPanel.SetActive(true);
-        backButton.gameObject.SetActive(true);
+       
     }
 
     public void MultiPlayer()
