@@ -15,6 +15,9 @@ public class GUIController : MonoBehaviour
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
         settingsPanel, helpPanel, opponentDisconnectedPanel;
+    //panels in the help panel tab view
+    public GameObject rulesPanel, gameplayPanel;
+
     public Text messageText, inputText;
     public Button winButton, chatButton;
     public ScrollRect chatScrollRect;
@@ -437,5 +440,18 @@ public class GUIController : MonoBehaviour
             chatPanel.SetActive(false);
         }
     }
-    
+
+    #region helpPanel
+    public void showRulesPanel()
+    {
+        gameplayPanel.SetActive(false);
+        rulesPanel.SetActive(true);
+    }
+    public void showGameplayPanel()
+    {
+        rulesPanel.SetActive(false);
+        gameplayPanel.SetActive(true);
+    }
+    #endregion
+
 }
