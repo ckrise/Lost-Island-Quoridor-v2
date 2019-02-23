@@ -20,12 +20,26 @@ public class AI {
     public string GetEasyMove(string playerMove) {
         HandlePlayerMove(playerMove);
         TreeNode rootNode = new TreeNode(CurrentBoard);
-        AlphaBeta ab = new AlphaBeta();
+        List<TreeNode> possibleMoves = rootNode.GetChildren();
         
         string moveSelected = "error";
-
-        ab.Iterate(rootNode, 1, -100, 100, true);
-        moveSelected = ab.GetMoveSelected();
+        float max = -10000000;
+        float min = 1000;
+        foreach (TreeNode node in possibleMoves) {
+            //List<TreeNode> nextMoves = node.GetChildren();
+            //int opponentValueSelected = 0;
+            //foreach (TreeNode nextNode in nextMoves) {
+            //    int value = nextNode.GetValue();
+            //    if (value < min) {
+            //        min = value;
+            //        opponentValueSelected = value;
+            //    }
+            //}
+            if (node.GetValue() > max) {
+                max = node.GetValue();
+                moveSelected = node.GetMoveMade();
+            }
+        }
         CurrentBoard.MakeMove(moveSelected);
 
         return moveSelected;

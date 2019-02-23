@@ -32,10 +32,6 @@ public class AIController {
         return AImove;
     }
 
-    public void Reset() {
-        computer = new AI();
-    }
-
     public void SetAIHard() {
         difficulty = "hard";
     }

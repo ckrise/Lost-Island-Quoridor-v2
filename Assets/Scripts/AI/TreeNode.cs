@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 public class TreeNode
 {
     private AIBoard board;
-    private int Value { get; set; }
+    private float Value { get; set; }
     private bool ValueSet { get; set; }
     private string moveMade { get; set; }
 
@@ -29,7 +29,7 @@ public class TreeNode
         List<TreeNode> children = new List<TreeNode>();
         List<string> moves = board.GetWallMoves();
         moves.AddRange(board.GetPawnMoves());
-        SetNodesOfInterest(ref moves);
+        //SetNodesOfInterest(ref moves);
         foreach (string move in moves) {
             children.Add(new TreeNode(new AIBoard(board), move));
         }     
@@ -58,11 +58,11 @@ public class TreeNode
 
     //Determines if this node is in a end game state.
     public bool IsTerminalNode() {
-        return board.IsWinner();
+        return !(board.GetWinner() == "none");
     }
 
     //Gets the value of the node, calculates it if it has not been done.
-    public int GetValue() {
+    public float GetValue() {
         if (!ValueSet) {
             EvaluateNode();
         }
@@ -71,25 +71,22 @@ public class TreeNode
 
     //Static evaluation function of the gameboard.
     private void EvaluateNode() {
-        int playerOneShortestPath;
-        int playerTwoShortestPath;
-        if (moveMade.EndsWith("h") || moveMade.EndsWith("v"))
+        //Currently assumes max player is player 2.
+        string winner = board.GetWinner();
+        if (winner == "player1")
         {
-            playerOneShortestPath = board.EstimateShortestPath(true, 6);
-            playerTwoShortestPath = board.EstimateShortestPath(false, 6);
+            Value = -1000;
+            return;
         }
-        else
+        else if(winner == "player2")
         {
-            playerOneShortestPath = board.EstimateShortestPath(true, 10);
-            playerTwoShortestPath = board.EstimateShortestPath(false, 20);
+            Value = 1000;
+            return;
         }
-        
-        //Difference is the number of moves P2 path is shorter than P1.
-        int difference = playerOneShortestPath - playerTwoShortestPath;
-        int wallDifference = board.GetPlayerTwoNumWalls() - board.GetPlayerOneNumWalls();
-        Value = difference + board.GetPlayerTwoNumWalls() + wallDifference * 2;
+
+        int PlayerOneDistance = board.FindShortestPath(true);
+        int PlayerTwoDistance = board.FindShortestPath(false);
+
+        Value = PlayerOneDistance - PlayerTwoDistance;
     }
-
-    
-
 }
