@@ -14,7 +14,7 @@ public class GUIController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
-        settingsPanel, helpPanel;
+        settingsPanel, helpPanel, opponentDisconnectedPanel;
     public Text messageText, inputText;
     public Button winButton, chatButton;
     public ScrollRect chatScrollRect;
@@ -342,7 +342,20 @@ public class GUIController : MonoBehaviour
    }
     public void LeaveGame()
     {
+        if (!GameData.IsAIGame)
+        {
+            Debug.Log("NetworkGame");
+            GameData.NetworkController.gameOver();
+        }
         SceneManager.LoadScene("MainMenu");
+    }
+    public void OpponentLeft()
+    {
+        //TODO:
+        //Lock the MenuButtons as well
+        //lock UI
+        playerTurn = false;
+        opponentDisconnectedPanel.SetActive(true);
     }
 
     private void TakeFromWallPool(bool isPlayer)

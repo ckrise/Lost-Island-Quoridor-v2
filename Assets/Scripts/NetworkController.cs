@@ -214,8 +214,6 @@ public class NetworkController : MonoBehaviour
         {
             networkGame();
             PhotonNetwork.LoadLevel("GameScene");
-            
-
         }
         else
         {
@@ -226,7 +224,6 @@ public class NetworkController : MonoBehaviour
     //Outline of how to send info over network
     public void networkGame()
     {
-
         Debug.Log("Start networkgame");
         //To call RPC function need a PhotonView
         photonView = PhotonView.Get(this);
@@ -252,17 +249,17 @@ public class NetworkController : MonoBehaviour
         PhotonNetwork.Disconnect();
     }
 
-    public void playerQuitNetworkGame()
-    {
-        gameOver();
-    }
+    //public void playerQuitNetworkGame()
+    //{
+    //    gameOver();
+    //}
 
-    public void OnPlayerDisconnected()
+    public void OnPhotonPlayerDisconnected()
     {
+        Debug.Log("Player disconnected!");
         if(PhotonNetwork.room.PlayerCount == 1)
         {
-            //Tell player that opponent left
-            gameOver();
+            guiController.OpponentLeft();           
         }
     }
 
@@ -281,10 +278,12 @@ public class NetworkController : MonoBehaviour
         photonView.RPC("chatMessage", PhotonTargets.Others, message);
     }
 
-    public void onForfeitToSend(string forfeitMessage)
-    {
-        photonView.RPC("fofeit", PhotonTargets.Others, forfeitMessage);
-    }
+    //public void onForfeitToSend()
+    //{
+    //    Debug.Log("Called onForfeitToSend() this SHOULD be working!");
+    //    photonView.RPC("forfeit", PhotonTargets.Others);
+    //    playerQuitNetworkGame();
+    //}
 
     #endregion
 
@@ -309,13 +308,12 @@ public class NetworkController : MonoBehaviour
         Debug.Log(move);
     }
 
-    [PunRPC]
-    public void forfeit(string forfeitMessage)
-    {
-        string isFofeit = forfeitMessage;
-        //Player has quit let the player know they have won
-        Debug.Log(isFofeit);
-    }
+    //[PunRPC]
+    //public void forfeit()
+    //{
+    //    Debug.Log("Player left");
+    //    playerQuitNetworkGame();        
+    //}
 
     public string changeOrientation(string move)
     {
