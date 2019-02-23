@@ -29,9 +29,9 @@ public class PawnAnimation : MonoBehaviour
         float delta = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(
             transform.position, destination, delta);
-        if (isPlayer && destination == gameObject.transform.position)
+        if (destination == gameObject.transform.position)
         {
-            GUIController.GUIReference.AnimationCompleted();
+            GUIController.GUIReference.AnimationCompleted(isPlayer);
         }
     }
     

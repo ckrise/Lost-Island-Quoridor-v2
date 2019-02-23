@@ -18,7 +18,7 @@ public class GUIController : MonoBehaviour
     public Text winText, messageText, inputText;
     public Button winButton, chatButton;
     public ScrollRect chatScrollRect;
-    public bool cameraAnimationFinished = false;
+    public bool animationFinished = false;
 
     //tile objects that are invisible until pawn is clicked
     private List<GameObject> ghostPlayerMoves;   
@@ -125,10 +125,12 @@ public class GUIController : MonoBehaviour
         if (move.Length == 3)
         {
             PlaceOpponentWall(move);
+            animationFinished = false;
         }
         else if (move.Length == 2)
         {
             MoveOpponentPawn(move);
+            animationFinished = false;
         }
 
         ActivateGhostMoves(validMoves);
@@ -163,7 +165,7 @@ public class GUIController : MonoBehaviour
 
     public void PlacePlayerWall(string move)
     {
-        if (playerTurn && cameraAnimationFinished)
+        if (playerTurn && animationFinished)
         {
             playerTurn = false;
             TakeFromWallPool(true);
@@ -203,7 +205,7 @@ public class GUIController : MonoBehaviour
 
     public void ActivateGhostWall(Vector3 position, char orientation)
     {
-        if (playerTurn && !pawnClicked && cameraAnimationFinished)
+        if (playerTurn && !pawnClicked && animationFinished)
         {
             float rotation;
             if (orientation == 'v')
@@ -259,9 +261,13 @@ public class GUIController : MonoBehaviour
         }
     }
 
-    public void AnimationCompleted()
+    public void AnimationCompleted(bool isPlayer)
     {
-        EndTurn(playerMove);
+        animationFinished = true;
+        if (isPlayer)
+        {
+            EndTurn(playerMove);
+        }
     }
 
     //Destroys ghost walls and moves
@@ -295,7 +301,7 @@ public class GUIController : MonoBehaviour
     
     public void ShowGhostMoves()
     {
-        if (playerTurn && cameraAnimationFinished)
+        if (playerTurn && animationFinished)
         {
             pawnClicked = !pawnClicked;
             foreach (var space in ghostPlayerMoves)
