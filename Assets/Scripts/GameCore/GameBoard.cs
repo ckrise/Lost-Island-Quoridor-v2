@@ -11,7 +11,7 @@ namespace GameCore4.GameCore
 
         public List<string> RemovedWalls { get; set; }
 
-        public struct Coords
+        public struct Coords : IEquatable<Coords>
         {
             public Coords(int row, int column)
             {
@@ -20,6 +20,15 @@ namespace GameCore4.GameCore
             }
             public int Row { get; set; }
             public int Column { get; set; }
+
+            public bool Equals(Coords other)
+            {
+                if (Row == other.Row && Column == other.Column)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
         private int[,] Board { get; set; }
         public bool Winner { get; set; }
@@ -30,6 +39,7 @@ namespace GameCore4.GameCore
         public List<string> ValidPlayer1Moves { get; set; }
         public List<string> ValidPlayer2Moves { get; set; }
         private List<string> PlacedWalls { get; set; }
+        private List<Wall> Walls { get; set; }
 
         public GameBoard()
         {
@@ -47,20 +57,6 @@ namespace GameCore4.GameCore
             BuildValidPlayerMoves("Player1");
             BuildValidPlayerMoves("Player2");
             RemovedWalls = new List<string>();
-        }
-
-        //Copy constructor
-        //Written By: Jackson
-        public GameBoard(GameBoard oldGB, string player)
-        {
-            Player1 = new Player(oldGB.Player1);
-            Player2 = new Player(oldGB.Player2);
-            Board = (int[,])oldGB.Board.Clone();
-            Winner = false;
-            ValidWallMoves = new List<string>(oldGB.ValidWallMoves);
-            ValidPlayer1Moves = new List<string>(oldGB.ValidPlayer1Moves);
-            PlacedWalls = new List<string>(oldGB.PlacedWalls);
-            GetValidPlayerMoves(player);
         }
 
         public bool IsWinner()
@@ -121,6 +117,22 @@ namespace GameCore4.GameCore
                 move = "h" + i.ToString() + "h";
                 ValidWallMoves.Add(move);
             }
+
+            Walls = new List<Wall>();
+            foreach (string wallMove in ValidWallMoves)
+            {
+                List<Coords> coords = Conversions.MoveToArray(wallMove);
+                Wall wall = new Wall();
+                if (wallMove[2] == 'h')
+                {
+                    wall = new Wall(coords[0], coords[1], coords[2]);
+                }
+                else
+                {
+                    wall = new Wall(coords[2], coords[1], coords[0]);
+                }
+                Walls.Add(wall);
+            }
         }
 
         //ran at start
@@ -175,7 +187,7 @@ namespace GameCore4.GameCore
 
         public void MakeMove(string move, bool player)
         {
-            List<GameBoard.Coords> Coords = Conversions.MoveToArray(move);
+            List<Coords> Coords = Conversions.MoveToArray(move);
             if(Coords.Count == 1)
             {
                 if(player)
@@ -228,10 +240,14 @@ namespace GameCore4.GameCore
             Board[coord2.Row, coord2.Column] = 1;
             Board[coord3.Row, coord3.Column] = 1;
 
-            GetValidWallMoves(coords);
+
+            CheckAllWalls();
+
+
+            //GetValidWallMoves(coords);
             //check the walls around each player after a wall is placed
-            UpdateWallsAfterPlayerMove(Player1.CurrentPosition);
-            UpdateWallsAfterPlayerMove(Player2.CurrentPosition);
+           // UpdateWallsAfterPlayerMove(Player1.CurrentPosition);
+           // UpdateWallsAfterPlayerMove(Player2.CurrentPosition);
 
             List<Coords> player1Moves = GetValidPlayerMoves("Player1");
             List<Coords> player2Moves = GetValidPlayerMoves("Player2");
@@ -268,7 +284,13 @@ namespace GameCore4.GameCore
                 Board[destination.Row, destination.Column] = 2;
                 Player2.CurrentPosition = destination;
             }
-            UpdateWallsAfterPlayerMove(newPosition);
+
+
+            CheckAllWalls();
+
+           // UpdateWallsAfterPlayerMove(newPosition);
+
+
             List<Coords> player1Moves = GetValidPlayerMoves("Player1");
             List<Coords> player2Moves = GetValidPlayerMoves("Player2");
 
@@ -282,6 +304,30 @@ namespace GameCore4.GameCore
             foreach (Coords coord in player2Moves)
             {
                 ValidPlayer2Moves.Add(Conversions.ArrayToMove(new List<Coords> { coord }));
+            }
+        }
+
+        private void CheckAllWalls()
+        {
+            foreach (Wall wall in Walls)
+            {
+                if (!CheckOutOfBounds(wall))
+                {
+                    if (!TryPlaceWall(wall))
+                    {
+                        if (ValidWallMoves.Remove(Conversions.ArrayToMove(wall.Coords)))
+                        {
+                            RemovedWalls.Add(Conversions.ArrayToMove(wall.Coords));
+                        }
+                    }
+                    else
+                    {
+                        if (!ValidWallMoves.Contains(Conversions.ArrayToMove(wall.Coords)))
+                        {
+                            ValidWallMoves.Add(Conversions.ArrayToMove(wall.Coords));
+                        }
+                    }
+                }
             }
         }
 
@@ -990,12 +1036,14 @@ namespace GameCore4.GameCore
         private bool CheckExitPlayer1(int[,] board)
         {
             //Player 1 is moving to row 0
-            Stack<Coords> Stack = new Stack<Coords>();
+            Stack<Coords> PossibleMoves = new Stack<Coords>();
             Stack<Coords> Vistited = new Stack<Coords>();
             Coords currentSpot = Player1.CurrentPosition;
             bool moveMade;
             string moveType = "";
             Vistited.Push(currentSpot);
+
+            board[Player2.CurrentPosition.Row, Player2.CurrentPosition.Column] = 0;
 
             //try to move in a direction starting with up, if a move is made push all other avaliable moves
             //  onto the stack unless it has already been vistited
@@ -1019,7 +1067,7 @@ namespace GameCore4.GameCore
                             }
                             else
                             {
-                                Stack.Push(coords);
+                                PossibleMoves.Push(coords);
                             }
                         }
 
@@ -1040,7 +1088,7 @@ namespace GameCore4.GameCore
                             }
                             else
                             {
-                                Stack.Push(coords);
+                                PossibleMoves.Push(coords);
                             }
                         }
                     }
@@ -1060,7 +1108,7 @@ namespace GameCore4.GameCore
                             }
                             else
                             {
-                                Stack.Push(coords);
+                                PossibleMoves.Push(coords);
                             }
                         }
                     }
@@ -1080,7 +1128,7 @@ namespace GameCore4.GameCore
                             }
                             else
                             {
-                                Stack.Push(coords);
+                                PossibleMoves.Push(coords);
                             }
                         }
                     }
@@ -1107,9 +1155,9 @@ namespace GameCore4.GameCore
                 }
                 else
                 {
-                    if (Stack.Count > 0)
+                    if (PossibleMoves.Count > 0)
                     {
-                        currentSpot = Stack.Pop();
+                        currentSpot = PossibleMoves.Pop();
                     }
                 }
                 //exit found
@@ -1119,7 +1167,7 @@ namespace GameCore4.GameCore
                     break;
                 }
                 //exit impossible
-                if (!moveMade && Stack.Count == 0)
+                if (!moveMade && PossibleMoves.Count == 0)
                 {
                     exit = false;
                     break;
@@ -1131,13 +1179,17 @@ namespace GameCore4.GameCore
         private bool CheckExitPlayer2(int[,] board)
         {
             //Player 2 is moving to row 16
-            Stack<Coords> Stack = new Stack<Coords>();
+            Stack<Coords> PossibleMoves = new Stack<Coords>();
             Stack<Coords> Vistited = new Stack<Coords>();
             Coords currentSpot = Player2.CurrentPosition;
             bool moveMade;
             string moveType = "";
             Vistited.Push(currentSpot);
             bool exit = false;
+
+            board[Player1.CurrentPosition.Row, Player1.CurrentPosition.Column] = 0;
+
+
             while (!exit)
             {
                 moveMade = false;
@@ -1157,7 +1209,7 @@ namespace GameCore4.GameCore
                             }
                             else
                             {
-                                Stack.Push(coords);
+                                PossibleMoves.Push(coords);
                             }
                         }
                     }
@@ -1178,7 +1230,7 @@ namespace GameCore4.GameCore
                             else
                             {
 
-                                Stack.Push(coords);
+                                PossibleMoves.Push(coords);
                             }
                         }
                     }
@@ -1198,7 +1250,7 @@ namespace GameCore4.GameCore
                             }
                             else
                             {
-                                Stack.Push(coords);
+                                PossibleMoves.Push(coords);
                             }
                         }
                     }
@@ -1219,7 +1271,7 @@ namespace GameCore4.GameCore
                             else
                             {
 
-                                Stack.Push(coords);
+                                PossibleMoves.Push(coords);
 
                             }
                         }
@@ -1245,19 +1297,16 @@ namespace GameCore4.GameCore
                     }
                     Vistited.Push(currentSpot);
                 }
-                else
-                {
-                    if (Stack.Count > 0)
-                    {
-                        currentSpot = Stack.Pop();
-                    }
+                else if (PossibleMoves.Count > 0)
+                { 
+                    currentSpot = PossibleMoves.Pop();
                 }
                 if (currentSpot.Row == 16)
                 {
                     exit = true;
                     break;
                 }
-                if (!moveMade && Stack.Count == 0)
+                if (!moveMade && PossibleMoves.Count == 0)
                 {
                     exit = false;
                     break;
