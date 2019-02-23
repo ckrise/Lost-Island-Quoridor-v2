@@ -19,6 +19,7 @@ public class GUIController : MonoBehaviour
     public Button winButton, chatButton;
     public ScrollRect chatScrollRect;
     public bool animationFinished = false;
+    bool gameOver = false;
 
     //tile objects that are invisible until pawn is clicked
     private List<GameObject> ghostPlayerMoves;   
@@ -326,6 +327,7 @@ public class GUIController : MonoBehaviour
 
     public void GameOver(bool isWinner, string move = "")
     {
+        gameOver = true;
         if (move != "")
         {
             MoveOpponentPawn(move);
@@ -338,7 +340,6 @@ public class GUIController : MonoBehaviour
         {
             losePanel.SetActive(true);
         }
-        
    }
     public void LeaveGame()
     {
@@ -355,7 +356,11 @@ public class GUIController : MonoBehaviour
         //Lock the MenuButtons as well
         //lock UI
         playerTurn = false;
-        opponentDisconnectedPanel.SetActive(true);
+        if (!gameOver)
+        {
+            opponentDisconnectedPanel.SetActive(true);
+        }
+        
     }
 
     private void TakeFromWallPool(bool isPlayer)
@@ -397,17 +402,33 @@ public class GUIController : MonoBehaviour
 
     public void ShowChatMenu()
     {
-        chatPanel.SetActive(!chatPanel.activeSelf);
+        if(!gameOver)
+        {
+            chatPanel.SetActive(!chatPanel.activeSelf);
+            helpPanel.SetActive(false);
+            settingsPanel.SetActive(false);
+        }
+        
     }
 
     public void ShowHelpMenu()
     {
-        helpPanel.SetActive(!helpPanel.activeSelf);
+        if (!gameOver)
+        {
+            helpPanel.SetActive(!helpPanel.activeSelf);
+            settingsPanel.SetActive(false);
+            chatPanel.SetActive(false);
+        }
     }
 
     public void ShowSettingsMenu()
     {
-        settingsPanel.SetActive(!settingsPanel.activeSelf);
+        if (!gameOver)
+        {
+            settingsPanel.SetActive(!settingsPanel.activeSelf);
+            helpPanel.SetActive(false);
+            chatPanel.SetActive(false);
+        }
     }
     
 }
