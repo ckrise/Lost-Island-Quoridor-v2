@@ -164,7 +164,7 @@ public class GUIController : MonoBehaviour
         newWall.SetActive(true);
     }
 
-    public void PlacePlayerWall(string move)
+    public void PlacePlayerWall(Vector3 position, string move)
     {
         if (playerTurn && animationFinished)
         {
@@ -172,9 +172,10 @@ public class GUIController : MonoBehaviour
             TakeFromWallPool(true);
             DeactivateGhostWall();
             GameObject newWall = Instantiate(wall);
-            newWall.transform.rotation = ghostWall.transform.rotation;
+            var transformation = GetPositionAndRotationFromHoverPad(position, move[2]);
+            newWall.transform.rotation = transformation.Item2;
             newWall.SetActive(true);
-            newWall.GetComponent<WallAnimation>().SetDestination(ghostWall.transform.position, true);
+            newWall.GetComponent<WallAnimation>().SetDestination(transformation.Item1, true);
             playerMove = move;
         }
     }
@@ -208,20 +209,26 @@ public class GUIController : MonoBehaviour
     {
         if (playerTurn && !pawnClicked && animationFinished)
         {
-            float rotation;
-            if (orientation == 'v')
-            {
-                rotation = 90;
-                position.z--;
-            }
-            else
-            {
-                rotation = 0;
-                position.x++;
-            }
-            ghostWall.transform.SetPositionAndRotation(position, Quaternion.Euler(0, rotation, 0));
+            var transformation = GetPositionAndRotationFromHoverPad(position, orientation);
+            ghostWall.transform.SetPositionAndRotation(transformation.Item1, transformation.Item2);
             ghostWall.SetActive(true);
         }
+    }
+
+    public Tuple<Vector3, Quaternion> GetPositionAndRotationFromHoverPad(Vector3 position, char orientation)
+    {
+        float rotation;
+        if (orientation == 'v')
+        {
+            rotation = 90;
+            position.z--;
+        }
+        else
+        {
+            rotation = 0;
+            position.x++;
+        }
+        return new Tuple<Vector3, Quaternion>(position, Quaternion.Euler(0, rotation, 0));
     }
 
     public void DeactivateGhostWall()
