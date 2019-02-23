@@ -14541,6 +14541,7 @@ GameObject:
   - component: {fileID: 2034530533}
   - component: {fileID: 2034530532}
   - component: {fileID: 2034530531}
+  - component: {fileID: 2034530534}
   m_Layer: 5
   m_Name: HelpStoryButton
   m_TagString: Untagged
@@ -14658,6 +14659,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2034530529}
   m_CullTransparentMesh: 0
+--- !u!95 &2034530534
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034530529}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 541b09fabf8d06048bf7e9d37a3fa9fd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2055720157
 GameObject:
   m_ObjectHideFlags: 0
