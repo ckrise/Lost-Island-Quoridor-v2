@@ -18,10 +18,14 @@ public class MenuController : MonoBehaviour
     public Text lobbyText, connectingText;
     public ScrollRect roomScrollView;
 
+    private void Awake()
+    {
+        menu = this;
+    }
+
     // Start is called before the first frame update
     public void Start()
     {
-        menu = this;
         storyButton.onClick.AddListener(StoryMode);
         quickPlayButton.onClick.AddListener(QuickPlay);
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
