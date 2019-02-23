@@ -18,6 +18,8 @@ public class MenuController : MonoBehaviour
     public Text lobbyText, connectingText;
     public ScrollRect roomScrollView;
 
+    private List<string> roomList = new List<string>();
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -27,11 +29,17 @@ public class MenuController : MonoBehaviour
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
         settingsButton.onClick.AddListener(Settings);
         helpButton.onClick.AddListener(Help);
-       
+        if (PlayerPrefs.HasKey("PlayerName"))
+        {
+            continuePanel.SetActive(false);
+            mainPanel.SetActive(true);
+        }
+            
     }
 
     public void QuitGame()
     {
+        PlayerPrefs.DeleteKey("PlayerName");
         Application.Quit();
     }
     public void ClickToContinue()
@@ -192,16 +200,20 @@ public class MenuController : MonoBehaviour
 
     public void AddRoomsToList(List<string> roomNames)
     {
-        
         foreach (var room in roomNames)
         {
-            GameObject newRoomListing = Instantiate<GameObject>(roomListingPrefab, roomScrollView.content);
-            newRoomListing.name = room;
-            newRoomListing.GetComponentInChildren<Text>().text = room;
-            newRoomListing.GetComponentInChildren<Button>().onClick.AddListener(delegate{
-                Debug.Log("In Delegate");
-                JoinRoom(newRoomListing.name);
-            });
+            if (!roomList.Contains(room))
+            {
+                roomList.Add(room);
+                GameObject newRoomListing = Instantiate(roomListingPrefab, roomScrollView.content);
+                newRoomListing.name = room;
+                newRoomListing.GetComponentInChildren<Text>().text = room;
+                newRoomListing.GetComponentInChildren<Button>().onClick.AddListener(delegate
+                {
+                    Debug.Log("In Delegate");
+                    JoinRoom(newRoomListing.name);
+                });
+            }
         }
     }
 
