@@ -15,7 +15,7 @@ public class GUIController : MonoBehaviour
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
         settingsPanel, helpPanel;
-    public Text winText, messageText, inputText;
+    public Text messageText, inputText;
     public Button winButton, chatButton;
     public ScrollRect chatScrollRect;
     public bool animationFinished = false;
