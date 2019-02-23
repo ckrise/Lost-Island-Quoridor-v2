@@ -18,6 +18,8 @@ public class HoverPadBehavior : MonoBehaviour
 
     void OnMouseDown()
     {
-        GUIController.GUIReference.PlacePlayerWall(gameObject.name);
+        GUIController.GUIReference.PlacePlayerWall(
+            gameObject.transform.position,
+            gameObject.name);
     }
 }
