@@ -18,14 +18,12 @@ public class MenuController : MonoBehaviour
     public Text lobbyText, connectingText;
     public ScrollRect roomScrollView;
 
-    private void Awake()
-    {
-        menu = this;
-    }
+    private List<string> roomList = new List<string>();
 
     // Start is called before the first frame update
     public void Start()
     {
+        menu = this;
         storyButton.onClick.AddListener(StoryMode);
         quickPlayButton.onClick.AddListener(QuickPlay);
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
@@ -202,16 +200,20 @@ public class MenuController : MonoBehaviour
 
     public void AddRoomsToList(List<string> roomNames)
     {
-        
         foreach (var room in roomNames)
         {
-            GameObject newRoomListing = Instantiate<GameObject>(roomListingPrefab, roomScrollView.content);
-            newRoomListing.name = room;
-            newRoomListing.GetComponentInChildren<Text>().text = room;
-            newRoomListing.GetComponentInChildren<Button>().onClick.AddListener(delegate{
-                Debug.Log("In Delegate");
-                JoinRoom(newRoomListing.name);
-            });
+            if (!roomList.Contains(room))
+            {
+                roomList.Add(room);
+                GameObject newRoomListing = Instantiate(roomListingPrefab, roomScrollView.content);
+                newRoomListing.name = room;
+                newRoomListing.GetComponentInChildren<Text>().text = room;
+                newRoomListing.GetComponentInChildren<Button>().onClick.AddListener(delegate
+                {
+                    Debug.Log("In Delegate");
+                    JoinRoom(newRoomListing.name);
+                });
+            }
         }
     }
 
