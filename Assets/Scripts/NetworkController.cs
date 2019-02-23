@@ -146,8 +146,9 @@ public class NetworkController : MonoBehaviour
     private void OnJoinedRoom()
     {
         myRoom = PhotonNetwork.room.Name;
-        if(PhotonNetwork.room.PlayerCount == 2)
+        if (PhotonNetwork.room.PlayerCount == 2)
         {
+            GameData.PlayerGoesFirst = false;
             networkGame();
             PhotonNetwork.LoadLevel("GameScene");
         }
