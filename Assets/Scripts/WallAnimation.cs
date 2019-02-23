@@ -29,9 +29,9 @@ public class WallAnimation : MonoBehaviour
         float delta = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(
             transform.position, destination, delta);
-        if (isPlayer && destination == transform.position)
+        if (destination == transform.position)
         {
-            GUIController.GUIReference.AnimationCompleted();
+            GUIController.GUIReference.AnimationCompleted(isPlayer);
         }
     }
 

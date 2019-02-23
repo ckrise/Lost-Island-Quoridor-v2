@@ -6,6 +6,6 @@ public class CameraBehavior : MonoBehaviour
 {
     public void AnimationFinished()
     {
-        GUIController.GUIReference.cameraAnimationFinished = true;
+        GUIController.GUIReference.animationFinished = true;
     }
 }
