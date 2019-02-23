@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System;
 
 public class AIBoard
 {
@@ -12,9 +10,6 @@ public class AIBoard
     private bool IsPlayerOneTurn { get; set; }
 
     //Wall as a string : true if wall can be placed false otherwise
-    private bool MapsInitialized { get; set; }
-    private Dictionary<string, int> ShortestPathMapP1;
-    private Dictionary<string, int> ShortestPathMapP2;
     private Dictionary<string, bool> ValidWallPlacements { get; set; }
     private List<Move> InvalidPawnMoves { get; set; }
 
@@ -28,21 +23,26 @@ public class AIBoard
         PlayerTwoNumWalls = 10;
         IsPlayerOneTurn = true;
         InitializeValidWallPlacements();
-        ShortestPathMapP1 = new Dictionary<string, int>();
-        ShortestPathMapP2 = new Dictionary<string, int>();
-        ResetMaps();
     }
 
     //Does a deep copy of the board passed to the constructor.
     public AIBoard(AIBoard copy)
     {
-        InvalidPawnMoves = new List<Move>(copy.InvalidPawnMoves);
+        InvalidPawnMoves = new List<Move>();
+        foreach (Move move in copy.InvalidPawnMoves)
+        {
+            InvalidPawnMoves.Add(move);
+        }
         PlayerOneLocation = copy.PlayerOneLocation;
         PlayerTwoLocation = copy.PlayerTwoLocation;
         PlayerOneNumWalls = copy.PlayerOneNumWalls;
         PlayerTwoNumWalls = copy.PlayerTwoNumWalls; ;
         IsPlayerOneTurn = copy.IsPlayerOneTurn;
-        ValidWallPlacements = new Dictionary<string, bool>(copy.ValidWallPlacements);
+        ValidWallPlacements = new Dictionary<string, bool>();
+        foreach (KeyValuePair<string, bool> wall in copy.ValidWallPlacements)
+        {
+            ValidWallPlacements.Add(wall.Key, wall.Value);
+        }
     }
 
     public string GetPlayerOnePos()
@@ -291,122 +291,72 @@ public class AIBoard
         return result;
     }
 
+
     //Shortest Path functions start here.
-    public int FindShortestPath(bool isPlayerOne)
+    //If result returns as -1: no path exists.
+    //Otherwise it will return the number of moves it would take to reach the end goal
+    //for each respective player.
+    //TODO: optimize by checking each square found for the direct path(would save tons of time early game).
+    public int EstimateShortestPath(bool isPlayerOne, int maxDepth)
     {
+        Queue<SearchNode> spaces = new Queue<SearchNode>();
         int result = -1;
         if (isPlayerOne)
         {
-            List<string> endSpaces = new List<string> { "a9", "b9", "c9", "d9", "e9", "f9", "g9", "h9", "i9" };
-            foreach (string endSpace in endSpaces)
-            {
-                List<string> visitedSpaces = new List<string>();
-                Queue<string> spacesToVisit = new Queue<string>();
-                spacesToVisit.Enqueue(endSpace);
-                while (spacesToVisit.Count > 0)
-                {
-                    string currentSpace = spacesToVisit.Dequeue();
-
-                    List<string> adjacentSpaces = GetAdjacentMoves(currentSpace);
-
-                    int min = ShortestPathMapP1[currentSpace];
-                    foreach (string thing in adjacentSpaces)
-                    {
-                        int thingSP = ShortestPathMapP1[thing];
-                        if (thingSP + 1 < min)
-                        {
-                            ShortestPathMapP1[currentSpace] = thingSP + 1;
-                        }
-                        if (!visitedSpaces.Contains(thing))
-                        {
-                            spacesToVisit.Enqueue(thing);
-                            visitedSpaces.Add(thing);
-                        }
-                    }
-                }
-            }
-            result = ShortestPathMapP1[PlayerOneLocation];
+            spaces.Enqueue(new SearchNode(PlayerOneLocation));
         }
-        else {
-            List<string> endSpaces = new List<string> { "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1" };
-            foreach (string endSpace in endSpaces)
-            {
-                List<string> visitedSpaces = new List<string>();
-                Queue<string> spacesToVisit = new Queue<string>();
-                spacesToVisit.Enqueue(endSpace);
-                while (spacesToVisit.Count > 0)
-                {
-                    string currentSpace = spacesToVisit.Dequeue();
-
-                    List<string> adjacentSpaces = GetAdjacentMoves(currentSpace);
-
-                    int min = ShortestPathMapP2[currentSpace];
-                    foreach (string thing in adjacentSpaces)
-                    {
-                        int thingSP = ShortestPathMapP2[thing];
-                        if (thingSP + 1 < min)
-                        {
-                            ShortestPathMapP2[currentSpace] = thingSP + 1;
-                        }
-                        if (!visitedSpaces.Contains(thing))
-                        {
-                            spacesToVisit.Enqueue(thing);
-                            visitedSpaces.Add(thing);
-                        }
-                    }
-                }
-            }
-            result = ShortestPathMapP2[PlayerTwoLocation];
+        else
+        {
+            spaces.Enqueue(new SearchNode(PlayerTwoLocation));
         }
 
+        //Will exit after all paths return without finding end or 
+        //break out of loop when first path to finish is found.
+        while (spaces.Count != 0 && result == -1)
+        {
+            SearchNode currentNode = spaces.Dequeue();
+
+            //Checks for easy direct path
+            if (IsDirectPath(isPlayerOne)) {
+                result = FindDirectDistance(currentNode.GetSpace(), isPlayerOne);
+                break;
+            }
+
+            //If it reaches distance of 8 estimate remaining distance with direct distance.
+            if (currentNode.GetDepth() == maxDepth) {
+                return maxDepth + FindDirectDistance(currentNode.GetSpace(), isPlayerOne);
+            }
+
+            //Check the different end conditions for respective players.
+            //If they succeed set the result to the node's depth and break the loop.
+            if (isPlayerOne)
+            {
+                if (currentNode.GetSpace().EndsWith("9"))
+                {
+                    result = currentNode.GetDepth();
+                }
+            }
+            else
+            {
+                if (currentNode.GetSpace().EndsWith("1"))
+                {
+                    result = currentNode.GetDepth();
+                }
+            }
+
+            //Get a list of moves from the current node location.
+            //If the node has not already been visited by this branch it is added to the queue.
+            List<string> movesFromSpace = GetAdjacentMoves(currentNode.GetSpace());
+            foreach (string move in movesFromSpace)
+            {
+                if (!currentNode.GetVisited().Contains(move))
+                {
+                    spaces.Enqueue(new SearchNode(currentNode, move));
+                }
+            }
+
+        }
         return result;
-    }
-
-    public Dictionary<string, int> GetP1SPMap() {
-        return ShortestPathMapP1;
-    }
-
-    private void ResetMaps() {
-        for (int i = 1; i < 10; i++) {
-            ShortestPathMapP1.Add("a" + i.ToString(), 100);
-            ShortestPathMapP1.Add("b" + i.ToString(), 100);
-            ShortestPathMapP1.Add("c" + i.ToString(), 100);
-            ShortestPathMapP1.Add("d" + i.ToString(), 100);
-            ShortestPathMapP1.Add("e" + i.ToString(), 100);
-            ShortestPathMapP1.Add("f" + i.ToString(), 100);
-            ShortestPathMapP1.Add("g" + i.ToString(), 100);
-            ShortestPathMapP1.Add("h" + i.ToString(), 100);
-            ShortestPathMapP1.Add("i" + i.ToString(), 100);
-
-            ShortestPathMapP2.Add("a" + i.ToString(), 100);
-            ShortestPathMapP2.Add("b" + i.ToString(), 100);
-            ShortestPathMapP2.Add("c" + i.ToString(), 100);
-            ShortestPathMapP2.Add("d" + i.ToString(), 100);
-            ShortestPathMapP2.Add("e" + i.ToString(), 100);
-            ShortestPathMapP2.Add("f" + i.ToString(), 100);
-            ShortestPathMapP2.Add("g" + i.ToString(), 100);
-            ShortestPathMapP2.Add("h" + i.ToString(), 100);
-            ShortestPathMapP2.Add("i" + i.ToString(), 100);
-        }
-        ShortestPathMapP1["a9"] = 0;
-        ShortestPathMapP1["b9"] = 0;
-        ShortestPathMapP1["c9"] = 0;
-        ShortestPathMapP1["d9"] = 0;
-        ShortestPathMapP1["e9"] = 0;
-        ShortestPathMapP1["f9"] = 0;
-        ShortestPathMapP1["g9"] = 0;
-        ShortestPathMapP1["h9"] = 0;
-        ShortestPathMapP1["i9"] = 0;
-
-        ShortestPathMapP2["a1"] = 0;
-        ShortestPathMapP2["b1"] = 0;
-        ShortestPathMapP2["c1"] = 0;
-        ShortestPathMapP2["d1"] = 0;
-        ShortestPathMapP2["e1"] = 0;
-        ShortestPathMapP2["f1"] = 0;
-        ShortestPathMapP2["g1"] = 0;
-        ShortestPathMapP2["h1"] = 0;
-        ShortestPathMapP2["i1"] = 0;
     }
 
     public bool IsDirectPath(bool isPlayerOne) {
@@ -526,7 +476,7 @@ public class AIBoard
 
     //Returns a list of moves from the space specified.
     //This is used as a helper function in traversal functions.
-    public List<string> GetAdjacentMoves(string space)
+    private List<string> GetAdjacentMoves(string space)
     {
         List<string> possibleMoves = new List<string>();
         foreach (string move in DictionaryLookup.PerformAdjacentSpaceLookup(space))
@@ -582,18 +532,18 @@ public class AIBoard
 
     //Returns true if there is a winner.
     //Easily modifiable to return the string of which player won.
-    public string GetWinner()
+    public bool IsWinner()
     {
-        string winner = "none";
+        bool result = false;
         if (PlayerOneLocation.EndsWith("9"))
         {
-            winner = "player1";
+            result = true;
         }
         else if (PlayerTwoLocation.EndsWith("1"))
         {
-            winner = "player2";
+            result = true;
         }
-        return winner;
+        return result;
     }
 
 }
