@@ -12,14 +12,16 @@ public class MenuController : MonoBehaviour
         settingsButton, helpButton, backButton, easyButton, hardButton,
         joinRoom, createRoom;
     public GameObject mainPanel, multiplayerPanel, settingsPanel,
-        helpPanel, storyPanel, quickplayPanel, lobbyPanel, 
-        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab;
+        helpPanel, storyPanel, quickplayPanel, lobbyPanel,
+        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab,
+        storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
+        settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel; 
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText;
     public ScrollRect roomScrollView;
 
     private List<string> roomList = new List<string>();
-
+    private List<GameObject> helpPanels;
     // Start is called before the first frame update
     public void Start()
     {
@@ -34,7 +36,10 @@ public class MenuController : MonoBehaviour
             continuePanel.SetActive(false);
             mainPanel.SetActive(true);
         }
-            
+        helpPanels = new List<GameObject>{ storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
+                                           settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel };
+
+
     }
 
     public void QuitGame()
@@ -132,19 +137,19 @@ public class MenuController : MonoBehaviour
     }
 
     #region Help
-    public GameObject gamePlayHelpPanel, navigationHelpPanel;
-
-    public void showNavigationHelpPanel()
+    
+    private void HideAllHelp()
     {
-        //shut off other help panels
-        gamePlayHelpPanel.SetActive(false);
-        navigationHelpPanel.SetActive(true);
+        foreach (var panel in helpPanels)
+        {
+            panel.SetActive(false);
+        }
     }
 
-    public void showGamePlayHelpPanel()
+    public void ShowHelpPanel(GameObject panel)
     {
-        navigationHelpPanel.SetActive(false);
-        gamePlayHelpPanel.SetActive(true);
+        HideAllHelp();
+        panel.SetActive(true);
     }
 
     #endregion
