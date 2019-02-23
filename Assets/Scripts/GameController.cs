@@ -7,7 +7,7 @@ using GameCore4.HelperClasses;
 public class GameController : MonoBehaviour
 {
     public static GameController GCInstance;
-    private GameBoard Board { get; set; }
+    private AIBoard Board { get; set; }
     private AIController AIController { get; set; }
     private bool playerTurn {get; set;}
     private bool aiGame {get; set;}
@@ -15,30 +15,35 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         DontDestroyOnLoad(gameObject);  
         GCInstance = this;
-        Board = new GameBoard();
+        Board = new AIBoard();
         AIController = new AIController();
         playerTurn = GameData.PlayerGoesFirst;
         aiGame = GameData.IsAIGame;
 
         if(playerTurn)
         {
-            GUIController.GUIReference.StartPlayerTurn("", Board.ValidWallMoves, Board.ValidPlayer1Moves);
+            GUIController.GUIReference.StartPlayerTurn("", Board.GetWallMoves(), Board.GetPawnMoves());
         }
         else if(aiGame)
         {
             string aiMove = AIController.GetMove("gamestart");
-            Board.MakeMove(aiMove, playerTurn);
+            Board.MakeMove(aiMove);
             playerTurn = true;
-            GUIController.GUIReference.StartPlayerTurn(aiMove, Board.ValidWallMoves, Board.ValidPlayer1Moves);
+            GUIController.GUIReference.StartPlayerTurn(aiMove, Board.GetWallMoves(), Board.GetPawnMoves());
+        }
+        else
+        {
+            Board.PlayerTwoGoesFirst();
         }
         
     }
     //called by the GUIController when the player has finished making a move
     public void RecieveMoveFromPlayer(string move)
     {
-        Board.MakeMove(move, playerTurn);
+        Board.MakeMove(move);
         if (Board.IsWinner())
         {
             GUIController.GUIReference.GameOver(true, "");
@@ -53,7 +58,7 @@ public class GameController : MonoBehaviour
             if (aiGame)
             {
                 string aiMove = AIController.GetMove(move);
-                Board.MakeMove(aiMove, playerTurn);
+                Board.MakeMove(aiMove);
                 if(Board.IsWinner())
                 {
                     GUIController.GUIReference.GameOver(playerTurn, aiMove);
@@ -62,7 +67,7 @@ public class GameController : MonoBehaviour
                 else
                 {
                     playerTurn = true;
-                    GUIController.GUIReference.StartPlayerTurn(aiMove, Board.ValidWallMoves, Board.ValidPlayer1Moves);
+                    GUIController.GUIReference.StartPlayerTurn(aiMove, Board.GetWallMoves(), Board.GetPawnMoves());
                 }
             }
             else
@@ -76,7 +81,7 @@ public class GameController : MonoBehaviour
     //gotten a move from the opponent
     public void RecieveMoveFromNetwork(string move)
     {
-        Board.MakeMove(move, playerTurn);
+        Board.MakeMove(move);
         if(Board.IsWinner())
         {
             GameData.NetworkController.gameOver();
@@ -85,7 +90,7 @@ public class GameController : MonoBehaviour
         else
         {
             playerTurn = true;
-            GUIController.GUIReference.StartPlayerTurn(move, Board.ValidWallMoves, Board.ValidPlayer1Moves);
+            GUIController.GUIReference.StartPlayerTurn(move, Board.GetWallMoves(), Board.GetPawnMoves());
         }
     }
    
