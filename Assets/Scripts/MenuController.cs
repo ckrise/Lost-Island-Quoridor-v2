@@ -27,11 +27,17 @@ public class MenuController : MonoBehaviour
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
         settingsButton.onClick.AddListener(Settings);
         helpButton.onClick.AddListener(Help);
-       
+        if (PlayerPrefs.HasKey("PlayerName"))
+        {
+            continuePanel.SetActive(false);
+            mainPanel.SetActive(true);
+        }
+            
     }
 
     public void QuitGame()
     {
+        PlayerPrefs.DeleteKey("PlayerName");
         Application.Quit();
     }
     public void ClickToContinue()
