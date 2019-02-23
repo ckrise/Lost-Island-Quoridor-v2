@@ -11,10 +11,6 @@ public class GUIController : MonoBehaviour
     const string LOSE_TEXT = "You Lost!";
     //an instance of the GUIController used to call public methods
     public static GUIController GUIReference;
-
-    //animator controller to manipulate the opponent
-    //private MageController mageController;
-
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, chatPanel,
@@ -22,6 +18,7 @@ public class GUIController : MonoBehaviour
     public Text winText, messageText, inputText;
     public Button winButton, chatButton;
     public ScrollRect chatScrollRect;
+    public bool cameraAnimationFinished = false;
 
     //tile objects that are invisible until pawn is clicked
     private List<GameObject> ghostPlayerMoves;   
@@ -55,6 +52,8 @@ public class GUIController : MonoBehaviour
     };
     private Stack<GameObject> opponentWallPoolStack, playerWallPoolStack;
     private string playerMove;
+
+
     private void Start()
     {
         if (GameData.IsAIGame)
@@ -119,7 +118,6 @@ public class GUIController : MonoBehaviour
         pawnClicked = false;
         playerTurn = false;
         ghostPlayerMoves = new List<GameObject>();
-        //networkController = NetworkController.GetInstance();
     }
 
     public void StartPlayerTurn(string move, List<string> validWalls, List<string> validMoves)
@@ -165,8 +163,9 @@ public class GUIController : MonoBehaviour
 
     public void PlacePlayerWall(string move)
     {
-        if (playerTurn)
+        if (playerTurn && cameraAnimationFinished)
         {
+            playerTurn = false;
             TakeFromWallPool(true);
             DeactivateGhostWall();
             GameObject newWall = Instantiate(wall);
@@ -174,7 +173,6 @@ public class GUIController : MonoBehaviour
             newWall.SetActive(true);
             newWall.GetComponent<WallAnimation>().SetDestination(ghostWall.transform.position, true);
             playerMove = move;
-            //EndTurn(move);
         }
     }
 
@@ -188,11 +186,11 @@ public class GUIController : MonoBehaviour
 
     public void MovePlayerPawn(GameObject ghost)
     {
+        playerTurn = false;
         DestroyGhostMoves();
         Vector3 position = ghost.transform.position;
         playerPawn.GetComponent<PawnAnimation>().SetDestination(position, true);
         playerMove = FindCoordinate(position.x, position.z);
-        //EndTurn(FindCoordinate(position.x, position.z));
     }
 
     private void ActivateHoverPads(List<string> coordinates)
@@ -205,7 +203,7 @@ public class GUIController : MonoBehaviour
 
     public void ActivateGhostWall(Vector3 position, char orientation)
     {
-        if (playerTurn && !pawnClicked)
+        if (playerTurn && !pawnClicked && cameraAnimationFinished)
         {
             float rotation;
             if (orientation == 'v')
@@ -270,7 +268,7 @@ public class GUIController : MonoBehaviour
     //changes player bool
     private void EndTurn(string move)
     {
-        //DestroyGhostMoves();
+        DestroyGhostMoves();
         DeactivateHoverPads();
         playerTurn = false;
         pawnClicked = false;
@@ -297,7 +295,7 @@ public class GUIController : MonoBehaviour
     
     public void ShowGhostMoves()
     {
-        if (playerTurn)
+        if (playerTurn && cameraAnimationFinished)
         {
             pawnClicked = !pawnClicked;
             foreach (var space in ghostPlayerMoves)

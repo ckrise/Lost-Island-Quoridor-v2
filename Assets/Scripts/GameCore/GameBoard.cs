@@ -384,36 +384,36 @@ namespace GameCore4.GameCore
             coord3 = new Coords(newPosition.Row - 1, newPosition.Column);
             Wall bottomLeftHWall = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(newPosition.Row, newPosition.Column + 1);
+            coord1 = new Coords(newPosition.Row - 2, newPosition.Column + 1);
             coord2 = new Coords(newPosition.Row - 1, newPosition.Column + 1);
-            coord3 = new Coords(newPosition.Row - 2, newPosition.Column + 1);
+            coord3 = new Coords(newPosition.Row, newPosition.Column + 1);
             Wall topRightVWall = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(newPosition.Row + 2, newPosition.Column - 1);
+            coord1 = new Coords(newPosition.Row, newPosition.Column - 1);
             coord2 = new Coords(newPosition.Row + 1, newPosition.Column - 1);
-            coord3 = new Coords(newPosition.Row, newPosition.Column - 1);
+            coord3 = new Coords(newPosition.Row + 2, newPosition.Column - 1);
             Wall topLeftVWall = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(newPosition.Row, newPosition.Column - 1);
+            coord1 = new Coords(newPosition.Row - 2, newPosition.Column - 1);
             coord2 = new Coords(newPosition.Row - 1, newPosition.Column - 1);
-            coord3 = new Coords(newPosition.Row - 2, newPosition.Column - 1);
+            coord3 = new Coords(newPosition.Row, newPosition.Column - 1);
             Wall bottomLeftVWall = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(newPosition.Row + 2, newPosition.Column + 1);
+            coord1 = new Coords(newPosition.Row, newPosition.Column + 1);
             coord2 = new Coords(newPosition.Row + 1, newPosition.Column + 1);
-            coord3 = new Coords(newPosition.Row, newPosition.Column + 1);
+            coord3 = new Coords(newPosition.Row + 2, newPosition.Column + 1);
             Wall bottomRightVWall = new Wall(coord1, coord2, coord3);
 
 
             //far walls
-            coord1 = new Coords(newPosition.Row + 2, newPosition.Column + 3);
+            coord1 = new Coords(newPosition.Row, newPosition.Column + 3);
             coord2 = new Coords(newPosition.Row + 1, newPosition.Column + 3);
-            coord3 = new Coords(newPosition.Row, newPosition.Column + 3);
+            coord3 = new Coords(newPosition.Row + 2, newPosition.Column + 3);
             Wall farRightBottomVWall = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(newPosition.Row, newPosition.Column + 3);
+            coord1 = new Coords(newPosition.Row - 2, newPosition.Column + 3);
             coord2 = new Coords(newPosition.Row - 1, newPosition.Column + 3);
-            coord3 = new Coords(newPosition.Row - 2, newPosition.Column + 3);
+            coord3 = new Coords(newPosition.Row, newPosition.Column + 3);
             Wall farRightTopVWall = new Wall(coord1, coord2, coord3);
 
             coord1 = new Coords(newPosition.Row - 3, newPosition.Column);
@@ -426,14 +426,14 @@ namespace GameCore4.GameCore
             coord3 = new Coords(newPosition.Row - 3, newPosition.Column);
             Wall farTopLeftHWall = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(newPosition.Row + 2, newPosition.Column - 3);
+            coord1 = new Coords(newPosition.Row, newPosition.Column - 3);
             coord2 = new Coords(newPosition.Row + 1, newPosition.Column - 3);
-            coord3 = new Coords(newPosition.Row, newPosition.Column - 3);
+            coord3 = new Coords(newPosition.Row + 2, newPosition.Column - 3);
             Wall farLeftBottomVWall = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(newPosition.Row, newPosition.Column - 3);
+            coord1 = new Coords(newPosition.Row - 2, newPosition.Column - 3);
             coord2 = new Coords(newPosition.Row - 1, newPosition.Column - 3);
-            coord3 = new Coords(newPosition.Row - 2, newPosition.Column - 3);
+            coord3 = new Coords(newPosition.Row, newPosition.Column - 3);
             Wall farLeftTopVWall = new Wall(coord1, coord2, coord3);
 
             coord1 = new Coords(newPosition.Row + 3, newPosition.Column);
@@ -470,18 +470,21 @@ namespace GameCore4.GameCore
             //call tryPlaceWall and pass it all the walls
             foreach (Wall wall in wallsNew)
             {
-                if (!TryPlaceWall(wall))
+                if (!CheckOutOfBounds(wall))
                 {
-                    if (ValidWallMoves.Remove(Conversions.ArrayToMove(wall.Coords)))
+                    if (!TryPlaceWall(wall))
                     {
-                        RemovedWalls.Add(Conversions.ArrayToMove(wall.Coords));
+                        if (ValidWallMoves.Remove(Conversions.ArrayToMove(wall.Coords)))
+                        {
+                            RemovedWalls.Add(Conversions.ArrayToMove(wall.Coords));
+                        }
                     }
-                }
-                else
-                {
-                    if (!ValidWallMoves.Contains(Conversions.ArrayToMove(wall.Coords)))
+                    else
                     {
-                        ValidWallMoves.Add(Conversions.ArrayToMove(wall.Coords));
+                        if (!ValidWallMoves.Contains(Conversions.ArrayToMove(wall.Coords)))
+                        {
+                            ValidWallMoves.Add(Conversions.ArrayToMove(wall.Coords));
+                        }
                     }
                 }
             }
@@ -751,53 +754,53 @@ namespace GameCore4.GameCore
 
 
             //center vertical walls
-            coord1 = new Coords(position.Row + 1, position.Column - 2);
+            coord1 = new Coords(position.Row - 1, position.Column - 2);
             coord2 = new Coords(position.Row, position.Column - 2);
-            coord3 = new Coords(position.Row - 1, position.Column - 2);
+            coord3 = new Coords(position.Row + 1, position.Column - 2);
             Wall left = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(position.Row + 1, position.Column);
+            coord1 = new Coords(position.Row - 1, position.Column);
             coord2 = new Coords(position.Row, position.Column);
-            coord3 = new Coords(position.Row - 1, position.Column);
+            coord3 = new Coords(position.Row + 1, position.Column);
             Wall center = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(position.Row + 1, position.Column + 2);
+            coord1 = new Coords(position.Row - 1, position.Column + 2);
             coord2 = new Coords(position.Row, position.Column + 2);
-            coord3 = new Coords(position.Row - 1, position.Column + 2);
+            coord3 = new Coords(position.Row + 1, position.Column + 2);
             Wall right = new Wall(coord1, coord2, coord3);
 
 
             //top vertical walls
-            coord1 = new Coords(position.Row - 1, position.Column - 2);
+            coord1 = new Coords(position.Row - 3, position.Column - 2);
             coord2 = new Coords(position.Row - 2, position.Column - 2);
-            coord3 = new Coords(position.Row - 3, position.Column - 2);
+            coord3 = new Coords(position.Row - 1, position.Column - 2);
             Wall topLeft = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(position.Row - 1, position.Column);
+            coord1 = new Coords(position.Row - 3, position.Column);
             coord2 = new Coords(position.Row - 2, position.Column);
-            coord3 = new Coords(position.Row - 3, position.Column);
+            coord3 = new Coords(position.Row - 1, position.Column);
             Wall topCenter = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(position.Row - 1, position.Column + 2);
+            coord1 = new Coords(position.Row - 3, position.Column + 2);
             coord2 = new Coords(position.Row - 2, position.Column + 2);
-            coord3 = new Coords(position.Row - 3, position.Column + 2);
+            coord3 = new Coords(position.Row - 1, position.Column + 2);
             Wall topRight = new Wall(coord1, coord2, coord3);
 
 
             //bottom vertical walls
-            coord1 = new Coords(position.Row + 3, position.Column - 2);
+            coord1 = new Coords(position.Row + 1, position.Column - 2);
             coord2 = new Coords(position.Row + 2, position.Column - 2);
-            coord3 = new Coords(position.Row + 1, position.Column - 2);
+            coord3 = new Coords(position.Row + 3, position.Column - 2);
             Wall bottomLeft = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(position.Row + 3, position.Column);
+            coord1 = new Coords(position.Row + 1, position.Column);
             coord2 = new Coords(position.Row + 2, position.Column);
-            coord3 = new Coords(position.Row + 1, position.Column);
+            coord3 = new Coords(position.Row + 3, position.Column);
             Wall bottomCenter = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(position.Row + 3, position.Column + 2);
+            coord1 = new Coords(position.Row + 1, position.Column + 2);
             coord2 = new Coords(position.Row + 2, position.Column + 2);
-            coord3 = new Coords(position.Row + 1, position.Column + 2);
+            coord3 = new Coords(position.Row + 3, position.Column + 2);
             Wall bottomRight = new Wall(coord1, coord2, coord3);
 
             List<Wall> walls = new List<Wall>
@@ -818,20 +821,15 @@ namespace GameCore4.GameCore
             };
             foreach (Wall wall in walls)
             {
-                if (!TryPlaceWall(wall))
+                if (!CheckOutOfBounds(wall))
                 {
-                    if (ValidWallMoves.Remove(Conversions.ArrayToMove(wall.Coords)))
+                    if (!TryPlaceWall(wall))
                     {
-                        RemovedWalls.Add(Conversions.ArrayToMove(wall.Coords));
+                        if (ValidWallMoves.Remove(Conversions.ArrayToMove(wall.Coords)))
+                        {
+                            RemovedWalls.Add(Conversions.ArrayToMove(wall.Coords));
+                        }
                     }
-                }
-                else
-                {
-                    //New Wall Placement Should never make more walls available
-                    //if (!ValidWallMoves.Contains(Conversions.ArrayToMove(wall.Coords)))
-                    //{
-                    //    ValidWallMoves.Add(Conversions.ArrayToMove(wall.Coords));
-                    //}
                 }
             }
         }
@@ -853,14 +851,14 @@ namespace GameCore4.GameCore
             coord3 = new Coords(position.Row - 1, position.Column);
             Wall top2 = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(position.Row + 5, position.Column);
+            coord1 = new Coords(position.Row + 3, position.Column);
             coord2 = new Coords(position.Row + 4, position.Column);
-            coord3 = new Coords(position.Row + 3, position.Column);
+            coord3 = new Coords(position.Row + 5, position.Column);
             Wall bottom1 = new Wall(coord1, coord2, coord3);
 
-            coord1 = new Coords(position.Row + 3, position.Column);
+            coord1 = new Coords(position.Row + 1, position.Column);
             coord2 = new Coords(position.Row + 2, position.Column);
-            coord3 = new Coords(position.Row + 1, position.Column);
+            coord3 = new Coords(position.Row + 3, position.Column);
             Wall bottom2 = new Wall(coord1, coord2, coord3);
 
 
@@ -932,20 +930,15 @@ namespace GameCore4.GameCore
             };
             foreach (Wall wall in walls)
             {
-                if (!TryPlaceWall(wall))
+                if (!CheckOutOfBounds(wall))
                 {
-                    if (ValidWallMoves.Remove(Conversions.ArrayToMove(wall.Coords)))
+                    if (!TryPlaceWall(wall))
                     {
-                        RemovedWalls.Add(Conversions.ArrayToMove(wall.Coords));
+                        if (ValidWallMoves.Remove(Conversions.ArrayToMove(wall.Coords)))
+                        {
+                            RemovedWalls.Add(Conversions.ArrayToMove(wall.Coords));
+                        }
                     }
-                }
-                else
-                {
-                    //New Wall Placement Should never make more walls available
-                    //if (!ValidWallMoves.Contains(Conversions.ArrayToMove(wall.Coords)))
-                    //{
-                    //    ValidWallMoves.Add(Conversions.ArrayToMove(wall.Coords));
-                    //}
                 }
             }
         }
@@ -957,14 +950,6 @@ namespace GameCore4.GameCore
             Coords coord1 = wall.Coords[0];
             Coords coord2 = wall.Coords[1];
             Coords coord3 = wall.Coords[2];
-
-            //check for out of bounds
-            if (coord1.Row > 16 || coord1.Row < 0 || coord1.Column > 16 || coord1.Column < 0 ||
-               coord2.Row > 16 || coord2.Row < 0 || coord2.Column > 16 || coord2.Column < 0 ||
-               coord3.Row > 16 || coord3.Row < 0 || coord3.Column > 16 || coord3.Column < 0)
-            {
-                return false;
-            }
 
             //check for overlapping walls
             if (Board[coord1.Row, coord1.Column] != 0 || Board[coord2.Row, coord2.Column] != 0 || Board[coord3.Row, coord3.Column] != 0)
@@ -984,6 +969,22 @@ namespace GameCore4.GameCore
             }
 
             return true;
+        }
+
+        private bool CheckOutOfBounds(Wall wall)
+        {
+            Coords coord1 = wall.Coords[0];
+            Coords coord2 = wall.Coords[1];
+            Coords coord3 = wall.Coords[2];
+
+            //check for out of bounds
+            if (coord1.Row > 16 || coord1.Row < 0 || coord1.Column > 16 || coord1.Column < 0 ||
+               coord2.Row > 16 || coord2.Row < 0 || coord2.Column > 16 || coord2.Column < 0 ||
+               coord3.Row > 16 || coord3.Row < 0 || coord3.Column > 16 || coord3.Column < 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool CheckExitPlayer1(int[,] board)
