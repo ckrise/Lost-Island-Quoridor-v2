@@ -44,14 +44,16 @@ public class TreeNode
 
         int p2Column = board.GetPlayerTwoPos()[0]; //Ascii column value of a-i
         int p2Row = board.GetPlayerOnePos()[1]; //Ascii row value of 1-9
-        List<string> wallsOfInterest = new List<string>();
+        HashSet<string> wallsOfInterest = new HashSet<string>();
 
         List<int> columnsOfInterest = new List<int> { p1Column - 1, p1Column, p1Column + 1, p2Column - 1, p2Column, p2Column + 1 };
         List<int> rowsOfInterest = new List<int> { p1Row - 1, p1Row, p1Row + 1, p2Row - 1, p2Row, p2Row + 1 };
         List<string> toBeRemoved = new List<string>();
 
         foreach (string wall in board.GetWallsPlaced()) {
-            wallsOfInterest.AddRange(DictionaryLookup.PerformWallsOfInterestLookup(wall));
+            foreach (string importantWall in DictionaryLookup.PerformWallsOfInterestLookup(wall)) {
+                wallsOfInterest.Add(importantWall);
+            }
         }
 
         foreach (string move in moves) {

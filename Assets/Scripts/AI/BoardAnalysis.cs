@@ -27,7 +27,7 @@ static class BoardAnalysis
         {
             SearchNode currentNode = spaces.Dequeue();
 
-            //Checks for easy direct path
+
             if (HasDirectPath(board, isPlayerOne))
             {
                 result = FindDirectDistance(currentNode.GetSpace(), isPlayerOne);

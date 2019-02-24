@@ -249,7 +249,7 @@ public class AIBoard
                 AIBoard tempBoard = new AIBoard(this);
                 tempBoard.MakeMove(move.Key);
 
-                List<string> wallsOfConcern = DictionaryLookup.PerformWallsOfInterestLookup(move.Key);
+                HashSet<string> wallsOfConcern = DictionaryLookup.PerformWallsOfInterestLookup(move.Key);
                 bool containsCommonItem = WallsPlaced.Any(x => wallsOfConcern.Contains(x));
                 if (containsCommonItem)
                 {
