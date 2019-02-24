@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 public class AIBoard
 {
@@ -10,6 +12,7 @@ public class AIBoard
     private bool IsPlayerOneTurn { get; set; }
 
     //Wall as a string : true if wall can be placed false otherwise
+    private bool MapsInitialized { get; set; }
     private Dictionary<string, bool> ValidWallPlacements { get; set; }
     private List<Move> InvalidPawnMoves { get; set; }
 
@@ -28,21 +31,13 @@ public class AIBoard
     //Does a deep copy of the board passed to the constructor.
     public AIBoard(AIBoard copy)
     {
-        InvalidPawnMoves = new List<Move>();
-        foreach (Move move in copy.InvalidPawnMoves)
-        {
-            InvalidPawnMoves.Add(move);
-        }
+        InvalidPawnMoves = new List<Move>(copy.InvalidPawnMoves);
         PlayerOneLocation = copy.PlayerOneLocation;
         PlayerTwoLocation = copy.PlayerTwoLocation;
         PlayerOneNumWalls = copy.PlayerOneNumWalls;
         PlayerTwoNumWalls = copy.PlayerTwoNumWalls; ;
         IsPlayerOneTurn = copy.IsPlayerOneTurn;
-        ValidWallPlacements = new Dictionary<string, bool>();
-        foreach (KeyValuePair<string, bool> wall in copy.ValidWallPlacements)
-        {
-            ValidWallPlacements.Add(wall.Key, wall.Value);
-        }
+        ValidWallPlacements = new Dictionary<string, bool>(copy.ValidWallPlacements);
     }
 
     public string GetPlayerOnePos()
@@ -290,134 +285,7 @@ public class AIBoard
 
         return result;
     }
-
-
-    //Shortest Path functions start here.
-    //If result returns as -1: no path exists.
-    //Otherwise it will return the number of moves it would take to reach the end goal
-    //for each respective player.
-    //TODO: optimize by checking each square found for the direct path(would save tons of time early game).
-    public int EstimateShortestPath(bool isPlayerOne, int maxDepth)
-    {
-        Queue<SearchNode> spaces = new Queue<SearchNode>();
-        int result = -1;
-        if (isPlayerOne)
-        {
-            spaces.Enqueue(new SearchNode(PlayerOneLocation));
-        }
-        else
-        {
-            spaces.Enqueue(new SearchNode(PlayerTwoLocation));
-        }
-
-        //Will exit after all paths return without finding end or 
-        //break out of loop when first path to finish is found.
-        while (spaces.Count != 0 && result == -1)
-        {
-            SearchNode currentNode = spaces.Dequeue();
-
-            //Checks for easy direct path
-            if (IsDirectPath(isPlayerOne)) {
-                result = FindDirectDistance(currentNode.GetSpace(), isPlayerOne);
-                break;
-            }
-
-            //If it reaches distance of 8 estimate remaining distance with direct distance.
-            if (currentNode.GetDepth() == maxDepth) {
-                return maxDepth + FindDirectDistance(currentNode.GetSpace(), isPlayerOne);
-            }
-
-            //Check the different end conditions for respective players.
-            //If they succeed set the result to the node's depth and break the loop.
-            if (isPlayerOne)
-            {
-                if (currentNode.GetSpace().EndsWith("9"))
-                {
-                    result = currentNode.GetDepth();
-                }
-            }
-            else
-            {
-                if (currentNode.GetSpace().EndsWith("1"))
-                {
-                    result = currentNode.GetDepth();
-                }
-            }
-
-            //Get a list of moves from the current node location.
-            //If the node has not already been visited by this branch it is added to the queue.
-            List<string> movesFromSpace = GetAdjacentMoves(currentNode.GetSpace());
-            foreach (string move in movesFromSpace)
-            {
-                if (!currentNode.GetVisited().Contains(move))
-                {
-                    spaces.Enqueue(new SearchNode(currentNode, move));
-                }
-            }
-
-        }
-        return result;
-    }
-
-    public bool IsDirectPath(bool isPlayerOne) {
-        bool pathExists = false;
-        Queue<string> nextMove = new Queue<string>();
-        string currentPoint;
-
-        if (isPlayerOne)
-        {
-            nextMove.Enqueue(GetPlayerOnePos());
-            while (nextMove.Count != 0) {
-                currentPoint = nextMove.Dequeue();
-                if (currentPoint.EndsWith("9")) {
-                    pathExists = true;
-                    break;
-                }
-                List<string> movesFromCurrent = GetAdjacentMoves(currentPoint);
-                foreach (string move in movesFromCurrent) {
-                    if ((int)move[1] == (int)currentPoint[1] + 1) {
-                        nextMove.Enqueue(move);
-                        break;
-                    }
-                }
-            }
-        }
-        else {
-            nextMove.Enqueue(GetPlayerTwoPos());
-            while (nextMove.Count != 0)
-            {
-                currentPoint = nextMove.Dequeue();
-                if (currentPoint.EndsWith("1"))
-                {
-                    pathExists = true;
-                    break;
-                }
-                List<string> movesFromCurrent = GetAdjacentMoves(currentPoint);
-                foreach (string move in movesFromCurrent)
-                {
-                    if ((int)move[1] == (int)currentPoint[1] - 1)
-                    {
-                        nextMove.Enqueue(move);
-                        break;
-                    }
-                }
-            }
-        }
-        return pathExists;
-    }
-
-    public int FindDirectDistance(string space, bool isPlayerOne) {
-        int result = 0;
-        if (isPlayerOne)
-        {
-            result = 9 - (space[1] - 48);
-        }
-        else {
-            result = (space[1] - 48) - 1;
-        }
-        return result;
-    }
-
+    
     //Uses a depth first search to find any path that reaches the end goal
     private bool CheckPathExists(bool isPlayerOne)
     {
@@ -463,7 +331,7 @@ public class AIBoard
             foreach (string move in movesFromSpace)
             {
                 SearchNode sc = new SearchNode(currentNode, move);
-                if (!currentNode.GetVisited().Contains(move) && !movesToBeVisited.Contains(move))
+                if (!movesToBeVisited.Contains(move))
                 {
                     spaces.Push(sc);
                     movesToBeVisited.Add(move);
@@ -476,7 +344,7 @@ public class AIBoard
 
     //Returns a list of moves from the space specified.
     //This is used as a helper function in traversal functions.
-    private List<string> GetAdjacentMoves(string space)
+    public List<string> GetAdjacentMoves(string space)
     {
         List<string> possibleMoves = new List<string>();
         foreach (string move in DictionaryLookup.PerformAdjacentSpaceLookup(space))
@@ -532,18 +400,32 @@ public class AIBoard
 
     //Returns true if there is a winner.
     //Easily modifiable to return the string of which player won.
-    public bool IsWinner()
+    public string GetWinner()
     {
-        bool result = false;
+        string winner = "none";
         if (PlayerOneLocation.EndsWith("9"))
         {
-            result = true;
+            winner = "player1";
         }
         else if (PlayerTwoLocation.EndsWith("1"))
         {
-            result = true;
+            winner = "player2";
         }
-        return result;
+        return winner;
+    }
+
+    public bool IsWinner()
+    {
+        bool winner = false;
+        if (PlayerOneLocation.EndsWith("9"))
+        {
+            winner = true;
+        }
+        else if (PlayerTwoLocation.EndsWith("1"))
+        {
+            winner = true;
+        }
+        return winner;
     }
 
 }

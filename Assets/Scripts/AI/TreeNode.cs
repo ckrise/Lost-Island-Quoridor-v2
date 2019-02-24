@@ -75,19 +75,19 @@ public class TreeNode
         int playerTwoShortestPath;
         if (moveMade.EndsWith("h") || moveMade.EndsWith("v"))
         {
-            playerOneShortestPath = board.EstimateShortestPath(true, 6);
-            playerTwoShortestPath = board.EstimateShortestPath(false, 6);
+            playerOneShortestPath = BoardAnalysis.EstimateShortestPath(board, true, 100);
+            playerTwoShortestPath = BoardAnalysis.EstimateShortestPath(board, false, 100);
         }
         else
         {
-            playerOneShortestPath = board.EstimateShortestPath(true, 10);
-            playerTwoShortestPath = board.EstimateShortestPath(false, 20);
+            playerOneShortestPath = BoardAnalysis.EstimateShortestPath(board, true, 100);
+            playerTwoShortestPath = BoardAnalysis.EstimateShortestPath(board, false, 100);
         }
-        
+
         //Difference is the number of moves P2 path is shorter than P1.
         int difference = playerOneShortestPath - playerTwoShortestPath;
         int wallDifference = board.GetPlayerTwoNumWalls() - board.GetPlayerOneNumWalls();
-        Value = difference + board.GetPlayerTwoNumWalls() + wallDifference * 2;
+        Value = difference;
     }
 
     
