@@ -55,9 +55,7 @@ public class TreeNode
         }
 
         foreach (string move in moves) {
-            int move0 = move[0];
-            int move1 = move[1];
-            if (!columnsOfInterest.Contains(move0) || !rowsOfInterest.Contains(move1))
+            if (!columnsOfInterest.Contains(move[0]) || !rowsOfInterest.Contains(move[1]))
             {
                 if (!wallsOfInterest.Contains(move)) {
                     toBeRemoved.Add(move);
@@ -96,6 +94,17 @@ public class TreeNode
     private void EvaluateNode() {
         int playerOneShortestPath;
         int playerTwoShortestPath;
+
+        string winner = board.GetWinner();
+        if (winner == "player1")
+        {
+            Value = -10000;
+            return;
+        }
+        else if (winner == "player2") {
+            Value = 10000;
+            return;
+        }
         if (moveMade.EndsWith("h") || moveMade.EndsWith("v"))
         {
             playerOneShortestPath = BoardAnalysis.EstimateShortestPath(board, true, 100);
