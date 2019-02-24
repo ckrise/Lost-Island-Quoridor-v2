@@ -112,9 +112,13 @@ public class MenuController : MonoBehaviour
         switch (aiDifficulty)
         {
             case "AI_EASY":
+                GameData.AIDifficulty = "easy";
+                Debug.Log(GameData.AIDifficulty);
                 SceneManager.LoadScene("GameScene");
                 break;
             case "AI_HARD":
+                GameData.AIDifficulty = "hard";
+                Debug.Log(GameData.AIDifficulty);
                 SceneManager.LoadScene("GameScene");
                 break;
             default:

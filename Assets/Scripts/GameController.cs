@@ -22,6 +22,17 @@ public class GameController : MonoBehaviour
         AIController = new AIController();
         playerTurn = GameData.PlayerGoesFirst;
         aiGame = GameData.IsAIGame;
+        if(aiGame)
+        {
+            if (GameData.AIDifficulty == "easy")
+            {
+                AIController.SetAIEasy();
+            }
+            else if (GameData.AIDifficulty == "hard")
+            {
+                AIController.SetAIHard();
+            }
+        }
 
         if(playerTurn)
         {
@@ -29,6 +40,7 @@ public class GameController : MonoBehaviour
         }
         else if(aiGame)
         {
+            //set AI Difficulty here
             string aiMove = AIController.GetMove("gamestart");
             Board.MakeMove(aiMove);
             playerTurn = true;
