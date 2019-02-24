@@ -12,14 +12,15 @@ public class AIBoard
     private bool IsPlayerOneTurn { get; set; }
 
     //Wall as a string : true if wall can be placed false otherwise
-    private bool MapsInitialized { get; set; }
     private Dictionary<string, bool> ValidWallPlacements { get; set; }
     private List<Move> InvalidPawnMoves { get; set; }
+    private List<string> WallsPlaced { get; set; }
 
     //Defaults to player one making the first move.
     public AIBoard()
     {
         InvalidPawnMoves = new List<Move>();
+        WallsPlaced = new List<string>();
         PlayerOneLocation = "e1";
         PlayerTwoLocation = "e9";
         PlayerOneNumWalls = 10;
@@ -32,6 +33,7 @@ public class AIBoard
     public AIBoard(AIBoard copy)
     {
         InvalidPawnMoves = new List<Move>(copy.InvalidPawnMoves);
+        WallsPlaced = new List<string>(copy.WallsPlaced);
         PlayerOneLocation = copy.PlayerOneLocation;
         PlayerTwoLocation = copy.PlayerTwoLocation;
         PlayerOneNumWalls = copy.PlayerOneNumWalls;
@@ -64,6 +66,10 @@ public class AIBoard
         return IsPlayerOneTurn;
     }
 
+    public List<string> GetWallsPlaced() {
+        return WallsPlaced;
+    }
+
     //Accepts any move, updates board state to be as it should after the move is made.
     public void MakeMove(string move)
     {
@@ -81,6 +87,7 @@ public class AIBoard
     //Helper function that adds pawn moves blocked and wall placements blocked based on wall given.
     private void PlaceWall(string move)
     {
+        WallsPlaced.Add(move);
         if (IsPlayerOneTurn)
         {
             PlayerOneNumWalls--;

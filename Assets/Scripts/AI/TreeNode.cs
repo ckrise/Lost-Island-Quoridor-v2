@@ -28,25 +28,43 @@ public class TreeNode
     public List<TreeNode> GetChildren() {
         List<TreeNode> children = new List<TreeNode>();
         List<string> moves = board.GetWallMoves();
-        moves.AddRange(board.GetPawnMoves());
         SetNodesOfInterest(ref moves);
         foreach (string move in moves) {
             children.Add(new TreeNode(new AIBoard(board), move));
-        }     
+        }
+        foreach (string move in board.GetPawnMoves()) {
+            children.Add(new TreeNode(new AIBoard(board), move));
+        }
         return children;
     }
 
     private void SetNodesOfInterest(ref List<string> moves) {
-        int p1 = board.GetPlayerOnePos()[0];
-        int p2 = board.GetPlayerTwoPos()[0];
-        List<int> columnsOfInterest = new List<int> { p1 - 1, p1, p1 + 1, p2 - 1, p2, p2 + 1 };
+        int p1Column = board.GetPlayerOnePos()[0]; //Ascii column value of a-i
+        int p1Row = board.GetPlayerOnePos()[1]; //Ascii row value of 1-9
+
+        int p2Column = board.GetPlayerTwoPos()[0]; //Ascii column value of a-i
+        int p2Row = board.GetPlayerOnePos()[1]; //Ascii row value of 1-9
+        List<string> wallsOfInterest = new List<string>();
+
+        List<int> columnsOfInterest = new List<int> { p1Column - 1, p1Column, p1Column + 1, p2Column - 1, p2Column, p2Column + 1 };
+        List<int> rowsOfInterest = new List<int> { p1Row - 1, p1Row, p1Row + 1, p2Row - 1, p2Row, p2Row + 1 };
         List<string> toBeRemoved = new List<string>();
 
+        foreach (string wall in board.GetWallsPlaced()) {
+            wallsOfInterest.AddRange(DictionaryLookup.PerformWallsOfInterestLookup(wall));
+        }
+
         foreach (string move in moves) {
-            if (!columnsOfInterest.Contains(move[0])) {
-                toBeRemoved.Add(move);
+            int move0 = move[0];
+            int move1 = move[1];
+            if (!columnsOfInterest.Contains(move0) || !rowsOfInterest.Contains(move1))
+            {
+                if (!wallsOfInterest.Contains(move)) {
+                    toBeRemoved.Add(move);
+                }
             }
         }
+
         foreach (string move in toBeRemoved) {
             moves.Remove(move);
         }
@@ -92,7 +110,7 @@ public class TreeNode
         //Difference is the number of moves P2 path is shorter than P1.
         int difference = playerOneShortestPath - playerTwoShortestPath;
         int wallDifference = board.GetPlayerTwoNumWalls() - board.GetPlayerOneNumWalls();
-        Value = difference + board.GetPlayerTwoNumWalls() + wallDifference * 2;
+        Value = difference + wallDifference;
     }
 
     
