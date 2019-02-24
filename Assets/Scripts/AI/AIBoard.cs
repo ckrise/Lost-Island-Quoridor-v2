@@ -249,11 +249,18 @@ public class AIBoard
                 AIBoard tempBoard = new AIBoard(this);
                 tempBoard.MakeMove(move.Key);
 
-                if (tempBoard.CheckPathExists(true) && tempBoard.CheckPathExists(false))
+                List<string> wallsOfConcern = DictionaryLookup.PerformWallsOfInterestLookup(move.Key);
+                bool containsCommonItem = WallsPlaced.Any(x => wallsOfConcern.Contains(x));
+                if (containsCommonItem)
                 {
+                    if (tempBoard.CheckPathExists(true) && tempBoard.CheckPathExists(false))
+                    {
+                        possibleMoves.Add(move.Key);
+                    }
+                }
+                else {
                     possibleMoves.Add(move.Key);
                 }
-
             }
         }
         return possibleMoves;
