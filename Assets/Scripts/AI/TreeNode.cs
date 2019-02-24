@@ -69,6 +69,11 @@ public class TreeNode
         return Value;
     }
 
+    public void SetValue(int value) {
+        Value = value;
+        ValueSet = true;
+    }
+
     //Static evaluation function of the gameboard.
     private void EvaluateNode() {
         int playerOneShortestPath;
@@ -87,7 +92,7 @@ public class TreeNode
         //Difference is the number of moves P2 path is shorter than P1.
         int difference = playerOneShortestPath - playerTwoShortestPath;
         int wallDifference = board.GetPlayerTwoNumWalls() - board.GetPlayerOneNumWalls();
-        Value = difference + wallDifference / 2;
+        Value = difference + board.GetPlayerTwoNumWalls() + wallDifference * 2;
     }
 
     
