@@ -364,10 +364,12 @@ public class GUIController : MonoBehaviour
     {
         //TODO:
         //Lock the MenuButtons as well
+        
         //lock UI
         playerTurn = false;
         if (!gameOver)
         {
+            gameOver = true;
             opponentDisconnectedPanel.SetActive(true);
         }
         
