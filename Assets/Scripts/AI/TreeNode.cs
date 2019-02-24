@@ -87,7 +87,7 @@ public class TreeNode
         //Difference is the number of moves P2 path is shorter than P1.
         int difference = playerOneShortestPath - playerTwoShortestPath;
         int wallDifference = board.GetPlayerTwoNumWalls() - board.GetPlayerOneNumWalls();
-        Value = difference;
+        Value = difference + wallDifference / 2;
     }
 
     
