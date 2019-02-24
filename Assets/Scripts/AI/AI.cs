@@ -24,17 +24,7 @@ public class AI {
         
         string moveSelected = "error";
         float max = -10000000;
-        float min = 1000;
         foreach (TreeNode node in possibleMoves) {
-            //List<TreeNode> nextMoves = node.GetChildren();
-            //int opponentValueSelected = 0;
-            //foreach (TreeNode nextNode in nextMoves) {
-            //    int value = nextNode.GetValue();
-            //    if (value < min) {
-            //        min = value;
-            //        opponentValueSelected = value;
-            //    }
-            //}
             if (node.GetValue() > max) {
                 max = node.GetValue();
                 moveSelected = node.GetMoveMade();
@@ -63,8 +53,35 @@ public class AI {
 
 
     //TODO:
-    public string GetHardMove(string move) {
-        return "hardmove";
+    public string GetHardMove(string playerMove) {
+        HandlePlayerMove(playerMove);
+        TreeNode rootNode = new TreeNode(CurrentBoard);
+        List<TreeNode> possibleMoves = rootNode.GetChildren();
+
+        string moveSelected = "error";
+        float max = -10000000;
+        foreach (TreeNode node in possibleMoves)
+        {
+            int min = 10000000;
+            List<TreeNode> nextMoves = node.GetChildren();
+            foreach (TreeNode nextNode in nextMoves)
+            {
+                int value = nextNode.GetValue();
+                if (value < min)
+                {
+                    min = value;
+                }
+            }
+            node.SetValue(min);
+            if (node.GetValue() > max)
+            {
+                max = node.GetValue();
+                moveSelected = node.GetMoveMade();
+            }
+        }
+        CurrentBoard.MakeMove(moveSelected);
+
+        return moveSelected;
     }
 
 
