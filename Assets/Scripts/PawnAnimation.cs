@@ -8,6 +8,7 @@ public class PawnAnimation : MonoBehaviour
     public float speed = 2;
     private bool isPlayer = false;
 
+
     // http://answers.unity.com/answers/1426132/view.html
     // Start is called before the first frame update
     void Start()

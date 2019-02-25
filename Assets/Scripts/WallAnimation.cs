@@ -9,14 +9,17 @@ public class WallAnimation : MonoBehaviour
     public float startdepth = 2;
     private bool isPlayer = false;
 
+
     private void Awake()
     {
+       
         destination = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+       
         if (destination != transform.position)
         {
             IncrementPosition();
