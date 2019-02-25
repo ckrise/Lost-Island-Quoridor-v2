@@ -248,17 +248,9 @@ public class AIBoard
                 //This checks to make sure walls are valid
                 AIBoard tempBoard = new AIBoard(this);
                 tempBoard.MakeMove(move.Key);
-
-                HashSet<string> wallsOfConcern = DictionaryLookup.PerformWallsOfInterestLookup(move.Key);
-                bool containsCommonItem = WallsPlaced.Any(x => wallsOfConcern.Contains(x));
-                if (containsCommonItem)
+                
+                if (tempBoard.CheckPathExists(true) && tempBoard.CheckPathExists(false))
                 {
-                    if (tempBoard.CheckPathExists(true) && tempBoard.CheckPathExists(false))
-                    {
-                        possibleMoves.Add(move.Key);
-                    }
-                }
-                else {
                     possibleMoves.Add(move.Key);
                 }
             }
