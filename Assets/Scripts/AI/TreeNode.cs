@@ -27,12 +27,14 @@ public class TreeNode
     //Returns a list of treeNodes that contains of the children of this node.
     public List<TreeNode> GetChildren() {
         List<TreeNode> children = new List<TreeNode>();
+        foreach (string move in board.GetPawnMoves())
+        {
+            children.Add(new TreeNode(new AIBoard(board), move));
+        }
+
         List<string> moves = board.GetWallMoves();
         SetNodesOfInterest(ref moves);
         foreach (string move in moves) {
-            children.Add(new TreeNode(new AIBoard(board), move));
-        }
-        foreach (string move in board.GetPawnMoves()) {
             children.Add(new TreeNode(new AIBoard(board), move));
         }
         return children;

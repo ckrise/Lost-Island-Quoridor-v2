@@ -6,14 +6,10 @@ using System;
 public class AI {
 
     public AIBoard CurrentBoard { get; set; }
-    private List<string> PossibleWallMoves { get; set; }
-    private List<string> PossiblePlayerMoves { get; set; }
 
     public AI()
     {
         CurrentBoard = new AIBoard();
-        PossibleWallMoves = new List<string>();
-        PossiblePlayerMoves = new List<string>();
     }
 
     //Currently gets a random move of all possible moves.
@@ -57,33 +53,68 @@ public class AI {
     public string GetHardMove(string playerMove) {
         HandlePlayerMove(playerMove);
         TreeNode rootNode = new TreeNode(CurrentBoard);
-        List<TreeNode> possibleMoves = rootNode.GetChildren();
 
         string moveSelected = "error";
-        float max = -10000000;
-        foreach (TreeNode node in possibleMoves)
+        if (CurrentBoard.GetPlayerOneNumWalls() == 0 || CurrentBoard.GetPlayerTwoNumWalls() == 0)
         {
-            int min = 10000000;
-            List<TreeNode> nextMoves = node.GetChildren();
-            foreach (TreeNode nextNode in nextMoves)
-            {
-                int value = nextNode.GetValue();
-                if (value < min)
-                {
-                    min = value;
-                }
-            }
-            node.SetValue(min);
-            if (node.GetValue() > max)
-            {
-                max = node.GetValue();
-                moveSelected = node.GetMoveMade();
-            }
+            moveSelected = IterateStart(rootNode, 3);
+        }
+        else {
+            moveSelected = IterateStart(rootNode, 2);
         }
         CurrentBoard.MakeMove(moveSelected);
 
         return moveSelected;
     }
 
+    private string IterateStart(TreeNode node, int depth) {
+        List<TreeNode> rootChildren = node.GetChildren();
+        int alpha = -10000000;
+        int beta = 100000000;
 
+        List<string> movesSelected = new List<string>();
+        foreach (TreeNode child in rootChildren) {
+            int result = Iterate(child, depth - 1, alpha, beta, false);
+            if (result > alpha)
+            {
+                alpha = result;
+                movesSelected.Clear();
+                movesSelected.Add(child.GetMoveMade());
+            }
+            else if (result == alpha) {
+                movesSelected.Add(child.GetMoveMade());
+            }
+        }
+
+        return movesSelected[DictionaryLookup.rnd.Next(movesSelected.Count)];
+    }
+
+    private int Iterate(TreeNode node, int depth, int alpha, int beta, bool isMaxPlayer) {
+        if (depth == 0) {
+            return node.GetValue();
+        }
+        if (isMaxPlayer)
+        {
+            foreach (TreeNode child in node.GetChildren()) {
+                alpha = Math.Max(alpha, Iterate(child, depth - 1, alpha, beta, !isMaxPlayer));
+                if (beta > alpha) {
+                    break;
+                }
+            }
+
+            return alpha;
+        }
+        else
+        {
+            foreach (TreeNode child in node.GetChildren())
+            {
+                beta = Math.Min(beta, Iterate(child, depth - 1, alpha, beta, !isMaxPlayer));
+                if (beta < alpha)
+                {
+                    break;
+                }
+            }
+            return beta;
+        }
+    }
 }
