@@ -185,11 +185,10 @@ public class NetworkController : MonoBehaviour
         }
     }
 
-    private bool OnDisconnectedFromPhoton()
+    private void OnDisconnectedFromPhoton()
     {
         isConnectedServer = false;
         Debug.Log("Disconnected from photon");
-        return isConnectedServer;
     }
 
     public void onClickLeaveMultiplayer()
