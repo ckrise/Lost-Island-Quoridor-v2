@@ -6,9 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GUIController : MonoBehaviour
 {
-    
-    const string WIN_TEXT = "You Win!";
-    const string LOSE_TEXT = "You Lost!";
+    #region public variables
     //an instance of the GUIController used to call public methods
     public static GUIController GUIReference;
     //Instances of gameboard objects that the controller must manipulate
@@ -22,8 +20,9 @@ public class GUIController : MonoBehaviour
     public Button winButton, chatButton;
     public ScrollRect chatScrollRect;
     public bool animationFinished = false;
-    bool gameOver = false;
-
+    public bool gameOver = false;
+    #endregion
+    #region private variables
     //tile objects that are invisible until pawn is clicked
     private List<GameObject> ghostPlayerMoves;   
     private string playerNumber = "Player1";
@@ -56,7 +55,15 @@ public class GUIController : MonoBehaviour
     };
     private Stack<GameObject> opponentWallPoolStack, playerWallPoolStack;
     private string playerMove;
-
+    #endregion
+    #region unity
+    void Awake()
+    {
+        GUIReference = this;
+        pawnClicked = false;
+        playerTurn = false;
+        ghostPlayerMoves = new List<GameObject>();
+    }
 
     private void Start()
     {
@@ -70,7 +77,9 @@ public class GUIController : MonoBehaviour
         playerWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("PlayerWallPool"));
         opponentWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("OpponentWallPool"));
     }
+    #endregion
 
+    #region conversions
     ////Calculate what is being clicked
     ////Returns Z0 if not in range
     private string FindCoordinate(float x, float y)
@@ -116,14 +125,52 @@ public class GUIController : MonoBehaviour
         return coordinate;
     }
 
-    void Awake()
+    private Vector3 GetPositionFromCoordinate(string coordinate)
     {
-        GUIReference = this;
-        pawnClicked = false;
-        playerTurn = false;
-        ghostPlayerMoves = new List<GameObject>();
+        if (coordinate != "")
+        {
+            int row = (int)char.GetNumericValue(coordinate[1]);
+            float x = COLUMN_MIDPOINT[coordinate[0]];
+            float y = ROW_MIDPOINT[row];
+            return new Vector3(x, 0, y);
+        }
+        else
+        {
+            return new Vector3(); ;
+        }
+    }
+    
+    public Tuple<Vector3, Quaternion> GetPositionAndRotationFromHoverPad(Vector3 position, char orientation)
+    {
+        float rotation;
+        if (orientation == 'v')
+        {
+            rotation = 90;
+            position.z--;
+        }
+        else
+        {
+            rotation = 0;
+            position.x++;
+        }
+        return new Tuple<Vector3, Quaternion>(position, Quaternion.Euler(0, rotation, 0));
+    }
+    private GameObject FindInactiveObject(string name)
+    {
+        var gameObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (var obj in gameObjects)
+        {
+            if (obj.name == name)
+            {
+                return obj;
+            }
+        }
+        return null;
     }
 
+    #endregion
+
+    #region player
     public void StartPlayerTurn(string move, List<string> validWalls, List<string> validMoves)
     {
         if (move.Length == 3)
@@ -141,7 +188,53 @@ public class GUIController : MonoBehaviour
         ActivateHoverPads(validWalls);
         playerTurn = true;
     }
+    public void PlacePlayerWall(Vector3 position, string move)
+    {
+        if (!pawnClicked && playerTurn && animationFinished)
+        {
+            playerTurn = false;
+            TakeFromWallPool(true);
+            DeactivateGhostWall();
+            GameObject newWall = Instantiate(wall);
+            var transformation = GetPositionAndRotationFromHoverPad(position, move[2]);
+            newWall.transform.rotation = transformation.Item2;
+            newWall.SetActive(true);
+            newWall.GetComponent<WallAnimation>().SetDestination(transformation.Item1, true);
+            playerMove = move;
+        }
+    }
+    public void MovePlayerPawn(GameObject ghost)
+    {
+        if (playerTurn)
+        {
+            playerTurn = false;
+            DestroyGhostMoves();
+            Vector3 position = ghost.transform.position;
+            playerPawn.GetComponent<PawnAnimation>().SetDestination(position, true);
+            playerMove = FindCoordinate(position.x, position.z);
+        }
+    }
+    public void AnimationCompleted(bool isPlayer)
+    {
+        animationFinished = true;
+        if (isPlayer)
+        {
+            EndTurn(playerMove);
+        }
+    }
 
+    private void EndTurn(string move)
+    {
+        DestroyGhostMoves();
+        DeactivateHoverPads();
+        playerTurn = false;
+        pawnClicked = false;
+        Debug.Log("Player Move: " + move);
+        GameController.GCInstance.RecieveMoveFromPlayer(move);
+    }
+    #endregion
+
+    #region opponent
     private void PlaceOpponentWall(string coordinate)
     {
         //should make the mage do a little move before placing a wall
@@ -166,23 +259,6 @@ public class GUIController : MonoBehaviour
         newWall.GetComponent<WallAnimation>().SetDestination(position, false);
         newWall.SetActive(true);
     }
-
-    public void PlacePlayerWall(Vector3 position, string move)
-    {
-        if (playerTurn && animationFinished)
-        {
-            playerTurn = false;
-            TakeFromWallPool(true);
-            DeactivateGhostWall();
-            GameObject newWall = Instantiate(wall);
-            var transformation = GetPositionAndRotationFromHoverPad(position, move[2]);
-            newWall.transform.rotation = transformation.Item2;
-            newWall.SetActive(true);
-            newWall.GetComponent<WallAnimation>().SetDestination(transformation.Item1, true);
-            playerMove = move;
-        }
-    }
-
     private void MoveOpponentPawn(string coordinate)
     {
         //should make the mage play the attack animation
@@ -190,15 +266,9 @@ public class GUIController : MonoBehaviour
         Vector3 newPosition = GetPositionFromCoordinate(coordinate);
         opponentPawn.GetComponent<PawnAnimation>().SetDestination(newPosition, false);
     }
+    #endregion
 
-    public void MovePlayerPawn(GameObject ghost)
-    {
-        playerTurn = false;
-        DestroyGhostMoves();
-        Vector3 position = ghost.transform.position;
-        playerPawn.GetComponent<PawnAnimation>().SetDestination(position, true);
-        playerMove = FindCoordinate(position.x, position.z);
-    }
+    #region walls
 
     private void ActivateHoverPads(List<string> coordinates)
     {
@@ -218,27 +288,31 @@ public class GUIController : MonoBehaviour
         }
     }
 
-    public Tuple<Vector3, Quaternion> GetPositionAndRotationFromHoverPad(Vector3 position, char orientation)
-    {
-        float rotation;
-        if (orientation == 'v')
-        {
-            rotation = 90;
-            position.z--;
-        }
-        else
-        {
-            rotation = 0;
-            position.x++;
-        }
-        return new Tuple<Vector3, Quaternion>(position, Quaternion.Euler(0, rotation, 0));
-    }
-
     public void DeactivateGhostWall()
     {
         ghostWall.SetActive(false);
     }
+    private void DeactivateHoverPads()
+    {
+        foreach (var hoverpad in GameObject.FindGameObjectsWithTag("HoverPad"))
+        {
+            hoverpad.SetActive(false);
+        }
+    }
+    private void TakeFromWallPool(bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            playerWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
+        }
+        else
+        {
+            opponentWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
+        }
+    }
 
+    #endregion
+    #region moves
     private void ActivateGhostMoves(List<string> moves)
     {
         foreach (var move in moves)
@@ -256,51 +330,6 @@ public class GUIController : MonoBehaviour
         ghost.transform.position = GetPositionFromCoordinate(move);
         ghostPlayerMoves.Add(ghost);
     }
-
-    private Vector3 GetPositionFromCoordinate(string coordinate)
-    {
-        if (coordinate != "")
-        {
-            int row = (int)char.GetNumericValue(coordinate[1]);
-            float x = COLUMN_MIDPOINT[coordinate[0]];
-            float y = ROW_MIDPOINT[row];
-            return new Vector3(x, 0, y);
-        }
-        else
-        {
-            return new Vector3(); ;
-        }
-    }
-
-    public void AnimationCompleted(bool isPlayer)
-    {
-        animationFinished = true;
-        if (isPlayer)
-        {
-            EndTurn(playerMove);
-        }
-    }
-
-    //Destroys ghost walls and moves
-    //changes player bool
-    private void EndTurn(string move)
-    {
-        DestroyGhostMoves();
-        DeactivateHoverPads();
-        playerTurn = false;
-        pawnClicked = false;
-        Debug.Log("Player Move: " + move);
-        GameController.GCInstance.RecieveMoveFromPlayer(move);
-    }
-
-    private void DeactivateHoverPads()
-    {
-        foreach (var hoverpad in GameObject.FindGameObjectsWithTag("HoverPad"))
-        {
-            hoverpad.SetActive(false);
-        }
-    }
-
     private void DestroyGhostMoves()
     {
         foreach (var ghost in ghostPlayerMoves)
@@ -309,7 +338,6 @@ public class GUIController : MonoBehaviour
         }
         ghostPlayerMoves.Clear();
     }
-    
     public void ShowGhostMoves()
     {
         if (playerTurn && animationFinished)
@@ -321,20 +349,9 @@ public class GUIController : MonoBehaviour
             }
         }
     }
+    #endregion
 
-    private GameObject FindInactiveObject(string name)
-    {
-        var gameObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-        foreach (var obj in gameObjects)
-        {
-            if (obj.name == name)
-            {
-                return obj;
-            }
-        }
-        return null;
-    }
-
+    #region game end
     public void GameOver(bool isWinner, string move = "")
     {
         gameOver = true;
@@ -374,44 +391,9 @@ public class GUIController : MonoBehaviour
         }
         
     }
+    #endregion
 
-    private void TakeFromWallPool(bool isPlayer)
-    {
-        if (isPlayer)
-        {
-            playerWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
-        }
-        else
-        {
-            opponentWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
-        }
-    }
-
-    public void ReceiveMessage(string message)
-    {
-        //update message window
-        UpdateChat("Them:" + message);     
-    }
-
-    public void SendChat()
-    {
-        if (inputText.text != "")
-        {
-            string message = "You: " + inputText.text;
-            string messageToSend = inputText.text;
-            inputText.text = "";
-            UpdateChat(message);
-            //NEW CHANGE
-            GameData.NetworkController.onMessageToSend(messageToSend);
-        }
-    }
-
-    private void UpdateChat(string message)
-    {
-        Text newChat = Instantiate(messageText, chatScrollRect.content);
-        newChat.text = message;
-    }
-
+    #region menu
     public void ShowChatMenu()
     {
         if(!gameOver)
@@ -442,7 +424,33 @@ public class GUIController : MonoBehaviour
             chatPanel.SetActive(false);
         }
     }
+    #endregion
+    #region chat
+    public void ReceiveMessage(string message)
+    {
+        //update message window
+        UpdateChat("Them:" + message);     
+    }
 
+    public void SendChat()
+    {
+        if (inputText.text != "")
+        {
+            string message = "You: " + inputText.text;
+            string messageToSend = inputText.text;
+            inputText.text = "";
+            UpdateChat(message);
+            //NEW CHANGE
+            GameData.NetworkController.onMessageToSend(messageToSend);
+        }
+    }
+
+    private void UpdateChat(string message)
+    {
+        Text newChat = Instantiate(messageText, chatScrollRect.content);
+        newChat.text = message;
+    }
+#endregion
     #region helpPanel
     public void showRulesPanel()
     {
