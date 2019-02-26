@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 static class DictionaryLookup
 {
+    public static Random rnd = new Random();
     //Dictionary 1: Wall Placed as a String : List of Pawn moves blocked by the wall.
 
     private static readonly Dictionary<string, List<Move>> PawnBlockLookup = new Dictionary<string, List<Move>>()
