@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 public class NetworkController : MonoBehaviour
 {
     public const string versionName = "0.1";
@@ -18,6 +19,7 @@ public class NetworkController : MonoBehaviour
     private List<string> roomList = new List<string>();
     public InputField messageInputField;
     public PhotonView photonView;
+   
 
     #region references
     private void Start()
@@ -55,6 +57,7 @@ public class NetworkController : MonoBehaviour
     private void OnFailedToConnectToPhoton()
     {
         Debug.Log("Failed To Connect");
+        //TODO notify user they have not connected
     }
 
     private void OnJoinedLobby()
@@ -82,10 +85,14 @@ public class NetworkController : MonoBehaviour
     { 
         foreach (var room in PhotonNetwork.GetRoomList())
         {
-            string roomToAdd = room.ToString();
-            string[] nameList = roomToAdd.Split('\'');
-            Debug.Log(nameList[1]);
-            roomList.Add(nameList[1]);
+            Debug.Log(room.PlayerCount);
+            if (room.PlayerCount < 2)
+            {
+                string roomToAdd = room.ToString();
+                string[] nameList = roomToAdd.Split('\'');
+                Debug.Log(nameList[1]);
+                roomList.Add(nameList[1]);
+            }
         }
     }
 
@@ -108,7 +115,6 @@ public class NetworkController : MonoBehaviour
     {
         return myRoom;
     }
-
     #endregion
 
     #region Create Rooms
@@ -133,9 +139,9 @@ public class NetworkController : MonoBehaviour
 
     private void OnPhotonCreateRoomFailed()
     {
+
         Debug.Log("Could not create room");
     }
-
     #endregion
 
     #region Join Rooms
@@ -144,6 +150,7 @@ public class NetworkController : MonoBehaviour
         Debug.Log(name);
         PhotonNetwork.JoinRoom(name);
         //PhotonNetwork.JoinRoom(roomName);
+        
     }
 
     private void OnJoinedRoom()
@@ -190,6 +197,11 @@ public class NetworkController : MonoBehaviour
 
     private void OnDisconnectedFromPhoton()
     {
+        string sceneName = SceneManager.GetActiveScene().name;
+        if(sceneName == "MainMenu")
+        {
+            //TODO change to main menu
+        }
         isConnectedServer = false;
         Debug.Log("Disconnected from photon");
     }
