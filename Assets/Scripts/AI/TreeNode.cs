@@ -101,7 +101,17 @@ public class TreeNode
     }
 
     //Gets the Value of the node, calculates it if it has not been done.
-    public int GetValue() {
+    public int GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(int val) {
+        value = val;
+    }
+
+    //Gets the Value of the node, calculates it if it has not been done.
+    public int CalcValue() {
         EvaluateNode();
         return value;
     }
