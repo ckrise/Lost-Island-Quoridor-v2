@@ -21,7 +21,7 @@ static class BoardAnalysis
     public static int GetShortestPath(AIBoard board, bool isPlayerOne)
     {
         Queue<SearchNode> spaces = new Queue<SearchNode>();
-        List<string> movesToBeVisited = new List<string>();
+        HashSet<string> movesToBeVisited = new HashSet<string>();
         int result = -1;
         if (isPlayerOne)
         {
@@ -152,14 +152,12 @@ static class BoardAnalysis
                     pathExists = true;
                     break;
                 }
-                List<string> movesFromCurrent = board.GetAdjacentMoves(currentPoint);
-                foreach (string move in movesFromCurrent)
+
+                string nextSpace = new string(new char[] {currentPoint[0], (char)(currentPoint[1] + 1) });
+                if (!board.GetInvalidPawnMoves().Contains(new Move(currentPoint, nextSpace)))
                 {
-                    if ((int)move[1] == (int)currentPoint[1] + 1)
-                    {
-                        nextMove.Enqueue(move);
-                        break;
-                    }
+                    nextMove.Enqueue(nextSpace);
+                    break;
                 }
             }
         }
@@ -174,14 +172,12 @@ static class BoardAnalysis
                     pathExists = true;
                     break;
                 }
-                List<string> movesFromCurrent = board.GetAdjacentMoves(currentPoint);
-                foreach (string move in movesFromCurrent)
+
+                string nextSpace = new string(new char[] { currentPoint[0], (char)(currentPoint[1] - 1) });
+                if (!board.GetInvalidPawnMoves().Contains(new Move(currentPoint, nextSpace)))
                 {
-                    if ((int)move[1] == (int)currentPoint[1] - 1)
-                    {
-                        nextMove.Enqueue(move);
-                        break;
-                    }
+                    nextMove.Enqueue(nextSpace);
+                    break;
                 }
             }
         }

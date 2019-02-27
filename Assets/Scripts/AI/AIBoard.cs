@@ -47,6 +47,7 @@ public class AIBoard
     public bool GetIsPlayerOneTurn() { return IsPlayerOneTurn; }
     public List<string> GetWallsPlaced() { return WallsPlaced; }
     public HashSet<string> GetAllValidWalls() { return ValidWallPlacements; }
+    public HashSet<Move> GetInvalidPawnMoves() { return InvalidPawnMoves; }
 
     //Accepts any move, updates board state to be as it should after the move is made.
     public void MakeMove(string move)
