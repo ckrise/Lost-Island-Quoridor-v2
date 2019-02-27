@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System;
+﻿using System.Collections.Generic;
 
 public class AIBoard
 {
@@ -11,15 +8,15 @@ public class AIBoard
     private int PlayerTwoNumWalls { get; set; }
     private bool IsPlayerOneTurn { get; set; }
 
-    //Wall as a string : true if wall can be placed false otherwise
-    private Dictionary<string, bool> ValidWallPlacements { get; set; }
-    private List<Move> InvalidPawnMoves { get; set; }
     private List<string> WallsPlaced { get; set; }
+    
+    private HashSet<string> ValidWallPlacements { get; set; }
+    private HashSet<Move> InvalidPawnMoves { get; set; }
 
     //Defaults to player one making the first move.
     public AIBoard()
     {
-        InvalidPawnMoves = new List<Move>();
+        InvalidPawnMoves = new HashSet<Move>(new MoveEqualityComparer());
         WallsPlaced = new List<string>();
         PlayerOneLocation = "e1";
         PlayerTwoLocation = "e9";
@@ -32,43 +29,24 @@ public class AIBoard
     //Does a deep copy of the board passed to the constructor.
     public AIBoard(AIBoard copy)
     {
-        InvalidPawnMoves = new List<Move>(copy.InvalidPawnMoves);
+        InvalidPawnMoves = new HashSet<Move>(copy.InvalidPawnMoves, new MoveEqualityComparer());
         WallsPlaced = new List<string>(copy.WallsPlaced);
         PlayerOneLocation = copy.PlayerOneLocation;
         PlayerTwoLocation = copy.PlayerTwoLocation;
         PlayerOneNumWalls = copy.PlayerOneNumWalls;
         PlayerTwoNumWalls = copy.PlayerTwoNumWalls; ;
         IsPlayerOneTurn = copy.IsPlayerOneTurn;
-        ValidWallPlacements = new Dictionary<string, bool>(copy.ValidWallPlacements);
+        ValidWallPlacements = new HashSet<string>(copy.ValidWallPlacements);
     }
 
-    public string GetPlayerOnePos()
-    {
-        return PlayerOneLocation;
-    }
-
-    public string GetPlayerTwoPos()
-    {
-        return PlayerTwoLocation;
-    }
-
-    public int GetPlayerOneNumWalls()
-    {
-        return PlayerOneNumWalls;
-    }
-
-    public int GetPlayerTwoNumWalls()
-    {
-        return PlayerTwoNumWalls;
-    }
-
-    public bool GetIsPlayerOneTurn() {
-        return IsPlayerOneTurn;
-    }
-
-    public List<string> GetWallsPlaced() {
-        return WallsPlaced;
-    }
+    //Basic get functions.
+    public string GetPlayerOnePos() { return PlayerOneLocation; }
+    public string GetPlayerTwoPos() { return PlayerTwoLocation; }
+    public int GetPlayerOneNumWalls() { return PlayerOneNumWalls; }
+    public int GetPlayerTwoNumWalls() { return PlayerTwoNumWalls; }
+    public bool GetIsPlayerOneTurn() { return IsPlayerOneTurn; }
+    public List<string> GetWallsPlaced() { return WallsPlaced; }
+    public HashSet<string> GetAllValidWalls() { return ValidWallPlacements; }
 
     //Accepts any move, updates board state to be as it should after the move is made.
     public void MakeMove(string move)
@@ -107,7 +85,7 @@ public class AIBoard
         List<string> wallsBlocked = DictionaryLookup.PerformWallBlockLookup(move);
         foreach (string blockedWall in wallsBlocked)
         {
-            ValidWallPlacements[blockedWall] = false;
+            ValidWallPlacements.Remove(blockedWall);
         }
     }
 
@@ -129,101 +107,79 @@ public class AIBoard
      **/
     public List<string> GetPawnMoves()
     {
-        List<string> possibleMoves = new List<string>();
+        List<string> possibleMoves;
         if (IsPlayerOneTurn)
         {
-            foreach (string move in DictionaryLookup.PerformAdjacentSpaceLookup(PlayerOneLocation))
-            {
-                bool moveGood = true;
-                foreach (Move invalidMove in InvalidPawnMoves)
+            possibleMoves = GetAdjacentMoves(PlayerOneLocation);
+            foreach (string move in possibleMoves.ToArray()) {
+                if (PlayerTwoLocation == move)
                 {
-                    if (invalidMove.Equals(new Move(PlayerOneLocation, move)))
+                    possibleMoves.Remove(move);
+
+                    string jumpDirection = BoardAnalysis.GetMoveDirection(PlayerOneLocation, PlayerTwoLocation);
+                    List<string> possibleJumps = GetAdjacentMoves(PlayerTwoLocation);
+                    List<string> perpendicularJumps = new List<string>();
+                    string straightJump = "n";
+                    possibleJumps.Remove(PlayerOneLocation);
+                    foreach (string jump in possibleJumps)
                     {
-                        moveGood = false;
-                    }
-                }
-                if (moveGood)
-                {
-                    //Possible jump handling done here.
-                    if (PlayerTwoLocation == move)
-                    {
-                        string jumpDirection = GetMoveDirection(PlayerOneLocation, PlayerTwoLocation);
-                        List<string> possibleJumps = GetAdjacentMoves(PlayerTwoLocation);
-                        List<string> perpendicularJumps = new List<string>();
-                        string straightJump = "none";
-                        possibleJumps.Remove(PlayerOneLocation);
-                        foreach (string jump in possibleJumps) {
-                            string possibleDirection = GetMoveDirection(PlayerTwoLocation, jump);
-                            if (possibleDirection == jumpDirection)
-                            {
-                                straightJump = jump;
-                            }
-                            else {
-                                perpendicularJumps.Add(jump);
-                            }
-                        }
-                        if (straightJump != "none")
+                        string possibleDirection = BoardAnalysis.GetMoveDirection(PlayerOneLocation, jump);
+                        if (possibleDirection == jumpDirection)
                         {
-                            possibleMoves.Add(straightJump);
+                            straightJump = jump;
                         }
-                        else {
-                            possibleMoves.AddRange(perpendicularJumps);
+                        else
+                        {
+                            perpendicularJumps.Add(jump);
                         }
+                    }
+                    if (straightJump != "n")
+                    {
+                        possibleMoves.Add(straightJump);
                     }
                     else
                     {
-                        possibleMoves.Add(move);
+                        possibleMoves.AddRange(perpendicularJumps);
                     }
+                    break;
                 }
             }
         }
         else
         {
-            foreach (string move in DictionaryLookup.PerformAdjacentSpaceLookup(PlayerTwoLocation))
+            possibleMoves = GetAdjacentMoves(PlayerTwoLocation);
+            foreach (string move in possibleMoves.ToArray())
             {
-                bool moveGood = true;
-                foreach (Move invalidMove in InvalidPawnMoves)
+                if (PlayerOneLocation == move)
                 {
-                    if (invalidMove.Equals(new Move(PlayerTwoLocation, move)))
+                    possibleMoves.Remove(move);
+
+                    string jumpDirection = BoardAnalysis.GetMoveDirection(PlayerTwoLocation, PlayerOneLocation);
+                    List<string> possibleJumps = GetAdjacentMoves(PlayerOneLocation);
+                    List<string> perpendicularJumps = new List<string>();
+                    string straightJump = "n";
+                    possibleJumps.Remove(PlayerTwoLocation);
+                    foreach (string jump in possibleJumps)
                     {
-                        moveGood = false;
-                    }
-                }
-                if (moveGood)
-                {
-                    //Possible jump handling done here.
-                    if (PlayerOneLocation == move)
-                    {
-                        string jumpDirection = GetMoveDirection(PlayerTwoLocation, PlayerOneLocation);
-                        List<string> possibleJumps = GetAdjacentMoves(PlayerOneLocation);
-                        List<string> perpendicularJumps = new List<string>();
-                        string straightJump = "none";
-                        possibleJumps.Remove(PlayerTwoLocation);
-                        foreach (string jump in possibleJumps)
+                        string possibleDirection = BoardAnalysis.GetMoveDirection(PlayerOneLocation, jump);
+                        if (possibleDirection == jumpDirection)
                         {
-                            string possibleDirection = GetMoveDirection(PlayerOneLocation, jump);
-                            if (possibleDirection == jumpDirection)
-                            {
-                                straightJump = jump;
-                            }
-                            else
-                            {
-                                perpendicularJumps.Add(jump);
-                            }
-                        }
-                        if (straightJump != "none")
-                        {
-                            possibleMoves.Add(straightJump);
+                            straightJump = jump;
                         }
                         else
                         {
-                            possibleMoves.AddRange(perpendicularJumps);
+                            perpendicularJumps.Add(jump);
                         }
+                    }
+                    if (straightJump != "n")
+                    {
+                        possibleMoves.Add(straightJump);
                     }
                     else
                     {
-                        possibleMoves.Add(move);
+                        possibleMoves.AddRange(perpendicularJumps);
                     }
+                    break;
                 }
             }
         }
@@ -233,119 +189,23 @@ public class AIBoard
     public List<string> GetWallMoves()
     {
         List<string> possibleMoves = new List<string>();
-        foreach (KeyValuePair<string, bool> move in ValidWallPlacements)
+
+        if ((IsPlayerOneTurn && PlayerOneNumWalls == 0) || (!IsPlayerOneTurn && PlayerTwoNumWalls == 0)) { }
+        else
         {
-            if (IsPlayerOneTurn && PlayerOneNumWalls == 0)
-            {
-                break;
-            }
-            else if (!IsPlayerOneTurn && PlayerTwoNumWalls == 0)
-            {
-                break;
-            }
-            if (move.Value)
+            foreach (string wall in ValidWallPlacements)
             {
                 //This checks to make sure walls are valid
                 AIBoard tempBoard = new AIBoard(this);
-                tempBoard.MakeMove(move.Key);
-                
-                if (tempBoard.CheckPathExists(true) && tempBoard.CheckPathExists(false))
+                tempBoard.MakeMove(wall);
+
+                if (BoardAnalysis.CheckPathExists(tempBoard, true) && BoardAnalysis.CheckPathExists(tempBoard, false))
                 {
-                    possibleMoves.Add(move.Key);
+                    possibleMoves.Add(wall);
                 }
             }
         }
         return possibleMoves;
-    }
-
-    //Pawn Jumping Mechanic Functions
-    //Returns string of right, left, up, or down.
-    //Throws exception if passed a move in the wrong format.
-    private string GetMoveDirection(string startSpace, string endSpace) {
-        string result;
-        int startRow = startSpace[0];
-        int startNumber = startSpace[1];
-        int endRow = endSpace[0];
-        int endNumber = endSpace[1];
-
-        if (startRow > endRow)
-        {
-            result = "left";
-        }
-        else if (endRow > startRow)
-        {
-            result = "right";
-        }
-        else if (startNumber > endNumber)
-        {
-            result = "down";
-        }
-        else if (endNumber > startNumber)
-        {
-            result = "up";
-        }
-        else
-        {
-            result = "error";
-        }
-
-        return result;
-    }
-    
-    //Uses a depth first search to find any path that reaches the end goal
-    private bool CheckPathExists(bool isPlayerOne)
-    {
-        //Moves to be visited is used to prevent the revisiting of nodes by another branch.
-        List<string> movesToBeVisited = new List<string>();
-        Stack<SearchNode> spaces = new Stack<SearchNode>();
-        bool result = false;
-
-        //Adds the appropriate starting node depending on specified player.
-        if (isPlayerOne)
-        {
-            spaces.Push(new SearchNode(PlayerOneLocation));
-        }
-        else
-        {
-            spaces.Push(new SearchNode(PlayerTwoLocation));
-        }
-
-
-        while (spaces.Count != 0 && !result)
-        {
-            SearchNode currentNode = spaces.Pop();
-
-            //Check the win conditions of the appropriate player.
-            if (isPlayerOne)
-            {
-                if (currentNode.GetSpace().EndsWith("9"))
-                {
-                    result = true;
-                }
-            }
-            else
-            {
-                if (currentNode.GetSpace().EndsWith("1"))
-                {
-                    result = true;
-                }
-            }
-
-            //Get the possible moves from the space of the current node.
-            List<string> movesFromSpace = GetAdjacentMoves(currentNode.GetSpace());
-            //Adds the appropriate nodes to the stack to be searched.
-            foreach (string move in movesFromSpace)
-            {
-                SearchNode sc = new SearchNode(currentNode, move);
-                if (!movesToBeVisited.Contains(move))
-                {
-                    spaces.Push(sc);
-                    movesToBeVisited.Add(move);
-                }
-            }
-
-        }
-        return result;
     }
 
     //Returns a list of moves from the space specified.
@@ -355,16 +215,7 @@ public class AIBoard
         List<string> possibleMoves = new List<string>();
         foreach (string move in DictionaryLookup.PerformAdjacentSpaceLookup(space))
         {
-            bool moveGood = true;
-            foreach (Move invalidMove in InvalidPawnMoves)
-            {
-                if (invalidMove.Equals(new Move(space, move)))
-                {
-                    moveGood = false;
-                    break;
-                }
-            }
-            if (moveGood)
+            if (!InvalidPawnMoves.Contains(new Move(space, move)))
             {
                 possibleMoves.Add(move);
             }
@@ -376,25 +227,25 @@ public class AIBoard
     //Builds the dictionary of walls and sets all to true(placeable).
     private void InitializeValidWallPlacements()
     {
-        ValidWallPlacements = new Dictionary<string, bool>();
+        ValidWallPlacements = new HashSet<string>();
         for (int i = 1; i <= 8; ++i)
         {
-            ValidWallPlacements.Add("a" + i.ToString() + "v", true);
-            ValidWallPlacements.Add("a" + i.ToString() + "h", true);
-            ValidWallPlacements.Add("b" + i.ToString() + "v", true);
-            ValidWallPlacements.Add("b" + i.ToString() + "h", true);
-            ValidWallPlacements.Add("c" + i.ToString() + "v", true);
-            ValidWallPlacements.Add("c" + i.ToString() + "h", true);
-            ValidWallPlacements.Add("d" + i.ToString() + "v", true);
-            ValidWallPlacements.Add("d" + i.ToString() + "h", true);
-            ValidWallPlacements.Add("e" + i.ToString() + "v", true);
-            ValidWallPlacements.Add("e" + i.ToString() + "h", true);
-            ValidWallPlacements.Add("f" + i.ToString() + "v", true);
-            ValidWallPlacements.Add("f" + i.ToString() + "h", true);
-            ValidWallPlacements.Add("g" + i.ToString() + "v", true);
-            ValidWallPlacements.Add("g" + i.ToString() + "h", true);
-            ValidWallPlacements.Add("h" + i.ToString() + "v", true);
-            ValidWallPlacements.Add("h" + i.ToString() + "h", true);
+            ValidWallPlacements.Add("a" + i.ToString() + "v");
+            ValidWallPlacements.Add("a" + i.ToString() + "h");
+            ValidWallPlacements.Add("b" + i.ToString() + "v");
+            ValidWallPlacements.Add("b" + i.ToString() + "h");
+            ValidWallPlacements.Add("c" + i.ToString() + "v");
+            ValidWallPlacements.Add("c" + i.ToString() + "h");
+            ValidWallPlacements.Add("d" + i.ToString() + "v");
+            ValidWallPlacements.Add("d" + i.ToString() + "h");
+            ValidWallPlacements.Add("e" + i.ToString() + "v");
+            ValidWallPlacements.Add("e" + i.ToString() + "h");
+            ValidWallPlacements.Add("f" + i.ToString() + "v");
+            ValidWallPlacements.Add("f" + i.ToString() + "h");
+            ValidWallPlacements.Add("g" + i.ToString() + "v");
+            ValidWallPlacements.Add("g" + i.ToString() + "h");
+            ValidWallPlacements.Add("h" + i.ToString() + "v");
+            ValidWallPlacements.Add("h" + i.ToString() + "h");
         }
     }
 
@@ -406,16 +257,16 @@ public class AIBoard
 
     //Returns true if there is a winner.
     //Easily modifiable to return the string of which player won.
-    public string GetWinner()
+    public int GetWinner()
     {
-        string winner = "none";
+        int winner = 0;
         if (PlayerOneLocation.EndsWith("9"))
         {
-            winner = "player1";
+            winner = 1;
         }
         else if (PlayerTwoLocation.EndsWith("1"))
         {
-            winner = "player2";
+            winner = 2;
         }
         return winner;
     }
@@ -434,4 +285,25 @@ public class AIBoard
         return winner;
     }
 
+    public override bool Equals(object obj)
+    {
+        var board = obj as AIBoard;
+        return board != null &&
+               PlayerOneLocation == board.PlayerOneLocation &&
+               PlayerOneNumWalls == board.PlayerOneNumWalls &&
+               PlayerTwoLocation == board.PlayerTwoLocation &&
+               PlayerTwoNumWalls == board.PlayerTwoNumWalls &&
+               EqualityComparer<List<string>>.Default.Equals(WallsPlaced, board.WallsPlaced);
+    }
+
+    public override int GetHashCode()
+    {
+        var hashCode = 537122267;
+        hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PlayerOneLocation);
+        hashCode = hashCode * -1521134295 + PlayerOneNumWalls.GetHashCode();
+        hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PlayerTwoLocation);
+        hashCode = hashCode * -1521134295 + PlayerTwoNumWalls.GetHashCode();
+        hashCode = hashCode * -1521134295 + EqualityComparer<List<string>>.Default.GetHashCode(WallsPlaced);
+        return hashCode;
+    }
 }

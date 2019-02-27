@@ -1,72 +1,63 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System;
+﻿using System.Collections.Generic;
 
 public class AI {
-
-    public AIBoard CurrentBoard { get; set; }
-
+    private AIBoard CurrentBoard { get; set; }
+    
     public AI()
     {
         CurrentBoard = new AIBoard();
     }
 
-    //Currently gets a random move of all possible moves.
-    //Takes playermove, if first move of the game then pass "gamestart", all lower case.
+    //Does a game tree search 1 layer deep.
     public string GetEasyMove(string playerMove) {
         HandlePlayerMove(playerMove);
+
         TreeNode rootNode = new TreeNode(CurrentBoard);
-        List<TreeNode> possibleMoves = rootNode.GetChildren();
-        
-        string moveSelected = "error";
-        float max = -10000000;
-        foreach (TreeNode node in possibleMoves) {
-            if (node.GetValue() > max) {
-                max = node.GetValue();
-                moveSelected = node.GetMoveMade();
-            }
-        }
+
+        string moveSelected = IterateStart(rootNode, 1);
+
         CurrentBoard.MakeMove(moveSelected);
 
         return moveSelected;
     }
 
+    //Initiates a minimax search 2 layers deep.
+    public string GetHardMove(string playerMove)
+    {
+        HandlePlayerMove(playerMove);
+
+        TreeNode rootNode = new TreeNode(CurrentBoard);
+
+        string moveSelected = IterateStart(rootNode, 2);
+
+        CurrentBoard.MakeMove(moveSelected);
+
+        return moveSelected;
+    }
+
+    //This handles game start logic and updating the board during the game.
     private void HandlePlayerMove(string playerMove)
     {
+        //AI starts on e9 and makes the first move of the game.
         if (playerMove == "gamestart")
         {
             CurrentBoard.PlayerTwoGoesFirst();
         }
+        //AI starts on e1 and makes the first move of the game.
         else if (playerMove == "")
         {
 
         }
+        //Updates the board with the player's move.
         else
         {
             CurrentBoard.MakeMove(playerMove);
         }
     }
 
-
-    //TODO:
-    public string GetHardMove(string playerMove) {
-        HandlePlayerMove(playerMove);
-        TreeNode rootNode = new TreeNode(CurrentBoard);
-
-        string moveSelected = "error";
-        if (CurrentBoard.GetPlayerOneNumWalls() == 0 || CurrentBoard.GetPlayerTwoNumWalls() == 0)
-        {
-            moveSelected = IterateStart(rootNode, 3);
-        }
-        else {
-            moveSelected = IterateStart(rootNode, 2);
-        }
-        CurrentBoard.MakeMove(moveSelected);
-
-        return moveSelected;
-    }
-
+    //Function able to return the actual move from the first level.
+    //This function is what initiates the alpha beta minimax search.
+    //Currently selects a random move from a list of moves evaluated to be equal to one another.
     private string IterateStart(TreeNode node, int depth) {
         List<TreeNode> rootChildren = node.GetChildren();
         int alpha = -10000000;
@@ -89,6 +80,8 @@ public class AI {
         return movesSelected[DictionaryLookup.rnd.Next(movesSelected.Count)];
     }
 
+
+    //Function that performs alpha beta pruning in a minimax tree search.
     private int Iterate(TreeNode node, int depth, int alpha, int beta, bool isMaxPlayer) {
         if (depth == 0) {
             return node.GetValue();
@@ -96,7 +89,7 @@ public class AI {
         if (isMaxPlayer)
         {
             foreach (TreeNode child in node.GetChildren()) {
-                alpha = Math.Max(alpha, Iterate(child, depth - 1, alpha, beta, !isMaxPlayer));
+                alpha = System.Math.Max(alpha, Iterate(child, depth - 1, alpha, beta, !isMaxPlayer));
                 if (beta > alpha) {
                     break;
                 }
@@ -108,7 +101,7 @@ public class AI {
         {
             foreach (TreeNode child in node.GetChildren())
             {
-                beta = Math.Min(beta, Iterate(child, depth - 1, alpha, beta, !isMaxPlayer));
+                beta = System.Math.Min(beta, Iterate(child, depth - 1, alpha, beta, !isMaxPlayer));
                 if (beta < alpha)
                 {
                     break;

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 static class DictionaryLookup
 {
-    public static Random rnd = new Random();
+    public static System.Random rnd = new System.Random();
     //Dictionary 1: Wall Placed as a String : List of Pawn moves blocked by the wall.
 
     private static readonly Dictionary<string, List<Move>> PawnBlockLookup = new Dictionary<string, List<Move>>()

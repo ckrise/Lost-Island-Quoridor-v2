@@ -1,20 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-/**
+﻿/**
  * This class is used for all interactions with AI.
- * Default difficulty set to easy. 
- =**/
+ **/
 public class AIController {
-    //Contains string "easy" or "hard". 
     private string difficulty;
     private AI computer;
 
+    //Default constructor 
     public AIController() {
-        difficulty = "easy";
         computer = new AI();
+        difficulty = "hard";
     }
-
     /**
      * Returns a move in the following format.
      * If wall, indicates the bottom left square then horizontal or vertical. Ex. B5h
