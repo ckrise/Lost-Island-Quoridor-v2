@@ -261,11 +261,11 @@ public class AIBoard
     public int GetWinner()
     {
         int winner = 0;
-        if (PlayerOneLocation[1] == '9')
+        if (PlayerOneLocation.EndsWith("9"))
         {
             winner = 1;
         }
-        else if (PlayerTwoLocation[1] == '1')
+        else if (PlayerTwoLocation.EndsWith("1"))
         {
             winner = 2;
         }
@@ -275,11 +275,11 @@ public class AIBoard
     public bool IsWinner()
     {
         bool winner = false;
-        if (PlayerOneLocation[1] == '9')
+        if (PlayerOneLocation.EndsWith("9"))
         {
             winner = true;
         }
-        else if (PlayerTwoLocation[1] == '1')
+        else if (PlayerTwoLocation.EndsWith("1"))
         {
             winner = true;
         }

@@ -2,14 +2,10 @@
 
 public class AI {
     private AIBoard CurrentBoard { get; set; }
-    private List<HashSet<TreeNode>> NodeEvalHistory { get; set; }
-    private int CurrentHistoryList { get; set; }
-
+    
     public AI()
     {
         CurrentBoard = new AIBoard();
-        NodeEvalHistory = new List<HashSet<TreeNode>>();
-        CurrentHistoryList = -1;
     }
 
     //Does a game tree search 1 layer deep.
@@ -28,9 +24,6 @@ public class AI {
     //Initiates a minimax search 2 layers deep.
     public string GetHardMove(string playerMove)
     {
-        CurrentHistoryList++;
-        NodeEvalHistory.Add(new HashSet<TreeNode>(new TreeNodeEqualityComparer()));
-
         HandlePlayerMove(playerMove);
 
         TreeNode rootNode = new TreeNode(CurrentBoard);
@@ -46,11 +39,20 @@ public class AI {
     private void HandlePlayerMove(string playerMove)
     {
         //AI starts on e9 and makes the first move of the game.
-        if (playerMove == "gamestart") { CurrentBoard.PlayerTwoGoesFirst(); }
+        if (playerMove == "gamestart")
+        {
+            CurrentBoard.PlayerTwoGoesFirst();
+        }
         //AI starts on e1 and makes the first move of the game.
-        else if (playerMove == ""){ }
+        else if (playerMove == "")
+        {
+
+        }
         //Updates the board with the player's move.
-        else { CurrentBoard.MakeMove(playerMove); }
+        else
+        {
+            CurrentBoard.MakeMove(playerMove);
+        }
     }
 
     //Function able to return the actual move from the first level.
@@ -82,16 +84,7 @@ public class AI {
     //Function that performs alpha beta pruning in a minimax tree search.
     private int Iterate(TreeNode node, int depth, int alpha, int beta, bool isMaxPlayer) {
         if (depth == 0) {
-            int result;
-            if (TryGetNodeValue(ref node))
-            {
-                result = node.GetValue();
-            }
-            else {
-                result = node.CalcValue();
-                NodeEvalHistory[CurrentHistoryList].Add(node);                
-            }
-            return result;
+            return node.GetValue();
         }
         if (isMaxPlayer)
         {
@@ -116,21 +109,5 @@ public class AI {
             }
             return beta;
         }
-    }
-
-    //Function uses history to find the value already calculated
-    private bool TryGetNodeValue(ref TreeNode node) {
-        bool resultFound = false;
-        foreach (HashSet<TreeNode> set in NodeEvalHistory) {
-            if (set.Contains(node)) {
-                foreach (TreeNode calculatedNode in set) {
-                    if (calculatedNode.Equals(node)) {
-                        node.SetValue(calculatedNode.GetValue());
-                        resultFound = true;
-                    }
-                }
-            }
-        }
-        return resultFound;
     }
 }

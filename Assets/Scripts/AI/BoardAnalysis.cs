@@ -83,7 +83,7 @@ static class BoardAnalysis
     public static bool CheckPathExists(AIBoard board, bool isPlayerOne)
     {
         //Moves to be visited is used to prevent the revisiting of nodes by another branch.
-        HashSet<string> movesToBeVisited = new HashSet<string>();
+        List<string> movesToBeVisited = new List<string>();
         Stack<SearchNode> spaces = new Stack<SearchNode>();
         bool result = false;
 
@@ -101,14 +101,13 @@ static class BoardAnalysis
         while (spaces.Count != 0 && !result)
         {
             SearchNode currentNode = spaces.Pop();
-            
+
             //Check the win conditions of the appropriate player.
             if (isPlayerOne)
             {
                 if (currentNode.space.EndsWith("9"))
                 {
                     result = true;
-                    break;
                 }
             }
             else
@@ -116,7 +115,6 @@ static class BoardAnalysis
                 if (currentNode.space.EndsWith("1"))
                 {
                     result = true;
-                    break;
                 }
             }
 
