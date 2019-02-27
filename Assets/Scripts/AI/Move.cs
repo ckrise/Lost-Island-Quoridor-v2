@@ -27,19 +27,19 @@ public class Move
     {
         unchecked
         {
-            int hashCode = 1867150729;
+            int hash = 17;
             if (Pos1.CompareTo(Pos2) > 0)
             {
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Pos1);
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Pos2);
+                hash = hash * 31 + Pos1.GetHashCode();
+                hash = hash * 31 + Pos2.GetHashCode();
             }
             else
             {
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Pos2);
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Pos1);
+                hash = hash * 31 + Pos1.GetHashCode();
+                hash = hash * 31 + Pos2.GetHashCode(); 
 
             }
-            return hashCode;
+            return hash;
         }
     }
 }
