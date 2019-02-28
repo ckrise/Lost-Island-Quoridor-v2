@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 
-static class DictionaryLookup
+namespace Board.Util
 {
-    public static System.Random rnd = new System.Random();
-    //Dictionary 1: Wall Placed as a String : List of Pawn moves blocked by the wall.
+    static class DictionaryLookup
+    {
+        //Dictionary 1: Wall Placed as a String : List of Pawn moves blocked by the wall.
 
-    private static readonly Dictionary<string, List<Move>> PawnBlockLookup = new Dictionary<string, List<Move>>()
+        private static readonly Dictionary<string, List<Move>> PawnBlockLookup = new Dictionary<string, List<Move>>()
     {
         {"a1v", new List<Move>(new Move[] { new Move("a1", "b1"), new Move("a2", "b2") })},
         {"a2v", new List<Move>(new Move[] { new Move("a2", "b2"), new Move("a3", "b3") })},
@@ -136,17 +137,17 @@ static class DictionaryLookup
         {"h7h", new List<Move>(new Move[] { new Move("h7", "h8"), new Move("i7", "i8") })},
         {"h8h", new List<Move>(new Move[] { new Move("h8", "h9"), new Move("i8", "i9") })}
     };
-    
-    //Function that performs the lookup on the wall data.
-    public static List<Move> PerformPawnBlockLookup(string wallPlaced)
-    {
-        return PawnBlockLookup[wallPlaced];
-    }
+
+        //Function that performs the lookup on the wall data.
+        public static List<Move> PerformPawnBlockLookup(string wallPlaced)
+        {
+            return PawnBlockLookup[wallPlaced];
+        }
 
 
-    //Dictionary 2: Wall as a string : List of Walls it prevents placement of
-    //This is initialized with specific values after the first lookup..
-    private static readonly Dictionary<string, List<string>> WallBlockLookup = new Dictionary<string, List<string>>()
+        //Dictionary 2: Wall as a string : List of Walls it prevents placement of
+        //This is initialized with specific values after the first lookup..
+        private static readonly Dictionary<string, List<string>> WallBlockLookup = new Dictionary<string, List<string>>()
     {
         {"a1v", new List<string>(new string[] { "a1v", "a1h", "a2v" })},
         {"a2v", new List<string>(new string[] { "a2v", "a2h", "a1v", "a3v" })},
@@ -278,15 +279,15 @@ static class DictionaryLookup
         {"h8h", new List<string>(new string[] { "h8h", "h8v", "g8h" })}
     };
 
-//Function that performs the lookup on the wall data.
-public static List<string> PerformWallBlockLookup(string wallPlaced)
-{
-    return WallBlockLookup[wallPlaced];
-}
+        //Function that performs the lookup on the wall data.
+        public static List<string> PerformWallBlockLookup(string wallPlaced)
+        {
+            return WallBlockLookup[wallPlaced];
+        }
 
-//Dictionary 3: Space as a string : List of spaces that are adjacent to the one given
-//This is initialized with specific values after the first lookup.
-private static readonly Dictionary<string, List<string>> AdjacentSpaceLookup = new Dictionary<string, List<string>>()
+        //Dictionary 3: Space as a string : List of spaces that are adjacent to the one given
+        //This is initialized with specific values after the first lookup.
+        private static readonly Dictionary<string, List<string>> AdjacentSpaceLookup = new Dictionary<string, List<string>>()
  {
         {"a1", new List<string> { "b1", "a2" }},
         {"a2", new List<string> { "b2", "a3", "a1" }},
@@ -372,13 +373,13 @@ private static readonly Dictionary<string, List<string>> AdjacentSpaceLookup = n
     };
 
 
-    //Function that performs the lookup and gives a list of adjacent spaces.
-    public static List<string> PerformAdjacentSpaceLookup(string space)
-    {
-        return AdjacentSpaceLookup[space];
-    }
+        //Function that performs the lookup and gives a list of adjacent spaces.
+        public static List<string> PerformAdjacentSpaceLookup(string space)
+        {
+            return AdjacentSpaceLookup[space];
+        }
 
-    private static readonly Dictionary<string, List<string>> WallsOfInterestLookup = new Dictionary<string, List<string>>()
+        private static readonly Dictionary<string, List<string>> WallsOfInterestLookup = new Dictionary<string, List<string>>()
     {
         {"a1v", new List<string>(new string[] { "b1h", "b2h", "a3v", "a2h" })},
         {"a2v", new List<string>(new string[] { "b1h", "b2h", "b3h", "a4v", "a1h", "a3h" })},
@@ -388,7 +389,7 @@ private static readonly Dictionary<string, List<string>> AdjacentSpaceLookup = n
         {"a6v", new List<string>(new string[] { "b5h", "b6h", "b7h", "a4v",  "a8v", "a5h", "a7h" })},
         {"a7v", new List<string>(new string[] { "b6h", "b7h", "b8h", "a5v", "a6h", "a8h" })},
         {"a8v", new List<string>(new string[] { "b7h", "b8h", "a6v", "a7h" })},
-        
+
         {"b1v", new List<string>(new string[] { "a1h", "a2h", "c1h", "c2h", "b3v", "b2h" })},
         {"b2v", new List<string>(new string[] { "a1h", "a2h", "a3h", "c1h", "c2h", "c3h", "b4v", "b1h", "b3h" })},
         {"b3v", new List<string>(new string[] { "a2h", "a3h", "a4h", "c2h", "c3h", "c4h", "b1v",  "b5v", "b2h", "b4h" })},
@@ -451,7 +452,7 @@ private static readonly Dictionary<string, List<string>> AdjacentSpaceLookup = n
         {"h6v", new List<string>(new string[] { "g5h", "g6h", "g7h", "i5h", "i6h", "i7h", "h4v",  "h8v", "h5h", "h7h" })},
         {"h7v", new List<string>(new string[] { "g6h", "g7h", "g8h", "i6h", "i7h", "i8h", "h5v", "h1h", "h8h" })},
         {"h8v", new List<string>(new string[] { "g7h", "g8h", "i7h", "i8h", "h6v", "h7h" })},
-        
+
         {"a1h", new List<string>(new string[] { "a2v", "b2v", "c1h", "b1v" })},
         {"a2h", new List<string>(new string[] { "a1v", "a3v", "b1v", "b3v", "c2h", "b2v" })},
         {"a3h", new List<string>(new string[] { "a2v", "a4v", "b2v", "b4v", "c3h", "b3v" })},
@@ -525,8 +526,9 @@ private static readonly Dictionary<string, List<string>> AdjacentSpaceLookup = n
         {"h8h", new List<string>(new string[] { "g7v", "h7v", "i7v", "f8h", "g8v" })},
 };
 
-    public static List<string> PerformWallsOfInterestLookup(string wall)
-    {
-        return WallsOfInterestLookup[wall];
+        public static List<string> PerformWallsOfInterestLookup(string wall)
+        {
+            return WallsOfInterestLookup[wall];
+        }
     }
 }

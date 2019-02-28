@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AI;
+using Board;
 using GameCore4.GameCore;
 using GameCore4.HelperClasses;
 
