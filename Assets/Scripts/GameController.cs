@@ -107,12 +107,13 @@ public class GameController : MonoBehaviour
         thread.Start();
         InvokeRepeating("ReceiveAIMove", 0.5f, 0.25f);
     }
+
     //gets a move from the AI and adds it to the board
     private void GetAIMove()
     {
         if(playerMove == "")
         {
-            aiMove = AIController.GetMove("gameStart");
+            aiMove = AIController.GetMove("gamestart");
         }
         else
         {
