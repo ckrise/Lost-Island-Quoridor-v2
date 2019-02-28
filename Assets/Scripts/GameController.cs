@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
         }
         else if(aiGame)
         {
+            Board.PlayerTwoGoesFirst();
             StartAIThread();
         }
         else
