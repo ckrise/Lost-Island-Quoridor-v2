@@ -23,7 +23,7 @@ namespace Board.Util
         }
 
         //Finds shortest path for the chosen player to the end of the board and returns it.
-        public static int EstimateShortestPath(AIBoard board, bool isPlayerOne)
+        public static int GetShortestPath(AIBoard board, bool isPlayerOne)
         {
             Queue<SearchNode> spaces = new Queue<SearchNode>();
             HashSet<string> movesToBeVisited = new HashSet<string>();
@@ -47,8 +47,25 @@ namespace Board.Util
                 //Checks for easy direct path
                 if (HasDirectPath(board, isPlayerOne))
                 {
-                    result = currentNode.depth + FindDirectDistance(currentNode.space, isPlayerOne);
+                    result = FindDirectDistance(currentNode.space, isPlayerOne);
                     break;
+                }
+
+                //Check the different end conditions for respective players.
+                //If they succeed set the result to the node's depth and break the loop.
+                if (isPlayerOne)
+                {
+                    if (currentNode.space.EndsWith("9"))
+                    {
+                        result = currentNode.depth;
+                    }
+                }
+                else
+                {
+                    if (currentNode.space.EndsWith("1"))
+                    {
+                        result = currentNode.depth;
+                    }
                 }
 
                 //Get a list of moves from the current node location.
@@ -84,7 +101,6 @@ namespace Board.Util
             {
                 spaces.Push(new SearchNode(board.GetPlayerTwoPos()));
             }
-            
 
 
             while (spaces.Count != 0 && !result)
@@ -92,10 +108,21 @@ namespace Board.Util
                 SearchNode currentNode = spaces.Pop();
 
                 //Check the win conditions of the appropriate player.
-                if (HasDirectPath(board, isPlayerOne))
+                if (isPlayerOne)
                 {
-                    result = true;
-                    break;
+                    if (currentNode.space.EndsWith("9"))
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (currentNode.space.EndsWith("1"))
+                    {
+                        result = true;
+                        break;
+                    }
                 }
 
                 //Get the possible moves from the space of the current node.
@@ -117,48 +144,47 @@ namespace Board.Util
         //Heuristic utility used to check if a direct path to the end of the board exists.
         public static bool HasDirectPath(AIBoard board, bool isPlayerOne)
         {
-            bool pathExists = true;
+            bool pathExists = false;
+            Queue<string> nextMove = new Queue<string>();
             string currentPoint;
-            HashSet<Move> badMoves = board.GetInvalidPawnMoves();
 
             if (isPlayerOne)
             {
-                currentPoint = board.GetPlayerOnePos();
-                string nextPoint = new string(new char[] { currentPoint[0], (char)(currentPoint[1] + 1) });
-
-                int i = 0;
-                while (i < 10) {
-                    i++;
-                    if (badMoves.Contains(new Move(currentPoint, nextPoint)))
+                nextMove.Enqueue(board.GetPlayerOnePos());
+                while (nextMove.Count != 0)
+                {
+                    currentPoint = nextMove.Dequeue();
+                    if (currentPoint.EndsWith("9"))
                     {
-                        pathExists = false;
+                        pathExists = true;
                         break;
                     }
-                    else
+
+                    string nextSpace = new string(new char[] { currentPoint[0], (char)(currentPoint[1] + 1) });
+                    if (!board.GetInvalidPawnMoves().Contains(new Move(currentPoint, nextSpace)))
                     {
-                        currentPoint = nextPoint;
-                        nextPoint = new string(new char[] { currentPoint[0], (char)(currentPoint[1] + 1) });
+                        nextMove.Enqueue(nextSpace);
+                        break;
                     }
                 }
             }
             else
             {
-                currentPoint = board.GetPlayerTwoPos();
-                string nextPoint = new string(new char[] { currentPoint[0], (char)(currentPoint[1] - 1) });
-
-                int i = 0;
-                while (i < 10)
+                nextMove.Enqueue(board.GetPlayerTwoPos());
+                while (nextMove.Count != 0)
                 {
-                    i++;
-                    if (badMoves.Contains(new Move(currentPoint, nextPoint)))
+                    currentPoint = nextMove.Dequeue();
+                    if (currentPoint.EndsWith("1"))
                     {
-                        pathExists = false;
+                        pathExists = true;
                         break;
                     }
-                    else
+
+                    string nextSpace = new string(new char[] { currentPoint[0], (char)(currentPoint[1] - 1) });
+                    if (!board.GetInvalidPawnMoves().Contains(new Move(currentPoint, nextSpace)))
                     {
-                        currentPoint = nextPoint;
-                        nextPoint = new string(new char[] { currentPoint[0], (char)(currentPoint[1] - 1) });
+                        nextMove.Enqueue(nextSpace);
+                        break;
                     }
                 }
             }

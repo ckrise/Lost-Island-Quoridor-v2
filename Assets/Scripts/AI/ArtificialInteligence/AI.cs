@@ -40,7 +40,7 @@ namespace AI
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
 
-            string moveSelected = IterateStart(rootNode, 3);
+            string moveSelected = IterateStart(rootNode, 2);
 
             CurrentBoard.MakeMove(moveSelected);
 
