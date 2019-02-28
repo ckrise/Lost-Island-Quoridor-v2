@@ -127,7 +127,7 @@ namespace Board
                         possibleJumps.Remove(PlayerOneLocation);
                         foreach (string jump in possibleJumps)
                         {
-                            string possibleDirection = BoardAnalysis.GetMoveDirection(PlayerOneLocation, jump);
+                            string possibleDirection = BoardAnalysis.GetMoveDirection(PlayerTwoLocation, jump);
                             if (possibleDirection == jumpDirection)
                             {
                                 straightJump = jump;

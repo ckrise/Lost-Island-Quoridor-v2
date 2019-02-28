@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using Board;
+using System;
 
-namespace AI
+namespace ArtificialInteligence
 {
     public class AI
     {
@@ -67,13 +68,13 @@ namespace AI
         private string IterateStart(TreeNode node, int depth)
         {
             List<TreeNode> rootChildren = node.GetChildren();
-            int alpha = -10000000;
-            int beta = 100000000;
+            float alpha = float.NegativeInfinity;
+            float beta = float.PositiveInfinity;
 
             List<string> movesSelected = new List<string>();
             foreach (TreeNode child in rootChildren)
             {
-                int result = Iterate(child, depth - 1, alpha, beta, false);
+                float result = Iterate(child, depth - 1, alpha, beta, false);
                 if (result > alpha)
                 {
                     alpha = result;
@@ -91,11 +92,11 @@ namespace AI
 
 
         //Function that performs alpha beta pruning in a minimax tree search.
-        private int Iterate(TreeNode node, int depth, int alpha, int beta, bool isMaxPlayer)
+        private float Iterate(TreeNode node, int depth, float alpha, float beta, bool isMaxPlayer)
         {
-            if (depth == 0)
+            if (depth == 0 || node.IsTerminalNode())
             {
-                int result;
+                float result;
                 if (TryGetNodeValue(ref node))
                 {
                     result = node.GetValue();
