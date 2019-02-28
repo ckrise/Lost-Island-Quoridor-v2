@@ -1,4 +1,4 @@
-﻿namespace AI
+﻿namespace ArtificialInteligence
 {
     /**
      * This class is used for all interactions with AI.

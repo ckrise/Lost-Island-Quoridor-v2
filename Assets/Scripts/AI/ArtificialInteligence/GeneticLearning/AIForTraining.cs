@@ -1,17 +1,40 @@
 ﻿using System.Collections.Generic;
 using Board;
-using System;
 
-namespace ArtificialInteligence
+namespace ArtificialInteligence.GeneticLearning
 {
-    public class AI
+    class AIForTraining
     {
         private AIBoard CurrentBoard { get; set; }
         private List<HashSet<TreeNode>> NodeEvalHistory { get; set; }
         private int CurrentHistoryList { get; set; }
+        public List<float> EvalWeights { get; set; }
 
-        public AI()
+        public AIForTraining()
         {
+            CurrentBoard = new AIBoard();
+            NodeEvalHistory = new List<HashSet<TreeNode>>();
+            CurrentHistoryList = -1;
+            EvalWeights = new List<float> { 1, -1, 1, -1, 1, -1 };
+        }
+
+        public AIForTraining(AIForTraining ai)
+        {
+            CurrentBoard = new AIBoard();
+            NodeEvalHistory = new List<HashSet<TreeNode>>();
+            CurrentHistoryList = -1;
+            EvalWeights = new List<float>(ai.EvalWeights);
+        }
+
+        public AIForTraining(List<float> weights)
+        {
+            CurrentBoard = new AIBoard();
+            NodeEvalHistory = new List<HashSet<TreeNode>>();
+            CurrentHistoryList = -1;
+            EvalWeights = new List<float>(weights);
+        }
+
+        public void ResetBoard() {
             CurrentBoard = new AIBoard();
             NodeEvalHistory = new List<HashSet<TreeNode>>();
             CurrentHistoryList = -1;
@@ -39,7 +62,7 @@ namespace ArtificialInteligence
 
             HandlePlayerMove(playerMove);
 
-            TreeNode rootNode = new TreeNode(CurrentBoard);
+            TreeNode rootNode = new TreeNode(CurrentBoard, EvalWeights, CurrentBoard.GetIsPlayerOneTurn());
 
             string moveSelected = IterateStart(rootNode, 2);
 
@@ -86,7 +109,6 @@ namespace ArtificialInteligence
                     movesSelected.Add(child.GetMoveMade());
                 }
             }
-
             return movesSelected[new System.Random().Next(movesSelected.Count)];
         }
 
@@ -155,5 +177,29 @@ namespace ArtificialInteligence
             }
             return resultFound;
         }
+
+        public AIForTraining GetMutatedAI() {
+            System.Random rnd = new System.Random();
+            List<float> mutatedWeights = new List<float>(EvalWeights);
+
+            for (int i = 0; i < mutatedWeights.Count; i++) {
+                int random = rnd.Next(0, 4);
+                if (random == 0)
+                { 
+                  //flip sign of weight
+                    mutatedWeights[i] += 1;
+                }
+                else if (random == 1)
+                { //if 2
+                  //pick random weight between -1 and 1
+                    mutatedWeights[i] -= 1;
+                }
+            }
+
+            AIForTraining newAI = new AIForTraining(mutatedWeights);
+            return newAI;
+        }
     }
 }
+
+

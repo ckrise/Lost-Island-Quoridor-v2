@@ -2,14 +2,24 @@
 using Board;
 using Board.Util;
 
-namespace AI
+namespace ArtificialInteligence
 {
     public class TreeNode
     {
+        //Will use static weights in real implementation to avoid overhead of copying to all nodes.
         private AIBoard Board { get; set; }
         private string MoveMade { get; set; }
-        private bool MaxPlayerIsPlayer1 { get; set; }
-        private int value;
+        private bool IsPlayerOne { get; set; }
+        private float value;
+
+        //Current weights of the form 
+        //0 - P1 shortest path
+        //1 = P2 shortest path
+        //2 = p1 number of walls
+        //3 = p2 number of walls
+        //4 = p1 manhattan distance
+        //4 = p2 manhattan distance
+        private readonly List<float> weights;
 
         //Used for creating a rootnode.
         //This will determine who the max player is for this node and all future children.
@@ -18,15 +28,24 @@ namespace AI
         {
             Board = new AIBoard(copy);
             MoveMade = "rootnode";
-            MaxPlayerIsPlayer1 = copy.GetIsPlayerOneTurn();
+            weights = new List<float> { 1f, -1f, 1f, -1f, 0f, 0f };
+            IsPlayerOne = copy.GetIsPlayerOneTurn();
         }
 
         //Used in the creating of children of a treenode.
-        public TreeNode(AIBoard copy, string move, bool maxPlayer)
+        public TreeNode(AIBoard copy, string move,  List<float> w, bool isp1)
         {
             Board = new AIBoard(copy);
             MoveMade = move;
-            MaxPlayerIsPlayer1 = maxPlayer;
+            weights = w;
+            IsPlayerOne = isp1;
+        }
+
+        public TreeNode(AIBoard copy, List<float> w, bool isp1) {
+            Board = new AIBoard(copy);
+            MoveMade = "rootnode";
+            weights = w;
+            IsPlayerOne = isp1;
         }
 
         //Constructs a list of treenodes that result from every move made that is possible.
@@ -39,7 +58,7 @@ namespace AI
                 //This checks to make sure walls are valid
                 AIBoard tempBoard = new AIBoard(Board);
                 tempBoard.MakeMove(move);
-                children.Add(new TreeNode(tempBoard, move, MaxPlayerIsPlayer1));
+                children.Add(new TreeNode(tempBoard, move, weights, IsPlayerOne));
             }
 
             //This gets only valid walls but is done here so that it will only check walls of interest.
@@ -58,7 +77,7 @@ namespace AI
                 {
                     if (BoardAnalysis.CheckPathExists(tempBoard, true) && BoardAnalysis.CheckPathExists(tempBoard, false))
                     {
-                        children.Add(new TreeNode(tempBoard, wall, MaxPlayerIsPlayer1));
+                        children.Add(new TreeNode(tempBoard, wall, weights, IsPlayerOne));
                     }
                 }
             }
@@ -116,18 +135,18 @@ namespace AI
         }
 
         //Gets the Value of the node, calculates it if it has not been done.
-        public int GetValue()
+        public float GetValue()
         {
             return value;
         }
 
-        public void SetValue(int val)
+        public void SetValue(float val)
         {
             value = val;
         }
 
         //Gets the Value of the node, calculates it if it has not been done.
-        public int CalcValue()
+        public float CalcValue()
         {
             EvaluateNode();
             return value;
@@ -141,18 +160,23 @@ namespace AI
             //Calculates factors of interest and calculates the value.
             else
             {
-                int P1SP = BoardAnalysis.GetShortestPath(Board, true);
-                int P2SP = BoardAnalysis.GetShortestPath(Board, false);
+                int P1SP = BoardAnalysis.EstimateShortestPath(Board, true);
+                int P2SP = BoardAnalysis.EstimateShortestPath(Board, false);
                 int P1NumWalls = Board.GetPlayerOneNumWalls();
                 int P2NumWalls = Board.GetPlayerTwoNumWalls();
+                int P1MD = BoardAnalysis.FindDirectDistance(Board.GetPlayerOnePos(), true);
+                int P2MD = BoardAnalysis.FindDirectDistance(Board.GetPlayerTwoPos(), false);
 
-                if (MaxPlayerIsPlayer1)
+                if (!IsPlayerOne)
                 {
-                    value = -P1SP + P2SP - P2NumWalls + P1NumWalls;
+                    value = weights[0] * P1SP + weights[1] * P2SP
+                          + weights[2] * P2NumWalls + weights[3] * P1NumWalls
+                          + weights[4] * P1MD + weights[5] * P2MD;
                 }
-                else
-                {
-                    value = P1SP - P2SP + P2NumWalls - P1NumWalls;
+                else {
+                    value = -weights[0] * P1SP + -weights[1] * P2SP
+                         + -weights[2] * P2NumWalls + -weights[3] * P1NumWalls
+                         + -weights[4] * P1MD + -weights[5] * P2MD;
                 }
             }
         }
@@ -161,39 +185,29 @@ namespace AI
          * Returns true if val is ready to return.
          * Tests for upcoming win conditions to 
          **/
-        private bool EvaluateWinPossibility(ref int val)
+        private bool EvaluateWinPossibility(ref float val)
         {
             int winner = Board.GetWinner();
             bool result = false;
-            if (MaxPlayerIsPlayer1)
+            if (winner == 1 && !IsPlayerOne)
             {
-                if (winner == 1)
-                {
-                    val = 10000;
-                    result = true;
-                }
-                else if (winner == 2)
-                {
-                    val = -10000;
-                    result = true;
-                }
-                else
-                {
-                    val = 0;
-                }
+                val = -10000;
+                result = true;
             }
-            else
+            else if (winner == 2 && !IsPlayerOne)
             {
-                if (winner == 1)
-                {
-                    val = -10000;
-                    result = true;
-                }
-                else if (winner == 2)
-                {
-                    val = 10000;
-                    result = true;
-                }
+                val = 10000;
+                result = true;
+            }
+            else if (winner == 1 && IsPlayerOne)
+            {
+                val = 10000;
+                result = true;
+            }
+            else if (winner == 2 && IsPlayerOne)
+            {
+                val = -10000;
+                result = true;
             }
             return result;
         }

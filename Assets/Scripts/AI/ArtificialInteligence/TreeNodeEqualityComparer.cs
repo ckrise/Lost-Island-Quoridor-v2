@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AI
+namespace ArtificialInteligence
 {
     //Equality comparer used to compare tree nodes for storage in hashset.
     class TreeNodeEqualityComparer : IEqualityComparer<TreeNode>
