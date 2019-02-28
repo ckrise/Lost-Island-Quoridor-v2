@@ -20,6 +20,9 @@ namespace ArtificialInteligence
         //Does a game tree search 1 layer deep.
         public string GetEasyMove(string playerMove)
         {
+            CurrentHistoryList++;
+            NodeEvalHistory.Add(new HashSet<TreeNode>(new TreeNodeEqualityComparer()));
+
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);

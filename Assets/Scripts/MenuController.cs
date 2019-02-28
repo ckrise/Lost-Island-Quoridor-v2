@@ -104,6 +104,11 @@ public class MenuController : MonoBehaviour
         hardButton.onClick.AddListener(StartHard);
     }
 
+    public void ToggleGoFirst(bool goFirst)
+    {
+        GameData.PlayerGoesFirst = goFirst;
+    }
+
     private void StartEasy()
     {
         StartAIGame("AI_EASY");
