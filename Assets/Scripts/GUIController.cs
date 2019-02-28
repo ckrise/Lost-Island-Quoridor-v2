@@ -16,7 +16,8 @@ public class GUIController : MonoBehaviour
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
 
-    public Text messageText, inputText;
+    public Text messageText;
+    public InputField chatInputField;
     public Button winButton, chatButton;
     public ScrollRect chatScrollRect;
     public bool animationFinished = false;
@@ -398,6 +399,8 @@ public class GUIController : MonoBehaviour
     {
         if(!gameOver)
         {
+            chatInputField.Select();
+            chatInputField.ActivateInputField();
             chatPanel.SetActive(!chatPanel.activeSelf);
             helpPanel.SetActive(false);
             settingsPanel.SetActive(false);
@@ -429,18 +432,18 @@ public class GUIController : MonoBehaviour
     public void ReceiveMessage(string message)
     {
         //update message window
-        UpdateChat("Them:" + message);     
+        UpdateChat(message);
+        ShowChatMenu();
     }
 
     public void SendChat()
     {
-        if (inputText.text != "")
+        if (chatInputField.text != "")
         {
-            string message = "You: " + inputText.text;
-            string messageToSend = inputText.text;
-            inputText.text = "";
-            UpdateChat(message);
-            //NEW CHANGE
+            string messageToSend = PlayerPrefs.GetString("PlayerName") + ": " + chatInputField.text;
+            string messageToDisplay = "You: " + chatInputField.text;
+            chatInputField.text = "";
+            UpdateChat(messageToDisplay);
             GameData.NetworkController.onMessageToSend(messageToSend);
         }
     }

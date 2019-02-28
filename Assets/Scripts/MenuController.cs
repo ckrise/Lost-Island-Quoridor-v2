@@ -17,7 +17,7 @@ public class MenuController : MonoBehaviour
         storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
         settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel; 
     public InputField createRoomField, joinRoomField, nameEntryField;
-    public Text lobbyText, connectingText;
+    public Text lobbyText, connectingText, nameErrorText;
     public ScrollRect roomScrollView;
 
     private List<string> roomList = new List<string>();
@@ -51,14 +51,22 @@ public class MenuController : MonoBehaviour
     {
         continuePanel.SetActive(false);
         nameEntryPanel.SetActive(true);
-       
+        nameEntryField.Select();
+        nameEntryField.ActivateInputField();
+
     }
     public void NameEntered()
     {
-        PlayerPrefs.SetString("PlayerName", nameEntryField.text);
-        nameEntryPanel.SetActive(false);
-        mainPanel.SetActive(true);
-        
+        if (nameEntryField.text != "")
+        {
+            PlayerPrefs.SetString("PlayerName", nameEntryField.text);
+            nameEntryPanel.SetActive(false);
+            mainPanel.SetActive(true);
+        }
+        else
+        {
+            nameErrorText.gameObject.SetActive(true);
+        }
     }
 
     public void Back()

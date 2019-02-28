@@ -9,7 +9,31 @@ public static class GameData
     private static string aiDifficulty = "Easy";
     private static NetworkController networkController;
     private static string scene = "AztecScene";
+    private static string playerMove = "";
+    private static string aiMove = "";
 
+    public static string PlayerMove
+    {
+        get
+        {
+            return playerMove;
+        }
+        set
+        {
+            playerMove = value;
+        }
+    }
+    public static string AIMove
+    {
+        get
+        {
+            return aiMove;
+        }
+        set
+        {
+            aiMove = value;
+        }
+    }
     public static string AIDifficulty
     {
         get
@@ -21,6 +45,7 @@ public static class GameData
             aiDifficulty = value;
         }
     }
+   
     public static bool IsAIGame
     {
         get

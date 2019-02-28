@@ -5,6 +5,8 @@ using ArtificialInteligence;
 using Board;
 using GameCore4.GameCore;
 using GameCore4.HelperClasses;
+using System.Threading;
+
 
 public class GameController : MonoBehaviour
 {
@@ -13,12 +15,16 @@ public class GameController : MonoBehaviour
     private AIController AIController { get; set; }
     private bool playerTurn {get; set;}
     private bool aiGame {get; set;}
-    
+    private string aiMove = "";
+    private string playerMove = "";
+    private bool aiHasNewMove = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+        //do we still need this????
         DontDestroyOnLoad(gameObject);  
+        //???????????????????????????
+
         GCInstance = this;
         Board = new AIBoard();
         AIController = new AIController();
@@ -42,11 +48,7 @@ public class GameController : MonoBehaviour
         }
         else if(aiGame)
         {
-            //set AI Difficulty here
-            string aiMove = AIController.GetMove("gamestart");
-            Board.MakeMove(aiMove);
-            playerTurn = true;
-            GUIController.GUIReference.StartPlayerTurn(aiMove, Board.GetWallMoves(), Board.GetPawnMoves());
+            StartAIThread();
         }
         else
         {
@@ -57,6 +59,7 @@ public class GameController : MonoBehaviour
     //called by the GUIController when the player has finished making a move
     public void RecieveMoveFromPlayer(string move)
     {
+        playerMove = move;
         Board.MakeMove(move);
         if (Board.IsWinner())
         {
@@ -71,18 +74,7 @@ public class GameController : MonoBehaviour
             playerTurn = false;
             if (aiGame)
             {
-                string aiMove = AIController.GetMove(move);
-                Board.MakeMove(aiMove);
-                if(Board.IsWinner())
-                {
-                    GUIController.GUIReference.GameOver(playerTurn, aiMove);
-                    
-                }
-                else
-                {
-                    playerTurn = true;
-                    GUIController.GUIReference.StartPlayerTurn(aiMove, Board.GetWallMoves(), Board.GetPawnMoves());
-                }
+                StartAIThread();
             }
             else
             {
@@ -108,10 +100,43 @@ public class GameController : MonoBehaviour
         }
     }
    
- 
-
-
-   
-
-   
+    //creates a new thread that calls GetAIMove
+    private void StartAIThread()
+    {
+        Thread thread = new Thread(GetAIMove) { IsBackground = true };
+        thread.Start();
+        InvokeRepeating("ReceiveAIMove", 0.5f, 0.25f);
+    }
+    //gets a move from the AI and adds it to the board
+    private void GetAIMove()
+    {
+        if(playerMove == "")
+        {
+            aiMove = AIController.GetMove("gameStart");
+        }
+        else
+        {
+           aiMove = AIController.GetMove(playerMove);
+        }
+        Board.MakeMove(aiMove);
+        aiHasNewMove = true;
+    }
+    //gets called on an interval until the AI is done. then gives the results of the move to the user
+    private void ReceiveAIMove()
+    { 
+        if(aiHasNewMove)
+        {
+            aiHasNewMove = false;
+            if (Board.IsWinner())
+            {
+                GUIController.GUIReference.GameOver(playerTurn, aiMove);
+            }
+            else
+            {
+                playerTurn = true;
+                GUIController.GUIReference.StartPlayerTurn(aiMove, Board.GetWallMoves(), Board.GetPawnMoves());
+            }
+            CancelInvoke();
+        }
+    }
 }
