@@ -20,12 +20,10 @@ public class MageBehavior : MonoBehaviour
     public void Summon()
     {
         animator.SetTrigger("summon");
-        Debug.Log("Summon called");
     }
     public void Attack()
     {
         animator.SetTrigger("attack");
-        Debug.Log("Attack called");
     }
    
 }
