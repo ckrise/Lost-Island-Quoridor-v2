@@ -51,14 +51,15 @@ public class MenuController : MonoBehaviour
     {
         continuePanel.SetActive(false);
         nameEntryPanel.SetActive(true);
-       
+        nameEntryField.Select();
+        nameEntryField.ActivateInputField();
+
     }
     public void NameEntered()
     {
         PlayerPrefs.SetString("PlayerName", nameEntryField.text);
         nameEntryPanel.SetActive(false);
         mainPanel.SetActive(true);
-        
     }
 
     public void Back()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.68841255, g: 0.62281877, b: 0.52420396, a: 1}
+  m_IndirectSpecularColor: {r: 0.68833274, g: 0.62281364, b: 0.52414554, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7303,7 +7303,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00001856966, y: 0.000060203394}
+  m_AnchoredPosition: {x: -0.00006433967, y: 0.000060203394}
   m_SizeDelta: {x: 0.00004576964, y: 600}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &279856111
@@ -7399,7 +7399,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: Enter message...
 --- !u!222 &281218639
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9197,12 +9197,12 @@ MonoBehaviour:
   m_LineType: 1
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 250
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 695291495}
-        m_MethodName: 
+        m_MethodName: SendChat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15208,7 +15208,7 @@ RectTransform:
   m_Father: {fileID: 148413880}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.45833325}
+  m_AnchorMin: {x: 0, y: 0.4583332}
   m_AnchorMax: {x: 1, y: 0.9999999}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -18203,11 +18203,12 @@ MonoBehaviour:
   gameplayPanel: {fileID: 1422841041}
   messageText: {fileID: 7662200659086568564, guid: 841df359a3433d64493f126102d554cd,
     type: 3}
-  inputText: {fileID: 2054308431}
+  chatInputField: {fileID: 322073772}
   winButton: {fileID: 1523273950}
   chatButton: {fileID: 294610697}
   chatScrollRect: {fileID: 2082590260}
   animationFinished: 0
+  gameOver: 0
 --- !u!1001 &696729873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20860,7 +20861,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &777678849
 GameObject:
@@ -25060,8 +25061,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902329401}
-  m_LocalRotation: {x: -0, y: 0.9997163, z: -0, w: -0.023819592}
-  m_LocalPosition: {x: -129.7, y: -1.5, z: 43.6}
+  m_LocalRotation: {x: -0, y: 0.7237492, z: -0, w: 0.6900632}
+  m_LocalPosition: {x: -38.599987, y: 0, z: -137.70001}
   m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_Children:
   - {fileID: 1869538175}
@@ -25070,8 +25071,8 @@ Transform:
   - {fileID: 278836966}
   - {fileID: 820797391}
   - {fileID: 610205680}
-  m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_Father: {fileID: 1444022797}
+  m_RootOrder: 621
   m_LocalEulerAnglesHint: {x: 0, y: 182.73, z: 0}
 --- !u!1 &905062434
 GameObject:
@@ -34868,8 +34869,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1245287190}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 5, y: 1.5, z: -8}
   m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_Children:
   - {fileID: 874829038}
@@ -34878,8 +34879,8 @@ Transform:
   - {fileID: 1131271211}
   - {fileID: 1970392748}
   - {fileID: 394614999}
-  m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_Father: {fileID: 1444022797}
+  m_RootOrder: 620
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1248820165
 PrefabInstance:
@@ -36667,7 +36668,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 575827234}
   m_Direction: 2
   m_Value: 0.99999976
-  m_Size: 0.5416666
+  m_Size: 0.5416667
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
