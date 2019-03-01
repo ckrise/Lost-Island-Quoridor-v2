@@ -15,7 +15,8 @@ public class MenuController : MonoBehaviour
         helpPanel, storyPanel, quickplayPanel, lobbyPanel,
         connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab,
         storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
-        settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel; 
+        settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel,
+        failMultiplayerConnectionPanel, failJoinRoomPanel, disconnectedFromMultiplayerPanel; 
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText, nameErrorText;
     public ScrollRect roomScrollView;
@@ -145,7 +146,18 @@ public class MenuController : MonoBehaviour
         mainPanel.SetActive(false);
         helpPanel.SetActive(true);
     }
-
+    public void CloseFailMultiplayerPanel()
+    {
+        failMultiplayerConnectionPanel.SetActive(false);
+    }
+    public void CloseFailJoinRoomPanel()
+    {
+        failJoinRoomPanel.SetActive(false);
+    }
+    public void CloseDisconnectedFromMultiPlayerPanel()
+    {
+        disconnectedFromMultiplayerPanel.SetActive(false);
+    }
    
 
     #region Help
