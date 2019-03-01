@@ -12,7 +12,7 @@ public class GUIController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
-        settingsPanel, helpPanel, opponentDisconnectedPanel;
+        settingsPanel, helpPanel, opponentDisconnectedPanel, disconnectedFromNetworkPanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
 
@@ -391,6 +391,10 @@ public class GUIController : MonoBehaviour
             opponentDisconnectedPanel.SetActive(true);
         }
         
+    }
+    public void closeLostConnectionPanel()
+    {
+        disconnectedFromNetworkPanel.SetActive(false);
     }
     #endregion
 
