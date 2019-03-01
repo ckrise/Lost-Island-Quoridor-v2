@@ -376,7 +376,7 @@ public class GUIController : MonoBehaviour
             Debug.Log("NetworkGame");
             GameData.NetworkController.gameOver();
         }
-        SceneManager.LoadScene("MainMenu");
+        //SceneManager.LoadScene("MainMenu");
     }
     public void OpponentLeft()
     {
