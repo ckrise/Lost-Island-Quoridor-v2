@@ -7,6 +7,10 @@ public class PawnAnimation : MonoBehaviour
     private Vector3 destination;
     public float speed = 2;
     private bool isPlayer = false;
+    private Vector3 startPosition;
+    private float totalDistance;
+    private float halfway;
+    private int b;
 
 
     // http://answers.unity.com/answers/1426132/view.html
@@ -22,6 +26,7 @@ public class PawnAnimation : MonoBehaviour
         if (destination != gameObject.transform.position)
         {
             IncrementPosition();
+            AnimateY();
         }
     }
 
@@ -30,19 +35,59 @@ public class PawnAnimation : MonoBehaviour
         float delta = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(
             transform.position, destination, delta);
+
         if (destination == gameObject.transform.position)
         {
             GUIController.GUIReference.AnimationCompleted(isPlayer);
         }
     }
-    
+
     public void SetDestination(Vector3 value, bool isPlayer)
     {
         this.isPlayer = isPlayer;
         destination = value;
+        startPosition = transform.position;
+        totalDistance = DistanceFormulaXZ(transform.position, destination);
+        halfway = totalDistance / 2;
+        b = CalculateB();
     }
 
+    private void AnimateY()
+    {
+        var p = transform.position;
+        float height = CalculateHeight();
+        transform.position = new Vector3(p.x, height, p.z);
 
+    }
+    private int CalculateB()
+    {
+        int b;
+        if (halfway == 1)
+        {
+            b = 1;
+        }
+        else if (halfway == 2)
+        {
+            b = 4;
+        }
+        else /*if (halfway == Mathf.Sqrt(8) / 2)*/
+        {
+            b = 2;
+        }
+        return b;
+    }
+    private float CalculateHeight()
+    {
+        float currentDist = DistanceFormulaXZ(transform.position, destination);
+        float currentDistFromHalf = currentDist - halfway;
+        return b - Mathf.Pow(currentDistFromHalf, 2);
+    }
 
+    private float DistanceFormulaXZ(Vector3 start, Vector3 end)
+    {
+        float xDiff = end.x - start.x;
+        float zDiff = end.z - start.z;
+        return Mathf.Sqrt(Mathf.Pow(xDiff, 2) + Mathf.Pow(zDiff, 2));
+    }
 
 }
