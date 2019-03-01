@@ -43,26 +43,24 @@ namespace ArtificialInteligence
             //This gets only valid walls but is done here so that it will only check walls of interest.
             //This avoids checking if a ton of walls are valid that we don't care about.
             //This is why we do not just call GetWallMoves()
-            HashSet<string> wallMoves = Board.GetAllValidWalls();
-            SetNodesOfInterest(ref wallMoves);
-            foreach (string wall in wallMoves)
-            {
-                //This checks to make sure walls are valid
-                AIBoard tempBoard = new AIBoard(Board);
-                tempBoard.MakeMove(wall);
-                if ((tempBoard.GetIsPlayerOneTurn() && tempBoard.GetPlayerOneNumWalls() == 0) 
-                    || (!tempBoard.GetIsPlayerOneTurn() && tempBoard.GetPlayerTwoNumWalls() == 0))
+            if ((Board.GetIsPlayerOneTurn() && Board.GetPlayerOneNumWalls() == 0)
+                    || (!Board.GetIsPlayerOneTurn() && Board.GetPlayerTwoNumWalls() == 0))
+            { }
+            else { 
+                HashSet<string> wallMoves = Board.GetAllValidWalls();
+                SetNodesOfInterest(ref wallMoves);
+                foreach (string wall in wallMoves)
                 {
-
-                }
-                else
-                {
+                    //This checks to make sure walls are valid
+                    AIBoard tempBoard = new AIBoard(Board);
+                    tempBoard.MakeMove(wall);
                     if (BoardAnalysis.CheckPathExists(tempBoard, true) && BoardAnalysis.CheckPathExists(tempBoard, false))
                     {
                         children.Add(new TreeNode(tempBoard, wall));
                     }
                 }
             }
+
             //end of wall selection
 
             return children;
