@@ -6,10 +6,10 @@ public class LevelLoader : MonoBehaviour
 {
     public GameObject loadingPanel;
     public Slider progressBar;
+    public Text progressText;
     public void LoadLevel(string sceneName)
     {
         StartCoroutine(LoadAsynchrously(sceneName));
-       
     }
 
     IEnumerator LoadAsynchrously(string sceneName)
@@ -20,6 +20,7 @@ public class LevelLoader : MonoBehaviour
         {
             float progress = Mathf.Clamp01(operation.progress / .9f);
             progressBar.value = progress;
+            progressText.text = (progress * 100f) + "%";
             yield return null;
         }
     }

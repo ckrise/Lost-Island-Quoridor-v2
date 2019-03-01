@@ -40,8 +40,6 @@ public class MenuController : MonoBehaviour
         }
         helpPanels = new List<GameObject>{ storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
                                            settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel };
-
-
     }
 
     public void QuitGame()
@@ -55,7 +53,6 @@ public class MenuController : MonoBehaviour
         nameEntryPanel.SetActive(true);
         nameEntryField.Select();
         nameEntryField.ActivateInputField();
-
     }
     public void NameEntered()
     {
@@ -86,7 +83,6 @@ public class MenuController : MonoBehaviour
             settingsPanel.SetActive(false);
             helpPanel.SetActive(false);
             quickplayPanel.SetActive(false);
-           
         }
     }
 
@@ -95,7 +91,6 @@ public class MenuController : MonoBehaviour
         PlayerPrefs.SetString("PLAY_MODE", "STORY");
         mainPanel.SetActive(false);
         storyPanel.SetActive(true);
-        
     }
 
     void QuickPlay()
@@ -129,12 +124,10 @@ public class MenuController : MonoBehaviour
             case "AI_EASY":
                 GameData.AIDifficulty = "easy";
                 Debug.Log(GameData.AIDifficulty);
-              
                 break;
             case "AI_HARD":
                 GameData.AIDifficulty = "hard";
                 Debug.Log(GameData.AIDifficulty);
-                 
                 break;
             default:
                 break;
@@ -145,14 +138,12 @@ public class MenuController : MonoBehaviour
     {
         mainPanel.SetActive(false);
         settingsPanel.SetActive(true);
-       
     }
 
     void Help()
     {
         mainPanel.SetActive(false);
         helpPanel.SetActive(true);
-        
     }
 
    
@@ -252,6 +243,4 @@ public class MenuController : MonoBehaviour
         GameData.NetworkController.onClickJoinRoom(name);
     }
     #endregion
-
-    
 }
