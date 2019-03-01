@@ -194,7 +194,9 @@ namespace Board
         {
             List<string> possibleMoves = new List<string>();
 
-            if ((IsPlayerOneTurn && PlayerOneNumWalls == 0) || (!IsPlayerOneTurn && PlayerTwoNumWalls == 0)) { }
+            if ((IsPlayerOneTurn && PlayerOneNumWalls == 0) || (!IsPlayerOneTurn && PlayerTwoNumWalls == 0)) {
+
+            }
             else
             {
                 foreach (string wall in ValidWallPlacements)

@@ -9,17 +9,7 @@ namespace ArtificialInteligence
         //Will use static weights in real implementation to avoid overhead of copying to all nodes.
         private AIBoard Board { get; set; }
         private string MoveMade { get; set; }
-        private bool IsPlayerOne { get; set; }
         private float value;
-
-        //Current weights of the form 
-        //0 - P1 shortest path
-        //1 = P2 shortest path
-        //2 = p1 number of walls
-        //3 = p2 number of walls
-        //4 = p1 manhattan distance
-        //4 = p2 manhattan distance
-        private readonly List<float> weights;
 
         //Used for creating a rootnode.
         //This will determine who the max player is for this node and all future children.
@@ -28,24 +18,13 @@ namespace ArtificialInteligence
         {
             Board = new AIBoard(copy);
             MoveMade = "rootnode";
-            weights = new List<float> { 1f, -1f, 1f, -1f, 0f, 0f };
-            IsPlayerOne = copy.GetIsPlayerOneTurn();
         }
 
         //Used in the creating of children of a treenode.
-        public TreeNode(AIBoard copy, string move,  List<float> w, bool isp1)
+        public TreeNode(AIBoard copy, string move)
         {
             Board = new AIBoard(copy);
             MoveMade = move;
-            weights = w;
-            IsPlayerOne = isp1;
-        }
-
-        public TreeNode(AIBoard copy, List<float> w, bool isp1) {
-            Board = new AIBoard(copy);
-            MoveMade = "rootnode";
-            weights = w;
-            IsPlayerOne = isp1;
         }
 
         //Constructs a list of treenodes that result from every move made that is possible.
@@ -58,7 +37,7 @@ namespace ArtificialInteligence
                 //This checks to make sure walls are valid
                 AIBoard tempBoard = new AIBoard(Board);
                 tempBoard.MakeMove(move);
-                children.Add(new TreeNode(tempBoard, move, weights, IsPlayerOne));
+                children.Add(new TreeNode(tempBoard, move));
             }
 
             //This gets only valid walls but is done here so that it will only check walls of interest.
@@ -71,13 +50,16 @@ namespace ArtificialInteligence
                 //This checks to make sure walls are valid
                 AIBoard tempBoard = new AIBoard(Board);
                 tempBoard.MakeMove(wall);
-                if ((Board.GetIsPlayerOneTurn() && Board.GetPlayerOneNumWalls() == 0) ||
-                    (!Board.GetIsPlayerOneTurn() && Board.GetPlayerTwoNumWalls() == 0)) { }
+                if ((tempBoard.GetIsPlayerOneTurn() && tempBoard.GetPlayerOneNumWalls() == 0) 
+                    || (!tempBoard.GetIsPlayerOneTurn() && tempBoard.GetPlayerTwoNumWalls() == 0))
+                {
+
+                }
                 else
                 {
                     if (BoardAnalysis.CheckPathExists(tempBoard, true) && BoardAnalysis.CheckPathExists(tempBoard, false))
                     {
-                        children.Add(new TreeNode(tempBoard, wall, weights, IsPlayerOne));
+                        children.Add(new TreeNode(tempBoard, wall));
                     }
                 }
             }
@@ -164,20 +146,8 @@ namespace ArtificialInteligence
                 int P2SP = BoardAnalysis.EstimateShortestPath(Board, false);
                 int P1NumWalls = Board.GetPlayerOneNumWalls();
                 int P2NumWalls = Board.GetPlayerTwoNumWalls();
-                int P1MD = BoardAnalysis.FindDirectDistance(Board.GetPlayerOnePos(), true);
-                int P2MD = BoardAnalysis.FindDirectDistance(Board.GetPlayerTwoPos(), false);
-
-                if (!IsPlayerOne)
-                {
-                    value = weights[0] * P1SP + weights[1] * P2SP
-                          + weights[2] * P2NumWalls + weights[3] * P1NumWalls
-                          + weights[4] * P1MD + weights[5] * P2MD;
-                }
-                else {
-                    value = -weights[0] * P1SP + -weights[1] * P2SP
-                         + -weights[2] * P2NumWalls + -weights[3] * P1NumWalls
-                         + -weights[4] * P1MD + -weights[5] * P2MD;
-                }
+                
+                value = (P1SP - P2SP) + (P2NumWalls - P1NumWalls);
             }
         }
 
@@ -189,24 +159,14 @@ namespace ArtificialInteligence
         {
             int winner = Board.GetWinner();
             bool result = false;
-            if (winner == 1 && !IsPlayerOne)
+            if (winner == 1)
             {
-                val = -10000;
+                val = -100000;
                 result = true;
             }
-            else if (winner == 2 && !IsPlayerOne)
+            else if (winner == 2)
             {
-                val = 10000;
-                result = true;
-            }
-            else if (winner == 1 && IsPlayerOne)
-            {
-                val = 10000;
-                result = true;
-            }
-            else if (winner == 2 && IsPlayerOne)
-            {
-                val = -10000;
+                val = 100000;
                 result = true;
             }
             return result;
