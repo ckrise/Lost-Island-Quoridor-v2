@@ -56,6 +56,7 @@ public class NetworkController : MonoBehaviour
 
     private void OnFailedToConnectToPhoton()
     {
+        menuController.OpenFailMultiplayerPanel();
         Debug.Log("Failed To Connect");
         //TODO notify user they have not connected
     }
@@ -139,7 +140,7 @@ public class NetworkController : MonoBehaviour
 
     private void OnPhotonCreateRoomFailed()
     {
-
+        menuController.OpenFailCreateRoomPanel();
         Debug.Log("Could not create room");
     }
     #endregion
@@ -168,6 +169,7 @@ public class NetworkController : MonoBehaviour
 
     private void OnPhotonJoinRoomFailed()
     {
+        menuController.OpenFailJoinRoomPanel();
         Debug.Log("Failed To Join Room");
     }
 
@@ -176,11 +178,11 @@ public class NetworkController : MonoBehaviour
     #region Back Functions
     public void onClickLeaveRoom()
     {
-        if (PhotonNetwork.room != null && PhotonNetwork.room.PlayerCount == 2)
-        {
-            PhotonNetwork.LeaveRoom();
-            Debug.Log("Left Room");
-        }
+       PhotonNetwork.room.IsVisible = false;
+       PhotonNetwork.room.IsOpen = false;
+       PhotonNetwork.LeaveRoom();
+       Debug.Log("Left Room");
+        
     }
 
     public void onClickBack()
@@ -195,15 +197,24 @@ public class NetworkController : MonoBehaviour
         }
     }
 
-    private void OnDisconnectedFromPhoton()
+    private void OnConnectionFail()
     {
         string sceneName = SceneManager.GetActiveScene().name;
-        if(sceneName == "MainMenu")
+        if (sceneName == "MainMenu")
         {
-            //TODO change to main menu
+            menuController.OpenDisconnectedFromMultiPlayerPanel();
+        }
+        else
+        {
+            guiController.openLostConnectionPanel();
         }
         isConnectedServer = false;
         Debug.Log("Disconnected from photon");
+    }
+
+    private void OnDisconnectedFromPhoton()
+    {
+        Debug.Log("Call this when anything disconnection happens"); 
     }
 
     public void onClickLeaveMultiplayer()

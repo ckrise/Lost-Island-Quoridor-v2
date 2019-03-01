@@ -392,6 +392,12 @@ public class GUIController : MonoBehaviour
         }
         
     }
+
+    public void openLostConnectionPanel()
+    {
+        disconnectedFromNetworkPanel.SetActive(true);
+    }
+
     public void closeLostConnectionPanel()
     {
         disconnectedFromNetworkPanel.SetActive(false);

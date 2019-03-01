@@ -16,7 +16,7 @@ public class MenuController : MonoBehaviour
         connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab,
         storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
         settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel,
-        failMultiplayerConnectionPanel, failJoinRoomPanel, disconnectedFromMultiplayerPanel; 
+        failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel, disconnectedFromMultiplayerPanel; 
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText, nameErrorText;
     public ScrollRect roomScrollView;
@@ -146,6 +146,39 @@ public class MenuController : MonoBehaviour
         mainPanel.SetActive(false);
         helpPanel.SetActive(true);
     }
+
+    public void OpenFailMultiplayerPanel()
+    {
+        if (connectingPanel.active)
+        {
+            connectingPanel.SetActive(false);
+        }
+        failMultiplayerConnectionPanel.SetActive(true);
+    }
+
+    public void OpenFailJoinRoomPanel()
+    {
+        if(connectingPanel.active)
+        {
+            connectingPanel.SetActive(false);
+        }
+        failJoinRoomPanel.SetActive(true);
+    }
+
+    public void OpenFailCreateRoomPanel()
+    {
+        if(connectingPanel.active)
+        {
+            connectingPanel.SetActive(false);
+        }
+        failCreateRoomPanel.SetActive(true);
+    }
+
+    public void OpenDisconnectedFromMultiPlayerPanel()
+    {
+        disconnectedFromMultiplayerPanel.SetActive(true);
+    }
+
     public void CloseFailMultiplayerPanel()
     {
         failMultiplayerConnectionPanel.SetActive(false);
@@ -154,6 +187,13 @@ public class MenuController : MonoBehaviour
     {
         failJoinRoomPanel.SetActive(false);
     }
+
+    public void CloseFailCreateRoomPanel()
+    {
+        failCreateRoomPanel.SetActive(false);
+        multiplayerPanel.SetActive(true);
+    }
+
     public void CloseDisconnectedFromMultiPlayerPanel()
     {
         disconnectedFromMultiplayerPanel.SetActive(false);
