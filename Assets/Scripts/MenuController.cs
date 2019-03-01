@@ -15,10 +15,11 @@ public class MenuController : MonoBehaviour
         helpPanel, storyPanel, quickplayPanel, lobbyPanel,
         connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab,
         storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
-        settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel; 
+        settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel; 
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText, nameErrorText;
     public ScrollRect roomScrollView;
+    private GameObject levelLoader;
 
     private List<string> roomList = new List<string>();
     private List<GameObject> helpPanels;
@@ -26,6 +27,7 @@ public class MenuController : MonoBehaviour
     public void Start()
     {
         menu = this;
+        
         storyButton.onClick.AddListener(StoryMode);
         quickPlayButton.onClick.AddListener(QuickPlay);
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
@@ -127,12 +129,12 @@ public class MenuController : MonoBehaviour
             case "AI_EASY":
                 GameData.AIDifficulty = "easy";
                 Debug.Log(GameData.AIDifficulty);
-                SceneManager.LoadScene("GameScene");
+              
                 break;
             case "AI_HARD":
                 GameData.AIDifficulty = "hard";
                 Debug.Log(GameData.AIDifficulty);
-                SceneManager.LoadScene("GameScene");
+                 
                 break;
             default:
                 break;
@@ -152,6 +154,8 @@ public class MenuController : MonoBehaviour
         helpPanel.SetActive(true);
         
     }
+
+   
 
     #region Help
     
@@ -248,4 +252,6 @@ public class MenuController : MonoBehaviour
         GameData.NetworkController.onClickJoinRoom(name);
     }
     #endregion
+
+    
 }
