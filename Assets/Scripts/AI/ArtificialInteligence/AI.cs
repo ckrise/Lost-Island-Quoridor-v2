@@ -43,8 +43,17 @@ namespace ArtificialInteligence
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
+            
+            int numLevelsSearched;
+            if (CurrentBoard.GetPlayerOneNumWalls() == 0 || CurrentBoard.GetPlayerTwoNumWalls() == 0)
+            {
+                numLevelsSearched = 1;
+            }
+            else {
+                numLevelsSearched = 2;
+            }
 
-            string moveSelected = IterateStart(rootNode, 2);
+            string moveSelected = IterateStart(rootNode, numLevelsSearched);
 
             CurrentBoard.MakeMove(moveSelected);
 
