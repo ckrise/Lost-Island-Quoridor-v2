@@ -103,9 +103,11 @@ public class MenuController : MonoBehaviour
         hardButton.onClick.AddListener(StartHard);
     }
 
-    public void ToggleGoFirst(bool goFirst)
+    public void ToggleGoFirst()
     {
-        GameData.PlayerGoesFirst = goFirst;
+        
+        GameData.PlayerGoesFirst = !GameData.PlayerGoesFirst;
+        Debug.Log(GameData.PlayerGoesFirst);
     }
 
     private void StartEasy()
