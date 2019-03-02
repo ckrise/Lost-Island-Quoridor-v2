@@ -34,7 +34,7 @@ public class MenuController : MonoBehaviour
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
         settingsButton.onClick.AddListener(Settings);
         helpButton.onClick.AddListener(Help);
-        if (PlayerPrefs.HasKey("PlayerName"))
+        if (PlayerData.PlayerName != "")
         {
             continuePanel.SetActive(false);
             mainPanel.SetActive(true);
@@ -45,7 +45,6 @@ public class MenuController : MonoBehaviour
 
     public void QuitGame()
     {
-        PlayerPrefs.DeleteKey("PlayerName");
         Application.Quit();
     }
     public void ClickToContinue()
@@ -59,7 +58,9 @@ public class MenuController : MonoBehaviour
     {
         if (nameEntryField.text != "")
         {
-            PlayerPrefs.SetString("PlayerName", nameEntryField.text);
+            PlayerData.PlayerName = nameEntryField.text;
+            Debug.Log(PlayerData.PlayerName);
+            //PlayerPrefs.SetString("PlayerName", nameEntryField.text);
             nameEntryPanel.SetActive(false);
             mainPanel.SetActive(true);
         }
@@ -147,57 +148,7 @@ public class MenuController : MonoBehaviour
         helpPanel.SetActive(true);
     }
 
-    public void OpenFailMultiplayerPanel()
-    {
-        if (connectingPanel.active)
-        {
-            connectingPanel.SetActive(false);
-        }
-        failMultiplayerConnectionPanel.SetActive(true);
-    }
-
-    public void OpenFailJoinRoomPanel()
-    {
-        if(connectingPanel.active)
-        {
-            connectingPanel.SetActive(false);
-        }
-        failJoinRoomPanel.SetActive(true);
-    }
-
-    public void OpenFailCreateRoomPanel()
-    {
-        if(connectingPanel.active)
-        {
-            connectingPanel.SetActive(false);
-        }
-        failCreateRoomPanel.SetActive(true);
-    }
-
-    public void OpenDisconnectedFromMultiPlayerPanel()
-    {
-        disconnectedFromMultiplayerPanel.SetActive(true);
-    }
-
-    public void CloseFailMultiplayerPanel()
-    {
-        failMultiplayerConnectionPanel.SetActive(false);
-    }
-    public void CloseFailJoinRoomPanel()
-    {
-        failJoinRoomPanel.SetActive(false);
-    }
-
-    public void CloseFailCreateRoomPanel()
-    {
-        failCreateRoomPanel.SetActive(false);
-        multiplayerPanel.SetActive(true);
-    }
-
-    public void CloseDisconnectedFromMultiPlayerPanel()
-    {
-        disconnectedFromMultiplayerPanel.SetActive(false);
-    }
+    
    
 
     #region Help
@@ -293,6 +244,58 @@ public class MenuController : MonoBehaviour
         connectingPanel.SetActive(true);
         changeLoadingText("Joining Room...");
         GameData.NetworkController.onClickJoinRoom(name);
+    }
+
+    public void OpenFailMultiplayerPanel()
+    {
+        if (connectingPanel.active)
+        {
+            connectingPanel.SetActive(false);
+        }
+        failMultiplayerConnectionPanel.SetActive(true);
+    }
+
+    public void OpenFailJoinRoomPanel()
+    {
+        if (connectingPanel.active)
+        {
+            connectingPanel.SetActive(false);
+        }
+        failJoinRoomPanel.SetActive(true);
+    }
+
+    public void OpenFailCreateRoomPanel()
+    {
+        if (connectingPanel.active)
+        {
+            connectingPanel.SetActive(false);
+        }
+        failCreateRoomPanel.SetActive(true);
+    }
+
+    public void OpenDisconnectedFromMultiPlayerPanel()
+    {
+        disconnectedFromMultiplayerPanel.SetActive(true);
+    }
+
+    public void CloseFailMultiplayerPanel()
+    {
+        failMultiplayerConnectionPanel.SetActive(false);
+    }
+    public void CloseFailJoinRoomPanel()
+    {
+        failJoinRoomPanel.SetActive(false);
+    }
+
+    public void CloseFailCreateRoomPanel()
+    {
+        failCreateRoomPanel.SetActive(false);
+        multiplayerPanel.SetActive(true);
+    }
+
+    public void CloseDisconnectedFromMultiPlayerPanel()
+    {
+        disconnectedFromMultiplayerPanel.SetActive(false);
     }
     #endregion
 }
