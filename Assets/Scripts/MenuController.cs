@@ -20,6 +20,7 @@ public class MenuController : MonoBehaviour
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText, nameErrorText;
     public ScrollRect roomScrollView;
+    public Sprite onSwitch, offSwitch;
     private GameObject levelLoader;
 
     private List<string> roomList = new List<string>();
@@ -69,6 +70,31 @@ public class MenuController : MonoBehaviour
             nameErrorText.gameObject.SetActive(true);
         }
     }
+
+    #region settings
+    public void UpdatePlayerMusicVolume(float vol)
+    {
+        PlayerData.MusicVolume = vol;
+    }
+
+    public void UpdatePlayerSFXVolume(float vol)
+    {
+        PlayerData.SfxVolume = vol;
+    }
+
+    public void UpdateNameFromSettings(Text name)
+    {
+        if (name.text != "")
+        {
+            PlayerData.PlayerName = name.text;
+        }
+    }
+
+    public void ToggleFullscreen(bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen;
+    }
+    #endregion
 
     public void Back()
     {
