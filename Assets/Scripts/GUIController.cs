@@ -12,7 +12,7 @@ public class GUIController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
-        settingsPanel, helpPanel, opponentDisconnectedPanel, disconnectedFromNetworkPanel;
+        settingsPanel, helpPanel, opponentDisconnectedPanel, disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
 
@@ -188,6 +188,8 @@ public class GUIController : MonoBehaviour
         ActivateGhostMoves(validMoves);
         ActivateHoverPads(validWalls);
         playerTurn = true;
+        opponentTurnPanel.SetActive(false);
+        playerTurnPanel.SetActive(true);
     }
     public void PlacePlayerWall(Vector3 position, string move)
     {
@@ -226,6 +228,8 @@ public class GUIController : MonoBehaviour
 
     private void EndTurn(string move)
     {
+        playerTurnPanel.SetActive(false);
+        opponentTurnPanel.SetActive(true);
         DestroyGhostMoves();
         DeactivateHoverPads();
         playerTurn = false;
