@@ -6,18 +6,19 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 public class NetworkController : MonoBehaviour
 {
-    #region Variables
     public const string versionName = "0.1";
     public static NetworkController networkController;
     public string myRoom;
     public string connectingString;
+    private bool isConnectedServer = false;
     public InputField createRoomInput, joinRoomInput;
     public static MenuController menuController;
     public GameController gameController = null;
     public GUIController guiController = null;
     private List<string> roomList = new List<string>();
+    public InputField messageInputField;
     public PhotonView photonView;
-    #endregion
+   
 
     #region references
     private void Start()
@@ -26,6 +27,12 @@ public class NetworkController : MonoBehaviour
         gameController = GameController.GCInstance;
         guiController = GUIController.GUIReference;
         
+    }
+
+    public void getGameReference(GameController gameControllerReference)
+    {
+        //NEW CHANGE
+        gameController = gameControllerReference;
     }
     #endregion
 
@@ -39,6 +46,13 @@ public class NetworkController : MonoBehaviour
         menuController.changeLoadingText(connectString);
     }
 
+    private void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
+        isConnectedServer = true;
+        Debug.Log("Connected To Our App");
+    }
+
     private void OnFailedToConnectToPhoton()
     {
         menuController.OpenFailMultiplayerPanel();
@@ -50,6 +64,7 @@ public class NetworkController : MonoBehaviour
     {
         menuController.MultiPlayer();
         GameData.NetworkController = this;
+        //listRooms();
         Debug.Log("joined"); 
     }
 
@@ -57,6 +72,11 @@ public class NetworkController : MonoBehaviour
     {
         Debug.Log("This was called");
         listRooms();
+    }
+
+    public bool isConnectedToServer()
+    {
+        return isConnectedServer;
     }
     #endregion
 
@@ -85,6 +105,16 @@ public class NetworkController : MonoBehaviour
             Debug.Log("not built");
         }
         menuController.UpdateRoomList(roomList);
+    }
+
+    public List<string> getListOfRooms()
+    {
+        return roomList;
+    }
+
+    public string getRoom()
+    {
+        return myRoom;
     }
     #endregion
 
@@ -164,6 +194,7 @@ public class NetworkController : MonoBehaviour
         menuController.OpenFailJoinRoomPanel();
         Debug.Log("Failed To Join Room");
     }
+
     #endregion
 
     #region Back Functions
@@ -199,7 +230,7 @@ public class NetworkController : MonoBehaviour
         {
             guiController.openLostConnectionPanel();
         }
-        //isConnectedServer = false;
+        isConnectedServer = false;
         Debug.Log("Disconnected from photon");
     }
 
@@ -220,6 +251,7 @@ public class NetworkController : MonoBehaviour
     {
         Debug.Log("LeftRoom");
     }
+
     #endregion
 
     #region Network Game
@@ -236,6 +268,7 @@ public class NetworkController : MonoBehaviour
         }
     }
 
+
     public void networkGame()
     {
         Debug.Log("Start network game");
@@ -249,6 +282,7 @@ public class NetworkController : MonoBehaviour
             Debug.Log("null object");
         }
     }
+
     #endregion
 
     #region Quitting/Finishing Game
@@ -257,6 +291,11 @@ public class NetworkController : MonoBehaviour
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.Disconnect();
     }
+
+    //public void playerQuitNetworkGame()
+    //{
+    //    gameOver();
+    //}
 
     public void OnPhotonPlayerDisconnected()
     {
@@ -281,9 +320,18 @@ public class NetworkController : MonoBehaviour
         Debug.Log(message);
         photonView.RPC("chatMessage", PhotonTargets.Others, message);
     }
+
+    //public void onForfeitToSend()
+    //{
+    //    Debug.Log("Called onForfeitToSend() this SHOULD be working!");
+    //    photonView.RPC("forfeit", PhotonTargets.Others);
+    //    playerQuitNetworkGame();
+    //}
+
     #endregion
 
     #region Receive Move
+
     [PunRPC]
     public void chatMessage(string message)
     {
@@ -302,6 +350,13 @@ public class NetworkController : MonoBehaviour
         gameController.RecieveMoveFromNetwork(moveToSend);
         Debug.Log(move);
     }
+
+    //[PunRPC]
+    //public void forfeit()
+    //{
+    //    Debug.Log("Player left");
+    //    playerQuitNetworkGame();        
+    //}
 
     public string changeOrientation(string move)
     {
