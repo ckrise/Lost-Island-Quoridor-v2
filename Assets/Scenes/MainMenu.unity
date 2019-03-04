@@ -7578,10 +7578,10 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1302322254}
         m_MethodName: ToggleFullscreen
-        m_Mode: 6
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 932279008}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11668,6 +11668,7 @@ MonoBehaviour:
   roomScrollView: {fileID: 153382366}
   musicVolumeSlider: {fileID: 854829395}
   sfxVolumeSlider: {fileID: 503897841}
+  fullscreenToggle: {fileID: 932279008}
 --- !u!1 &1312971772
 GameObject:
   m_ObjectHideFlags: 0

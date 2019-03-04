@@ -22,10 +22,10 @@ public class MenuController : MonoBehaviour
     public Text lobbyText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
     public Slider musicVolumeSlider, sfxVolumeSlider;
+    public Toggle fullscreenToggle;
     #endregion
     #region private variables
     private GameObject levelLoader;
-
     private List<GameObject> roomListings = new List<GameObject>();
     private List<GameObject> helpPanels;
     #endregion
@@ -48,6 +48,9 @@ public class MenuController : MonoBehaviour
         helpPanels = new List<GameObject>{ storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
                                            settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel };
 
+        //initialize fullscreen toggle
+        fullscreenToggle.isOn = Screen.fullScreen;
+        
         //set music and sfx volume
         musicVolumeSlider.value = PlayerData.MusicVolume;
         sfxVolumeSlider.value = PlayerData.SfxVolume;
@@ -110,9 +113,9 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    public void ToggleFullscreen(bool isFullscreen)
+    public void ToggleFullscreen(Toggle isFullscreen)
     {
-        Screen.fullScreen = isFullscreen;
+        Screen.fullScreen = isFullscreen.isOn;
     }
     #endregion
 
