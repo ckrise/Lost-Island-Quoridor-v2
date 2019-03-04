@@ -24,8 +24,10 @@ namespace ArtificialInteligence
             Board = new AIBoard(copy);
             Depth = 0;
             MoveMade = "rootnode";
+            Diff = BoardAnalysis.EstimateShortestPath(Board, true) - BoardAnalysis.EstimateShortestPath(Board, false);
         }
         
+        //Used for creating children
         public WallDiffNode(WallDiffNode n, string move)
         {
             MoveMade = move;
