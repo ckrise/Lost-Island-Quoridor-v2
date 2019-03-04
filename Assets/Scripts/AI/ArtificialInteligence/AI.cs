@@ -7,22 +7,15 @@ namespace ArtificialInteligence
     public class AI
     {
         private AIBoard CurrentBoard { get; set; }
-        private List<HashSet<TreeNode>> NodeEvalHistory { get; set; }
-        private int CurrentHistoryList { get; set; }
 
         public AI()
         {
             CurrentBoard = new AIBoard();
-            NodeEvalHistory = new List<HashSet<TreeNode>>();
-            CurrentHistoryList = -1;
         }
 
         //Does a game tree search 1 layer deep.
         public string GetEasyMove(string playerMove)
         {
-            CurrentHistoryList++;
-            NodeEvalHistory.Add(new HashSet<TreeNode>(new TreeNodeEqualityComparer()));
-
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
@@ -37,19 +30,17 @@ namespace ArtificialInteligence
         //Initiates a minimax search 2 layers deep.
         public string GetHardMove(string playerMove)
         {
-            CurrentHistoryList++;
-            NodeEvalHistory.Add(new HashSet<TreeNode>(new TreeNodeEqualityComparer()));
-
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
-            
+
             int numLevelsSearched;
             if (CurrentBoard.GetPlayerOneNumWalls() == 0 || CurrentBoard.GetPlayerTwoNumWalls() == 0)
             {
                 numLevelsSearched = 1;
             }
-            else {
+            else
+            {
                 numLevelsSearched = 2;
             }
 
@@ -86,7 +77,7 @@ namespace ArtificialInteligence
             List<string> movesSelected = new List<string>();
             foreach (TreeNode child in rootChildren)
             {
-                float result = Iterate(child, depth - 1, alpha, beta, false);
+                float result = ABIterate(child, depth - 1, alpha, beta, false);
                 if (result > alpha)
                 {
                     alpha = result;
@@ -104,27 +95,17 @@ namespace ArtificialInteligence
 
 
         //Function that performs alpha beta pruning in a minimax tree search.
-        private float Iterate(TreeNode node, int depth, float alpha, float beta, bool isMaxPlayer)
+        private float ABIterate(TreeNode node, int depth, float alpha, float beta, bool isMaxPlayer)
         {
             if (depth == 0 || node.IsTerminalNode())
             {
-                float result;
-                if (TryGetNodeValue(ref node))
-                {
-                    result = node.GetValue();
-                }
-                else
-                {
-                    result = node.CalcValue();
-                    NodeEvalHistory[CurrentHistoryList].Add(node);
-                }
-                return result;
+                return node.CalcValue();
             }
             if (isMaxPlayer)
             {
                 foreach (TreeNode child in node.GetChildren())
                 {
-                    alpha = System.Math.Max(alpha, Iterate(child, depth - 1, alpha, beta, !isMaxPlayer));
+                    alpha = System.Math.Max(alpha, ABIterate(child, depth - 1, alpha, beta, !isMaxPlayer));
                     if (beta > alpha)
                     {
                         break;
@@ -137,7 +118,7 @@ namespace ArtificialInteligence
             {
                 foreach (TreeNode child in node.GetChildren())
                 {
-                    beta = System.Math.Min(beta, Iterate(child, depth - 1, alpha, beta, !isMaxPlayer));
+                    beta = System.Math.Min(beta, ABIterate(child, depth - 1, alpha, beta, !isMaxPlayer));
                     if (beta < alpha)
                     {
                         break;
@@ -147,25 +128,9 @@ namespace ArtificialInteligence
             }
         }
 
-        //Function uses history to find the value already calculated
-        private bool TryGetNodeValue(ref TreeNode node)
-        {
-            bool resultFound = false;
-            foreach (HashSet<TreeNode> set in NodeEvalHistory)
-            {
-                if (set.Contains(node))
-                {
-                    foreach (TreeNode calculatedNode in set)
-                    {
-                        if (calculatedNode.Equals(node))
-                        {
-                            node.SetValue(calculatedNode.GetValue());
-                            resultFound = true;
-                        }
-                    }
-                }
-            }
-            return resultFound;
+        private int WallRisk() {
+            return 1;
         }
+        
     }
 }

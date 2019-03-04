@@ -46,7 +46,8 @@ namespace ArtificialInteligence
             if ((Board.GetIsPlayerOneTurn() && Board.GetPlayerOneNumWalls() == 0)
                     || (!Board.GetIsPlayerOneTurn() && Board.GetPlayerTwoNumWalls() == 0))
             { }
-            else { 
+            else
+            {
                 HashSet<string> wallMoves = Board.GetAllValidWalls();
                 SetNodesOfInterest(ref wallMoves);
                 foreach (string wall in wallMoves)
@@ -144,8 +145,10 @@ namespace ArtificialInteligence
                 int P2SP = BoardAnalysis.EstimateShortestPath(Board, false);
                 int P1NumWalls = Board.GetPlayerOneNumWalls();
                 int P2NumWalls = Board.GetPlayerTwoNumWalls();
+
+                int numWallsPlaced = 21 - P2NumWalls - P1NumWalls;
                 
-                value = (P1SP - P2SP) + (P2NumWalls - P1NumWalls);
+                value = (P1SP - P2SP) + (P2NumWalls - P1NumWalls) / numWallsPlaced;
             }
         }
 
