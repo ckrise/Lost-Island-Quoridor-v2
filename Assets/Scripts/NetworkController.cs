@@ -11,7 +11,6 @@ public class NetworkController : MonoBehaviour
     public string myRoom;
     public string connectingString;
     private bool isConnectedServer = false;
-    private bool playingNetworkGame = false;
     public InputField createRoomInput, joinRoomInput;
     public static MenuController menuController;
     public GameController gameController = null;
@@ -69,7 +68,7 @@ public class NetworkController : MonoBehaviour
         Debug.Log("joined"); 
     }
 
-    private void OnRecievedRoomListUpdate()
+    private void OnReceivedRoomListUpdate()
     {
         Debug.Log("This was called");
         listRooms();
@@ -123,8 +122,30 @@ public class NetworkController : MonoBehaviour
     public void onClickCreateRoom()
     {
         string creatingRoom = "Creating Room...";
-
         string playerName = PlayerData.PlayerName;  //PlayerPrefs.GetString("PlayerName");
+        string newPlayerName = playerName;
+        bool goodRoomName = false;
+        int count = 1;
+        
+        while(!goodRoomName)
+        {
+            if (!roomList.Contains(newPlayerName))
+            {
+                goodRoomName = true;
+                count = 1;
+            }
+            else if(roomList.Contains(playerName))
+            {
+                newPlayerName = playerName + '(' + count + ')';
+                count++;
+            }
+            else
+            {
+                //Not even sure how it would get to this
+            }
+        }
+        playerName = newPlayerName;
+        
         Debug.Log(playerName);
         PhotonNetwork.CreateRoom(playerName, new RoomOptions() { MaxPlayers = 2 }, null);
         menuController.changeLoadingText(creatingRoom);
@@ -247,18 +268,14 @@ public class NetworkController : MonoBehaviour
         }
     }
 
-    //Outline of how to send info over network
+
     public void networkGame()
     {
-        Debug.Log("Start networkgame");
-        //To call RPC function need a PhotonView
+        Debug.Log("Start network game");
+        //Setting some things up before we start the game
         photonView = PhotonView.Get(this);
-        //NEW CHANGE
         guiController = GUIController.GUIReference;
-        playingNetworkGame = true;
-        
         GameData.IsAIGame = false;
-        playingNetworkGame = true;
 
         if (photonView == null)
         {
