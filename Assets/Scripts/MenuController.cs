@@ -330,10 +330,12 @@ public class MenuController : MonoBehaviour
     public void CloseFailMultiplayerPanel()
     {
         failMultiplayerConnectionPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
     public void CloseFailJoinRoomPanel()
     {
         failJoinRoomPanel.SetActive(false);
+        multiplayerPanel.SetActive(true);
     }
 
     public void CloseFailCreateRoomPanel()
