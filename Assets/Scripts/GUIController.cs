@@ -20,6 +20,7 @@ public class GUIController : MonoBehaviour
     public InputField chatInputField;
     public Button winButton, chatButton;
     public ScrollRect chatScrollRect;
+    public Slider musicVolumeSlider, sfxVolumeSlider;
     public bool animationFinished = false;
     public bool gameOver = false;
     #endregion
@@ -68,6 +69,7 @@ public class GUIController : MonoBehaviour
 
     private void Start()
     {
+
         if (GameData.IsAIGame)
         {
             chatButton.gameObject.SetActive(false);
@@ -77,6 +79,10 @@ public class GUIController : MonoBehaviour
         //initialize wall pool stacks
         playerWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("PlayerWallPool"));
         opponentWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("OpponentWallPool"));
+
+        //set music and sfx volume
+        musicVolumeSlider.value = PlayerData.MusicVolume;
+        sfxVolumeSlider.value = PlayerData.SfxVolume;
     }
     #endregion
 
@@ -442,6 +448,22 @@ public class GUIController : MonoBehaviour
         }
     }
     #endregion
+    #region settings
+
+
+    public void UpdatePlayerMusicVolume(float vol)
+    {
+        PlayerData.MusicVolume = vol;
+    }
+
+    public void UpdatePlayerSFXVolume(float vol)
+    {
+        PlayerData.SfxVolume = vol;
+    }
+
+    #endregion
+
+
     #region chat
     public void ReceiveMessage(string message)
     {

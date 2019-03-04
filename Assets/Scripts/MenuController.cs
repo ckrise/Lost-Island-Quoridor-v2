@@ -18,9 +18,9 @@ public class MenuController : MonoBehaviour
         settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel,
         failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel, disconnectedFromMultiplayerPanel; 
     public InputField createRoomField, joinRoomField, nameEntryField;
-    public Text lobbyText, connectingText, nameErrorText;
+    public Text lobbyText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
-    public Sprite onSwitch, offSwitch;
+    public Slider musicVolumeSlider, sfxVolumeSlider;
     private GameObject levelLoader;
 
     private List<string> roomList = new List<string>();
@@ -42,6 +42,10 @@ public class MenuController : MonoBehaviour
         }
         helpPanels = new List<GameObject>{ storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
                                            settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel };
+
+        //set music and sfx volume
+        musicVolumeSlider.value = PlayerData.MusicVolume;
+        sfxVolumeSlider.value = PlayerData.SfxVolume;
     }
 
     public void QuitGame()
@@ -61,6 +65,7 @@ public class MenuController : MonoBehaviour
         {
             PlayerData.PlayerName = nameEntryField.text;
             Debug.Log(PlayerData.PlayerName);
+
             //PlayerPrefs.SetString("PlayerName", nameEntryField.text);
             nameEntryPanel.SetActive(false);
             mainPanel.SetActive(true);
@@ -82,11 +87,16 @@ public class MenuController : MonoBehaviour
         PlayerData.SfxVolume = vol;
     }
 
-    public void UpdateNameFromSettings(Text name)
+    public void UpdateNameFromSettings(InputField name)
     {
         if (name.text != "")
         {
+            nameUpdateText.text = $"Name changed\n" +
+                                  $"from {PlayerData.PlayerName}\n" +
+                                  $"to {name.text}";
+            nameUpdateText.gameObject.SetActive(true);
             PlayerData.PlayerName = name.text;
+            name.text = "";
         }
     }
 

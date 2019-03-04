@@ -2508,13 +2508,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 292048145}
   m_TextComponent: {fileID: 786948163}
   m_Placeholder: {fileID: 1312971774}
-  m_ContentType: 5
+  m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 6
+  m_KeyboardType: 0
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 4
+  m_CharacterValidation: 0
   m_CharacterLimit: 20
   m_OnEndEdit:
     m_PersistentCalls:
@@ -4981,6 +4981,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 673813093}
   m_CullTransparentMesh: 0
+--- !u!1 &689702993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 689702994}
+  - component: {fileID: 689702996}
+  - component: {fileID: 689702995}
+  m_Layer: 5
+  m_Name: NameUpdatedText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &689702994
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689702993}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1783596408}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 575, y: -205.8}
+  m_SizeDelta: {x: 250, y: 100}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &689702995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689702993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 2c33c67fe69736c4690e2f3ceab3b0b4, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "Name changed \nfrom ABCDEFGHIJKLMNOPQRST\n to ABCDEFGHIJKLMNOPQRST"
+--- !u!222 &689702996
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689702993}
+  m_CullTransparentMesh: 0
 --- !u!1 &697070471
 GameObject:
   m_ObjectHideFlags: 0
@@ -6041,8 +6120,8 @@ MonoBehaviour:
         m_MethodName: UpdateNameFromSettings
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1083857201}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+          m_ObjectArgument: {fileID: 1442021450}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.InputField, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9043,7 +9122,7 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 1
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 
 --- !u!222 &1083857202
@@ -11585,9 +11664,10 @@ MonoBehaviour:
   lobbyText: {fileID: 1728632753}
   connectingText: {fileID: 55685080}
   nameErrorText: {fileID: 1244870127}
+  nameUpdateText: {fileID: 689702995}
   roomScrollView: {fileID: 153382366}
-  onSwitch: {fileID: 0}
-  offSwitch: {fileID: 0}
+  musicVolumeSlider: {fileID: 854829395}
+  sfxVolumeSlider: {fileID: 503897841}
 --- !u!1 &1312971772
 GameObject:
   m_ObjectHideFlags: 0
@@ -13431,13 +13511,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1442021451}
   m_TextComponent: {fileID: 1083857201}
   m_Placeholder: {fileID: 901574361}
-  m_ContentType: 5
+  m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 6
+  m_KeyboardType: 0
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 4
+  m_CharacterValidation: 0
   m_CharacterLimit: 20
   m_OnEndEdit:
     m_PersistentCalls:
@@ -13446,8 +13526,8 @@ MonoBehaviour:
         m_MethodName: UpdateNameFromSettings
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1083857201}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+          m_ObjectArgument: {fileID: 1442021450}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.InputField, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15638,6 +15718,7 @@ RectTransform:
   - {fileID: 1442021449}
   - {fileID: 821183765}
   - {fileID: 1293127057}
+  - {fileID: 689702994}
   m_Father: {fileID: 1302322253}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
