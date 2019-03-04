@@ -171,6 +171,11 @@ public class MenuController : MonoBehaviour
         storyPanel.SetActive(true);
     }
 
+    void Tutorial()
+    {
+
+    }
+
     public void Back()
     {
         if (lobbyPanel.activeSelf)
@@ -193,6 +198,7 @@ public class MenuController : MonoBehaviour
     {
         Application.Quit();
     }
+
 
     #region Help
     void Help()
