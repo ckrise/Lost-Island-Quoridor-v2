@@ -83,7 +83,8 @@ public class NetworkController : MonoBehaviour
 
     #region Room Functions
     private void buildRoomList()
-    { 
+    {
+        roomList.Clear();
         foreach (var room in PhotonNetwork.GetRoomList())
         {
             Debug.Log(room.PlayerCount);
@@ -104,7 +105,7 @@ public class NetworkController : MonoBehaviour
         {
             Debug.Log("not built");
         }
-        menuController.AddRoomsToList(roomList);
+        menuController.UpdateRoomList(roomList);
     }
 
     public List<string> getListOfRooms()

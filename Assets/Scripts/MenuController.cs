@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
+    #region public variables
     public static MenuController menu;
     public Button storyButton, quickPlayButton, multiplayerButton, 
         settingsButton, helpButton, backButton, easyButton, hardButton,
@@ -21,10 +22,14 @@ public class MenuController : MonoBehaviour
     public Text lobbyText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
     public Slider musicVolumeSlider, sfxVolumeSlider;
+    #endregion
+    #region private variables
     private GameObject levelLoader;
 
-    private List<string> roomList = new List<string>();
+    private List<GameObject> roomListings = new List<GameObject>();
     private List<GameObject> helpPanels;
+    #endregion
+    #region unity
     // Start is called before the first frame update
     public void Start()
     {
@@ -47,11 +52,9 @@ public class MenuController : MonoBehaviour
         musicVolumeSlider.value = PlayerData.MusicVolume;
         sfxVolumeSlider.value = PlayerData.SfxVolume;
     }
+    #endregion
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
+    #region before main
     public void ClickToContinue()
     {
         continuePanel.SetActive(false);
@@ -75,8 +78,15 @@ public class MenuController : MonoBehaviour
             nameErrorText.gameObject.SetActive(true);
         }
     }
+    #endregion 
+
 
     #region settings
+    void Settings()
+    {
+        mainPanel.SetActive(false);
+        settingsPanel.SetActive(true);
+    }
     public void UpdatePlayerMusicVolume(float vol)
     {
         PlayerData.MusicVolume = vol;
@@ -106,31 +116,8 @@ public class MenuController : MonoBehaviour
     }
     #endregion
 
-    public void Back()
-    {
-        if (lobbyPanel.activeSelf)
-        {
-            lobbyPanel.SetActive(false);
-            multiplayerPanel.SetActive(true);
-        }
-        else
-        {
-            mainPanel.SetActive(true);
-            multiplayerPanel.SetActive(false);
-            storyPanel.SetActive(false);
-            settingsPanel.SetActive(false);
-            helpPanel.SetActive(false);
-            quickplayPanel.SetActive(false);
-        }
-    }
 
-    void StoryMode()
-    {
-        PlayerPrefs.SetString("PLAY_MODE", "STORY");
-        mainPanel.SetActive(false);
-        storyPanel.SetActive(true);
-    }
-
+    #region quickplay
     void QuickPlay()
     {
         mainPanel.SetActive(false);
@@ -155,7 +142,6 @@ public class MenuController : MonoBehaviour
     {
         StartAIGame("AI_HARD");
     }
-
     private void StartAIGame(string aiDifficulty)
     {
         PlayerPrefs.SetString("PLAY_MODE", aiDifficulty);
@@ -173,23 +159,44 @@ public class MenuController : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-    void Settings()
+    void StoryMode()
     {
+        PlayerPrefs.SetString("PLAY_MODE", "STORY");
         mainPanel.SetActive(false);
-        settingsPanel.SetActive(true);
+        storyPanel.SetActive(true);
     }
 
+    public void Back()
+    {
+        if (lobbyPanel.activeSelf)
+        {
+            lobbyPanel.SetActive(false);
+            multiplayerPanel.SetActive(true);
+        }
+        else
+        {
+            mainPanel.SetActive(true);
+            multiplayerPanel.SetActive(false);
+            storyPanel.SetActive(false);
+            settingsPanel.SetActive(false);
+            helpPanel.SetActive(false);
+            quickplayPanel.SetActive(false);
+        }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    #region Help
     void Help()
     {
         mainPanel.SetActive(false);
         helpPanel.SetActive(true);
     }
-
-    
-   
-
-    #region Help
     
     private void HideAllHelp()
     {
@@ -207,11 +214,13 @@ public class MenuController : MonoBehaviour
 
     #endregion
 
-    #region Networking
-
-    public void changeLoadingText(string loadText)
+    #region Networking Multiplayer
+    public void MultiPlayer()
     {
-        connectingText.text = loadText;
+        mainPanel.SetActive(false);
+        connectingPanel.SetActive(false);
+        multiplayerPanel.SetActive(true);
+        createRoom.onClick.AddListener(CreatingRoom);
     }
 
     void MultiPlayerConnect()
@@ -221,13 +230,9 @@ public class MenuController : MonoBehaviour
         connectingPanel.SetActive(true);
        
     }
-
-    public void MultiPlayer()
+    public void changeLoadingText(string loadText)
     {
-        mainPanel.SetActive(false);
-        connectingPanel.SetActive(false);
-        multiplayerPanel.SetActive(true);
-        createRoom.onClick.AddListener(CreatingRoom);
+        connectingText.text = loadText;
     }
 
     public void SetLobbyName(string name)
@@ -256,22 +261,25 @@ public class MenuController : MonoBehaviour
         lobbyPanel.SetActive(true);
     }
 
-    public void AddRoomsToList(List<string> roomNames)
+    public void UpdateRoomList(List<string> roomNames)
     {
+        //remove all rooms
+        foreach (var room in roomListings)
+        {
+            Destroy(room);
+        }
+        roomListings.Clear();
         foreach (var room in roomNames)
         {
-            if (!roomList.Contains(room))
+            GameObject newRoomListing = Instantiate(roomListingPrefab, roomScrollView.content);
+            newRoomListing.name = room;
+            newRoomListing.GetComponentInChildren<Text>().text = room;
+            newRoomListing.GetComponentInChildren<Button>().onClick.AddListener(delegate
             {
-                roomList.Add(room);
-                GameObject newRoomListing = Instantiate(roomListingPrefab, roomScrollView.content);
-                newRoomListing.name = room;
-                newRoomListing.GetComponentInChildren<Text>().text = room;
-                newRoomListing.GetComponentInChildren<Button>().onClick.AddListener(delegate
-                {
-                    Debug.Log("In Delegate");
-                    JoinRoom(newRoomListing.name);
-                });
-            }
+                Debug.Log("In Delegate");
+                JoinRoom(newRoomListing.name);
+            });
+            roomListings.Add(newRoomListing);
         }
     }
 
@@ -286,7 +294,7 @@ public class MenuController : MonoBehaviour
 
     public void OpenFailMultiplayerPanel()
     {
-        if (connectingPanel.active)
+        if (connectingPanel.activeSelf)
         {
             connectingPanel.SetActive(false);
         }
@@ -295,7 +303,7 @@ public class MenuController : MonoBehaviour
 
     public void OpenFailJoinRoomPanel()
     {
-        if (connectingPanel.active)
+        if (connectingPanel.activeSelf)
         {
             connectingPanel.SetActive(false);
         }
@@ -304,7 +312,7 @@ public class MenuController : MonoBehaviour
 
     public void OpenFailCreateRoomPanel()
     {
-        if (connectingPanel.active)
+        if (connectingPanel.activeSelf)
         {
             connectingPanel.SetActive(false);
         }
@@ -334,6 +342,7 @@ public class MenuController : MonoBehaviour
     public void CloseDisconnectedFromMultiPlayerPanel()
     {
         disconnectedFromMultiplayerPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
     #endregion
 }
