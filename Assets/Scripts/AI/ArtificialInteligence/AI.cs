@@ -129,7 +129,7 @@ namespace ArtificialInteligence
         }
 
         //If risk is very high will return 1, low risk is higher return value.
-        private int GetMoveRisk(string move, int maxDepth = 4) {
+        private int GetMoveRisk(string move) {
             int riskValue = 100;
             AIBoard tempBoard = new AIBoard(CurrentBoard);
             tempBoard.MakeMove(move);
@@ -137,24 +137,31 @@ namespace ArtificialInteligence
 
             List<string> wallPlacements = tempBoard.GetWallMoves();
             foreach (string wall in wallPlacements) {
-                riskValue = Math.Min(riskValue, RiskIterate(rootNode, maxDepth - 1));
+                riskValue = Math.Min(riskValue, RiskIterate(new WallDiffNode(rootNode, wall), 0));
             }
 
-            return 1;
+            return riskValue;
         }
 
-        private int RiskIterate(WallDiffNode node, int depth) {
+        private static int changeThreshhold = 3;
+        private int RiskIterate(WallDiffNode node, int depth, int maxDepth = 4) {
             //NumMoves is the number of moves it takes before a significant change in shortest path is found.
-            int numMoves = 0;
-            if (depth == 0)
+            int changeInDiff = node.CalcChangeInDiff();
+            int numMoves = 1000;
+            if (changeInDiff > changeThreshhold)
             {
-
+                numMoves = depth;
+            }
+            else if (depth > maxDepth) {
+                numMoves = depth;
             }
             else {
-
+                List<WallDiffNode> children = node.GetChildren();
+                foreach (WallDiffNode child in children) {
+                    numMoves = Math.Min(numMoves, RiskIterate(child, depth + 1));
+                }
             }
-
-            return numMoves;
+            return numMoves;   
         }
         
     }
