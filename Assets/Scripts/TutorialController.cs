@@ -61,6 +61,7 @@ public class TutorialController : MonoBehaviour
     #region unity
     void Awake()
     {
+        GameData.IsTutorial = true;
         Instance = this;
         pawnClicked = false;
         playerTurn = false;

@@ -173,12 +173,7 @@ public class MenuController : MonoBehaviour
         mainPanel.SetActive(false);
         storyPanel.SetActive(true);
     }
-
-    void Tutorial()
-    {
-        GameData.IsTutorial = true;
-    }
-
+    
     public void Back()
     {
         if (lobbyPanel.activeSelf)
