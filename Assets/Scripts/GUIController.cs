@@ -8,7 +8,7 @@ public class GUIController : MonoBehaviour
 {
     #region public variables
     //an instance of the GUIController used to call public methods
-    public static GUIController GUIReference;
+    public static GUIController Instance;
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
@@ -61,7 +61,7 @@ public class GUIController : MonoBehaviour
     #region unity
     void Awake()
     {
-        GUIReference = this;
+        Instance = this;
         pawnClicked = false;
         playerTurn = false;
         ghostPlayerMoves = new List<GameObject>();

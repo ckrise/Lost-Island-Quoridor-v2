@@ -5,6 +5,7 @@ using UnityEngine;
 public static class GameData
 {
     private static bool isAIGame = true;
+    private static bool isTutorial = false;
     private static bool playerGoesFirst = true;
     private static string aiDifficulty = "Easy";
     private static NetworkController networkController;
@@ -70,4 +71,5 @@ public static class GameData
     }
     public static NetworkController NetworkController { get => networkController; set => networkController = value; }
     public static string Scene { get => scene; set => scene = value; }
+    public static bool IsTutorial { get => isTutorial; set => isTutorial = value; }
 }

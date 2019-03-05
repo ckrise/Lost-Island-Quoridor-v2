@@ -24,7 +24,7 @@ public class NetworkController : MonoBehaviour
     {
         networkController = this;
         gameController = GameController.GCInstance;
-        guiController = GUIController.GUIReference;
+        guiController = GUIController.Instance;
         
     }
     #endregion
@@ -241,7 +241,7 @@ public class NetworkController : MonoBehaviour
         Debug.Log("Start network game");
         //Setting some things up before we start the game
         photonView = PhotonView.Get(this);
-        guiController = GUIController.GUIReference;
+        guiController = GUIController.Instance;
         GameData.IsAIGame = false;
 
         if (photonView == null)

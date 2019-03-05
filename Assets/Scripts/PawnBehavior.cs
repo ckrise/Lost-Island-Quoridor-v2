@@ -6,6 +6,13 @@ public class PawnBehavior : MonoBehaviour
 {
     private void OnMouseDown()
     {
-        GUIController.GUIReference.ShowGhostMoves();
+        if (GameData.IsTutorial)
+        {
+            TutorialController.Instance.ShowGhostMoves();
+        }
+        else
+        {
+            GUIController.Instance.ShowGhostMoves();
+        }
     }
 }

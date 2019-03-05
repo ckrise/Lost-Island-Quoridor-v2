@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.68833274, g: 0.62281364, b: 0.52414554, a: 1}
+  m_IndirectSpecularColor: {r: 0.68841255, g: 0.62281877, b: 0.52420396, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20854,6 +20854,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ea670c069e4a68448d4626406e1f3d8, type: 3}
+--- !u!1 &772054947 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 392713234383485592, guid: 1ea670c069e4a68448d4626406e1f3d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 772054946}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &774443723
 GameObject:
   m_ObjectHideFlags: 0
@@ -51040,28 +51046,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147113cf9afa7cc43af40c14a879e9bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPawn: {fileID: 0}
-  opponentPawn: {fileID: 0}
-  ghostSpace: {fileID: 0}
-  ghostWall: {fileID: 0}
-  wall: {fileID: 0}
-  hoverpadMaster: {fileID: 0}
-  winPanel: {fileID: 0}
-  chatPanel: {fileID: 0}
-  settingsPanel: {fileID: 0}
-  helpPanel: {fileID: 0}
-  playerTurnPanel: {fileID: 0}
-  opponentTurnPanel: {fileID: 0}
-  clickReceiverPanel: {fileID: 0}
-  rulesPanel: {fileID: 0}
-  gameplayPanel: {fileID: 0}
-  messageText: {fileID: 0}
-  chatInputField: {fileID: 0}
-  winButton: {fileID: 0}
-  chatButton: {fileID: 0}
-  chatScrollRect: {fileID: 0}
-  musicVolumeSlider: {fileID: 0}
-  sfxVolumeSlider: {fileID: 0}
+  playerPawn: {fileID: 865896236}
+  opponentPawn: {fileID: 1538463168}
+  ghostSpace: {fileID: 5869559904227978890, guid: 44bd9ed5cdc847f40b63f4de21c6669d,
+    type: 3}
+  ghostWall: {fileID: 772054947}
+  wall: {fileID: 392713234383485592, guid: 1ea670c069e4a68448d4626406e1f3d8, type: 3}
+  hoverpadMaster: {fileID: 2142611837}
+  winPanel: {fileID: 1499383094}
+  chatPanel: {fileID: 750238133}
+  settingsPanel: {fileID: 1124664839}
+  helpPanel: {fileID: 1987358569}
+  playerTurnPanel: {fileID: 71615856}
+  opponentTurnPanel: {fileID: 985612183}
+  clickReceiverPanel: {fileID: 2044386298}
+  rulesPanel: {fileID: 1440692828}
+  gameplayPanel: {fileID: 1422841041}
+  messageText: {fileID: 7662200659086568564, guid: 841df359a3433d64493f126102d554cd,
+    type: 3}
+  chatInputField: {fileID: 322073772}
+  winButton: {fileID: 1523273950}
+  chatButton: {fileID: 294610697}
+  chatScrollRect: {fileID: 2082590260}
+  musicVolumeSlider: {fileID: 2022177634}
+  sfxVolumeSlider: {fileID: 575124229}
   animationFinished: 0
   gameOver: 0
 --- !u!4 &1591136324
@@ -57905,7 +57913,6 @@ MonoBehaviour:
   joinRoomInput: {fileID: 0}
   gameController: {fileID: 0}
   guiController: {fileID: 0}
-  messageInputField: {fileID: 0}
   photonView: {fileID: 0}
 --- !u!4 &1828805143
 Transform:
@@ -64814,7 +64821,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2044386299
 RectTransform:
   m_ObjectHideFlags: 0

@@ -34,7 +34,14 @@ public class WallAnimation : MonoBehaviour
             transform.position, destination, delta);
         if (destination == transform.position)
         {
-            GUIController.GUIReference.AnimationCompleted(isPlayer);
+            if (GameData.IsTutorial)
+            {
+                TutorialController.Instance.AnimationCompleted(isPlayer);
+            }
+            else
+            {
+                GUIController.Instance.AnimationCompleted(isPlayer);
+            }
         }
     }
 

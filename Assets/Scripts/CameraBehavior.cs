@@ -6,6 +6,13 @@ public class CameraBehavior : MonoBehaviour
 {
     public void AnimationFinished()
     {
-        GUIController.GUIReference.animationFinished = true;
+        if (GameData.IsTutorial)
+        {
+            TutorialController.Instance.animationFinished = true;
+        }
+        else
+        {
+            GUIController.Instance.animationFinished = true;
+        }
     }
 }

@@ -38,7 +38,14 @@ public class PawnAnimation : MonoBehaviour
 
         if (destination == gameObject.transform.position)
         {
-            GUIController.GUIReference.AnimationCompleted(isPlayer);
+            if (GameData.IsTutorial)
+            {
+                TutorialController.Instance.AnimationCompleted(isPlayer);
+            }
+            else
+            {
+                GUIController.Instance.AnimationCompleted(isPlayer);
+            }
         }
     }
 

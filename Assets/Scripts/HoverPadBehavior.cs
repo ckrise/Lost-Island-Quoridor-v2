@@ -6,20 +6,46 @@ public class HoverPadBehavior : MonoBehaviour
 {
     public void OnMouseEnter()
     {
-        GUIController.GUIReference.ActivateGhostWall(
-            gameObject.transform.position,
-            gameObject.name[2]);
+        if (GameData.IsTutorial)
+        {
+            TutorialController.Instance.ActivateGhostWall(
+            transform.position,
+            name[2]);
+        }
+        else
+        {
+            GUIController.Instance.ActivateGhostWall(
+            transform.position,
+            name[2]);
+        }
     }
 
     public void OnMouseExit()
     {
-        GUIController.GUIReference.DeactivateGhostWall();
+        if (GameData.IsTutorial)
+        {
+            TutorialController.Instance.DeactivateGhostWall();
+        }
+        else
+        {
+            GUIController.Instance.DeactivateGhostWall();
+        }
     }
 
     void OnMouseDown()
     {
-        GUIController.GUIReference.PlacePlayerWall(
-            gameObject.transform.position,
-            gameObject.name);
+
+        if (GameData.IsTutorial)
+        {
+            TutorialController.Instance.PlacePlayerWall(
+                transform.position,
+                name);
+        }
+        else
+        {
+            GUIController.Instance.PlacePlayerWall(
+                transform.position,
+                name);
+        }
     }
 }

@@ -8,6 +8,7 @@ public class TutorialController : MonoBehaviour
 {
     #region public variables
     //Instances of gameboard objects that the controller must manipulate
+    public static TutorialController Instance;
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, chatPanel,
         settingsPanel, helpPanel, playerTurnPanel, opponentTurnPanel,
@@ -60,6 +61,7 @@ public class TutorialController : MonoBehaviour
     #region unity
     void Awake()
     {
+        Instance = this;
         pawnClicked = false;
         playerTurn = false;
         ghostPlayerMoves = new List<GameObject>();

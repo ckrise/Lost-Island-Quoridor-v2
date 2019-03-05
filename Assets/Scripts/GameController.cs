@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
 
         if(playerTurn)
         {
-            GUIController.GUIReference.StartPlayerTurn("", Board.GetWallMoves(), Board.GetPawnMoves());
+            GUIController.Instance.StartPlayerTurn("", Board.GetWallMoves(), Board.GetPawnMoves());
         }
         else if(aiGame)
         {
@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour
         Board.MakeMove(move);
         if (Board.IsWinner())
         {
-            GUIController.GUIReference.GameOver(true, "");
+            GUIController.Instance.GameOver(true, "");
             if(!aiGame)
             {
                 GameData.NetworkController.onMoveToSend(move);
@@ -92,12 +92,12 @@ public class GameController : MonoBehaviour
         if(Board.IsWinner())
         {
             GameData.NetworkController.gameOver();
-            GUIController.GUIReference.GameOver(false, move);
+            GUIController.Instance.GameOver(false, move);
         }
         else
         {
             playerTurn = true;
-            GUIController.GUIReference.StartPlayerTurn(move, Board.GetWallMoves(), Board.GetPawnMoves());
+            GUIController.Instance.StartPlayerTurn(move, Board.GetWallMoves(), Board.GetPawnMoves());
         }
     }
    
@@ -131,12 +131,12 @@ public class GameController : MonoBehaviour
             aiHasNewMove = false;
             if (Board.IsWinner())
             {
-                GUIController.GUIReference.GameOver(playerTurn, aiMove);
+                GUIController.Instance.GameOver(playerTurn, aiMove);
             }
             else
             {
                 playerTurn = true;
-                GUIController.GUIReference.StartPlayerTurn(aiMove, Board.GetWallMoves(), Board.GetPawnMoves());
+                GUIController.Instance.StartPlayerTurn(aiMove, Board.GetWallMoves(), Board.GetPawnMoves());
             }
             CancelInvoke();
         }

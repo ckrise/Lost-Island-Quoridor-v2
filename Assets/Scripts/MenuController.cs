@@ -54,6 +54,9 @@ public class MenuController : MonoBehaviour
         //set music and sfx volume
         musicVolumeSlider.value = PlayerData.MusicVolume;
         sfxVolumeSlider.value = PlayerData.SfxVolume;
+
+        //Not a tutorial unless I say it is!
+        GameData.IsTutorial = false;
     }
     #endregion
 
@@ -173,7 +176,7 @@ public class MenuController : MonoBehaviour
 
     void Tutorial()
     {
-
+        GameData.IsTutorial = true;
     }
 
     public void Back()
