@@ -9,7 +9,13 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: a4f2cbaa36dd56e468cbb50c82d2dcba
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/BeachScene.unity
+    guid: b95540fff3e76f34794a483d0579f1b2
+  - enabled: 1
+    path: Assets/Scenes/JungleScene.unity
+    guid: 53489adfcf5369a4e95e63f0e494ecff
+  - enabled: 1
+    path: Assets/Scenes/TempleScene.unity
     guid: 3db823952e5ad9349a378f0b9d893d68
   - enabled: 1
     path: Assets/Scenes/TutorialScene.unity

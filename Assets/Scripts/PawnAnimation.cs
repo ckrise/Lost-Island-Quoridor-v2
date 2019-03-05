@@ -5,7 +5,7 @@ using UnityEngine;
 public class PawnAnimation : MonoBehaviour
 {
     private Vector3 destination;
-    public float speed = 2;
+    private float speed = 10;
     private bool isPlayer = false;
     private Vector3 startPosition;
     private float totalDistance;

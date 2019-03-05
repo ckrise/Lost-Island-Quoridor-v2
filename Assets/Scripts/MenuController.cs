@@ -17,7 +17,8 @@ public class MenuController : MonoBehaviour
         connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab,
         storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
         settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel,
-        failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel, disconnectedFromMultiplayerPanel; 
+        failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel, 
+        disconnectedFromMultiplayerPanel, levelPanel; 
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
@@ -128,8 +129,12 @@ public class MenuController : MonoBehaviour
     {
         mainPanel.SetActive(false);
         quickplayPanel.SetActive(true);
-        easyButton.onClick.AddListener(StartEasy);
-        hardButton.onClick.AddListener(StartHard);
+    }
+
+    public void AItoLevelSelect()
+    {
+        quickplayPanel.SetActive(false);
+        levelPanel.SetActive(true);
     }
 
     public void ToggleGoFirst()
@@ -139,31 +144,9 @@ public class MenuController : MonoBehaviour
         Debug.Log(GameData.PlayerGoesFirst);
     }
 
-    private void StartEasy()
+    public void SetAIDifficulty(string difficulty)
     {
-        StartAIGame("AI_EASY");
-    }
-
-    private void StartHard()
-    {
-        StartAIGame("AI_HARD");
-    }
-    private void StartAIGame(string aiDifficulty)
-    {
-        PlayerPrefs.SetString("PLAY_MODE", aiDifficulty);
-        switch (aiDifficulty)
-        {
-            case "AI_EASY":
-                GameData.AIDifficulty = "easy";
-                Debug.Log(GameData.AIDifficulty);
-                break;
-            case "AI_HARD":
-                GameData.AIDifficulty = "hard";
-                Debug.Log(GameData.AIDifficulty);
-                break;
-            default:
-                break;
-        }
+        GameData.AIDifficulty = difficulty;
     }
     #endregion
 
@@ -180,6 +163,11 @@ public class MenuController : MonoBehaviour
         {
             lobbyPanel.SetActive(false);
             multiplayerPanel.SetActive(true);
+        }
+        else if (levelPanel.activeSelf)
+        {
+            levelPanel.SetActive(false);
+            quickplayPanel.SetActive(true);
         }
         else
         {

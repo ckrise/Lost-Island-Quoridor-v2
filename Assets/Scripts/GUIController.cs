@@ -74,7 +74,6 @@ public class GUIController : MonoBehaviour
         {
             chatButton.gameObject.SetActive(false);
         }
-        FindInactiveObject(GameData.Scene).SetActive(true);
 
         //initialize wall pool stacks
         playerWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("PlayerWallPool"));
@@ -190,12 +189,15 @@ public class GUIController : MonoBehaviour
             MoveOpponentPawn(move);
             animationFinished = false;
         }
+        else
+        {
+            opponentTurnPanel.SetActive(false);
+            playerTurnPanel.SetActive(true);
+        }
 
         ActivateGhostMoves(validMoves);
         ActivateHoverPads(validWalls);
         playerTurn = true;
-        opponentTurnPanel.SetActive(false);
-        playerTurnPanel.SetActive(true);
     }
     public void PlacePlayerWall(Vector3 position, string move)
     {
@@ -229,6 +231,11 @@ public class GUIController : MonoBehaviour
         if (isPlayer)
         {
             EndTurn(playerMove);
+        }
+        else
+        {
+            opponentTurnPanel.SetActive(false);
+            playerTurnPanel.SetActive(true);
         }
     }
 
