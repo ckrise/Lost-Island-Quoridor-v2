@@ -233,17 +233,18 @@ public class TutorialController : MonoBehaviour
 
     public void Continue()
     {
+        Debug.Log("Clicked continue");
         clickReceiverPanel.SetActive(false);
         ProgressController();
     }
     private void activateClickToContinue()
     {
-
+        clickReceiverPanel.SetActive(true);
     }
     private void advancePanels()
     {
         tutorialPanelQueue[tutorialProgress - 1].SetActive(false);
-        tutorialPanelQueue[tutorialprogress].SetActive(true);
+        tutorialPanelQueue[tutorialProgress].SetActive(true);
     }
    
     
