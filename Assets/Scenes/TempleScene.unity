@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.68841255, g: 0.62281877, b: 0.52420396, a: 1}
+  m_IndirectSpecularColor: {r: 0.688335, g: 0.62282234, b: 0.52414584, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18471,8 +18471,6 @@ MonoBehaviour:
   winButton: {fileID: 1523273950}
   chatButton: {fileID: 294610697}
   chatScrollRect: {fileID: 2082590260}
-  musicVolumeSlider: {fileID: 2022177634}
-  sfxVolumeSlider: {fileID: 575124229}
   animationFinished: 0
   gameOver: 0
 --- !u!1001 &696729873
@@ -24074,6 +24072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4b223a1fd46e145ba5dd6af302d719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 2
 --- !u!1 &867081855
 GameObject:
   m_ObjectHideFlags: 0
@@ -26469,7 +26468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &928714191
 RectTransform:
   m_ObjectHideFlags: 0
@@ -49582,6 +49581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4b223a1fd46e145ba5dd6af302d719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 2
 --- !u!1 &1539702064
 GameObject:
   m_ObjectHideFlags: 0
@@ -50170,7 +50170,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -57949,6 +57949,7 @@ MonoBehaviour:
   joinRoomInput: {fileID: 0}
   gameController: {fileID: 0}
   guiController: {fileID: 0}
+  messageInputField: {fileID: 0}
   photonView: {fileID: 0}
 --- !u!4 &1828805143
 Transform:
