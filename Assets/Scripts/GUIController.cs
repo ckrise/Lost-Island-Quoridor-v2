@@ -475,14 +475,16 @@ public class GUIController : MonoBehaviour
     {
         //update message window
         UpdateChat(message);
-        ShowChatMenu();
+        helpPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        chatPanel.SetActive(true);
     }
 
     public void SendChat()
     {
         if (chatInputField.text != "")
         {
-            string messageToSend = PlayerPrefs.GetString("PlayerName") + ": " + chatInputField.text;
+            string messageToSend = PlayerData.PlayerName + ": " + chatInputField.text;
             string messageToDisplay = "You: " + chatInputField.text;
             chatInputField.text = "";
             UpdateChat(messageToDisplay);
