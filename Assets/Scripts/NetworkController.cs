@@ -153,7 +153,7 @@ public class NetworkController : MonoBehaviour
         {
             GameData.PlayerGoesFirst = false;
             networkGame();
-           PhotonNetwork.LoadLevel("GameScene");
+           PhotonNetwork.LoadLevel("TempleScene");
            
         }
         Debug.Log("JOINED ROOM!");
@@ -229,7 +229,7 @@ public class NetworkController : MonoBehaviour
         if(PhotonNetwork.room.PlayerCount == 2)
         {
             networkGame();
-            PhotonNetwork.LoadLevel("GameScene");
+            PhotonNetwork.LoadLevel("TempleScene");
         }
         else
         {

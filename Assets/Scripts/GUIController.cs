@@ -69,7 +69,6 @@ public class GUIController : MonoBehaviour
 
     private void Start()
     {
-
         if (GameData.IsAIGame)
         {
             chatButton.gameObject.SetActive(false);
