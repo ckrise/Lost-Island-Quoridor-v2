@@ -91,7 +91,6 @@ public class GameController : MonoBehaviour
         Board.MakeMove(move);
         if(Board.IsWinner())
         {
-            GameData.NetworkController.gameOver();
             GUIController.Instance.GameOver(false, move);
         }
         else
