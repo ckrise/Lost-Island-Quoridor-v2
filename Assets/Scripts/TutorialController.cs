@@ -23,6 +23,13 @@ public class TutorialController : MonoBehaviour
     public Slider musicVolumeSlider, sfxVolumeSlider;
     public bool animationFinished = false;
     public bool gameOver = false;
+    //tutorial panels
+    public GameObject introPanel, movingPawn1Panel, movingPawn2panel, wallPlacement1Panel,
+                     wallPlacement2Panel, wallplacement3Panel, transitionPanel, turningTablesPanel,
+                     jumping1Panel, jumping2Panel, invalidWallPlacementPanel, endGameplayPanel,
+                     settingsTutorialPanel, helpTutorialPanel, chat1TutorialPanel, chat2TutorialPanel,
+                     endTurorialPanel;
+    
     #endregion
     #region private variables
     //tile objects that are invisible until pawn is clicked
@@ -57,6 +64,8 @@ public class TutorialController : MonoBehaviour
     private Stack<GameObject> opponentWallPoolStack, playerWallPoolStack;
     private string playerMove;
     private int tutorialProgress = 0;
+    private List<GameObject> tutorialPanelQueue = new List<GameObject>();
+
     #endregion
     #region unity
     void Awake()
@@ -77,6 +86,26 @@ public class TutorialController : MonoBehaviour
         //set music and sfx volume
         musicVolumeSlider.value = PlayerData.MusicVolume;
         sfxVolumeSlider.value = PlayerData.SfxVolume;
+
+        //create tutorial panel queue
+        tutorialPanelQueue.Add(introPanel);                 //0
+        tutorialPanelQueue.Add(movingPawn1Panel);           //1
+        tutorialPanelQueue.Add(movingPawn2panel);           //2
+        tutorialPanelQueue.Add(wallPlacement1Panel);        //3
+        tutorialPanelQueue.Add(wallPlacement2Panel);        //4
+        tutorialPanelQueue.Add(wallplacement3Panel);        //5
+        tutorialPanelQueue.Add(transitionPanel);            //6
+        tutorialPanelQueue.Add(turningTablesPanel);         //7
+        tutorialPanelQueue.Add(jumping1Panel);              //8
+        tutorialPanelQueue.Add(jumping2Panel);              //9
+        tutorialPanelQueue.Add(invalidWallPlacementPanel);  //10
+        tutorialPanelQueue.Add(endGameplayPanel);           //11
+        tutorialPanelQueue.Add(settingsTutorialPanel);      //12
+        tutorialPanelQueue.Add(helpTutorialPanel);          //13
+        tutorialPanelQueue.Add(chat1TutorialPanel);         //14
+        tutorialPanelQueue.Add(chat2TutorialPanel);         //15
+        tutorialPanelQueue.Add(endTurorialPanel);           //16
+
     }
     #endregion
 
@@ -172,14 +201,14 @@ public class TutorialController : MonoBehaviour
     #endregion
 
     #region tutorial controller
+    
 
     private void ProgressController()
     {
+        tutorialProgress++;
+        advancePanels();
         switch (tutorialProgress)
         {
-            case 0:
-                TutorialBegining();
-                break;
             case 1:
 
                 break;
@@ -197,23 +226,27 @@ public class TutorialController : MonoBehaviour
                 break;
             case 8:
                 break;
-            default:
-                break;
         }
     }
 
-    private void TutorialBegining()
-    {
-        //Promt Intro
-        //Prompt Click
-    }
+   
 
     public void Continue()
     {
         clickReceiverPanel.SetActive(false);
-        tutorialProgress++;
         ProgressController();
     }
+    private void activateClickToContinue()
+    {
+
+    }
+    private void advancePanels()
+    {
+        tutorialPanelQueue[tutorialProgress - 1].SetActive(false);
+        tutorialPanelQueue[tutorialprogress].SetActive(true);
+    }
+   
+    
 
         #endregion
 
