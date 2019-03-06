@@ -210,21 +210,74 @@ public class TutorialController : MonoBehaviour
         switch (tutorialProgress)
         {
             case 1:
+                Debug.Log(tutorialProgress);
+                //activate ability to click on pawn
 
                 break;
             case 2:
+                Debug.Log(tutorialProgress);
+                //happens when player clicks their pawn
+                //nothing needs to happen
                 break;
             case 3:
+                //happens when player moves their pawn
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
                 break;
             case 4:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
                 break;
             case 5:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
                 break;
             case 6:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
                 break;
             case 7:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
                 break;
             case 8:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
+                break;
+            case 9:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
+                break;
+            case 10:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
+                break;
+            case 11:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
+                break;
+            case 12:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
+                break;
+            case 13:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
+                break;
+            case 14:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
+                break;
+            case 15:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
+                break;
+            case 16:
+                Debug.Log(tutorialProgress);
+                activateClickToContinue();
+                break;
+            case 17:
+               
                 break;
         }
     }
