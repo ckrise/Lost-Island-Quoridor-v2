@@ -191,6 +191,7 @@ public class MenuController : MonoBehaviour
     {
         mainPanel.SetActive(false);
         helpPanel.SetActive(true);
+        ShowHelpPanel(mainHelpPanel);
     }
     
     private void HideAllHelp()
