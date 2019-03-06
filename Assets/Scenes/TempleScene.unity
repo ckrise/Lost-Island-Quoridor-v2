@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.68841255, g: 0.62281877, b: 0.52420396, a: 1}
+  m_IndirectSpecularColor: {r: 0.688335, g: 0.62282234, b: 0.52414584, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18493,8 +18493,8 @@ MonoBehaviour:
   winButton: {fileID: 1523273950}
   chatButton: {fileID: 294610697}
   chatScrollRect: {fileID: 2082590260}
-  musicVolumeSlider: {fileID: 0}
-  sfxVolumeSlider: {fileID: 0}
+  musicVolumeSlider: {fileID: 2022177634}
+  sfxVolumeSlider: {fileID: 575124229}
   animationFinished: 0
   gameOver: 0
 --- !u!1001 &696729873
