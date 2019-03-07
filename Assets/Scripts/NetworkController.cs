@@ -270,7 +270,7 @@ public class NetworkController : MonoBehaviour
 
     #endregion
 
-    #region Send Moves
+    #region Send Stuff
 
     public void onMoveToSend(string moveToSend)
     {
@@ -284,7 +284,7 @@ public class NetworkController : MonoBehaviour
     }
     #endregion
 
-    #region Receive Move
+    #region Receive Stuff
     [PunRPC]
     public void chatMessage(string message)
     {
