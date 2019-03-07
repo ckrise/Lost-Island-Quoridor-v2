@@ -6,6 +6,7 @@ namespace ArtificialInteligence
 {
     public class TreeNode
     {
+        public static List<float> weights = new List<float> { 1f, 1f, 1f, 1f };
         //Will use static weights in real implementation to avoid overhead of copying to all nodes.
         private AIBoard Board { get; set; }
         private string MoveMade { get; set; }
@@ -145,10 +146,9 @@ namespace ArtificialInteligence
                 int P2SP = BoardAnalysis.EstimateShortestPath(Board, false);
                 int P1NumWalls = Board.GetPlayerOneNumWalls();
                 int P2NumWalls = Board.GetPlayerTwoNumWalls();
-
-                int numWallsPlaced = 21 - P2NumWalls - P1NumWalls;
                 
-                value = (P1SP - P2SP) + (P2NumWalls - P1NumWalls) / numWallsPlaced;
+                
+                value = (weights[0] * P1SP - weights[1] * P2SP) + (weights[2] * P2NumWalls - weights[3] * P1NumWalls);
             }
         }
 

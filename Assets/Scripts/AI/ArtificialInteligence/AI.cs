@@ -16,19 +16,35 @@ namespace ArtificialInteligence
         //Does a game tree search 1 layer deep.
         public string GetEasyMove(string playerMove)
         {
+            TreeNode.weights = new List<float> { .5f, 1f, 1f, 0f };
+            HandlePlayerMove(playerMove);
+
+            TreeNode rootNode = new TreeNode(CurrentBoard);
+            
+            string moveSelected = IterateStart(rootNode, 1);
+
+            CurrentBoard.MakeMove(moveSelected);
+
+            return moveSelected;
+        }
+
+        //AI during first ai competition
+        public string GetIntermediateMove(string playerMove) {
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
 
-            string moveSelected;
-            int randomNum = new System.Random().Next(0, 4);
-            if (randomNum < 3)
+            int numLevelsSearched;
+            if (CurrentBoard.GetPlayerOneNumWalls() == 0 || CurrentBoard.GetPlayerTwoNumWalls() == 0)
             {
-                moveSelected = IterateStart(rootNode, 1);
+                numLevelsSearched = 1;
             }
-            else {
-                moveSelected = IterateStart(rootNode, 2);
+            else
+            {
+                numLevelsSearched = 2;
             }
+
+            string moveSelected = IterateStart(rootNode, numLevelsSearched);
 
             CurrentBoard.MakeMove(moveSelected);
 
