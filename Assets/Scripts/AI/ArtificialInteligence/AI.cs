@@ -20,7 +20,15 @@ namespace ArtificialInteligence
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
 
-            string moveSelected = IterateStart(rootNode, 1);
+            string moveSelected;
+            int randomNum = new System.Random().Next(0, 4);
+            if (randomNum < 3)
+            {
+                moveSelected = IterateStart(rootNode, 1);
+            }
+            else {
+                moveSelected = IterateStart(rootNode, 2);
+            }
 
             CurrentBoard.MakeMove(moveSelected);
 
