@@ -211,22 +211,32 @@ public class TutorialController : MonoBehaviour
         {
             case 1:
                 Debug.Log(tutorialProgress);
+                //deactivate all the hover pads becuase they are all active at the start
+                DeactivateHoverPads();
                 //activate ability to click on pawn
-
+                List<string> allowedPawnMoves = new List<string>();
+                allowedPawnMoves.Add("d1");
+                allowedPawnMoves.Add("e2");
+                allowedPawnMoves.Add("f1");
+                StartPlayerTurn("", new List<string>(), allowedPawnMoves);
                 break;
             case 2:
                 Debug.Log(tutorialProgress);
-                //happens when player clicks their pawn
-                //nothing needs to happen
+                //happens when player clicks thier pawn
                 break;
             case 3:
                 //happens when player moves their pawn
                 Debug.Log(tutorialProgress);
+                //TODO: the enemey makes a move
+
                 activateClickToContinue();
                 break;
             case 4:
+                //happens aftert the enemy has finished making a move and 
+                //the player clicked to continue
                 Debug.Log(tutorialProgress);
-                activateClickToContinue();
+                //start the player's turn with only walls as a placement possibility
+                StartPlayerTurn("", returnAllWallMoves(), new List<string>());
                 break;
             case 5:
                 Debug.Log(tutorialProgress);
@@ -279,6 +289,8 @@ public class TutorialController : MonoBehaviour
             case 17:
                
                 break;
+            default:
+                break;
         }
     }
 
@@ -299,13 +311,57 @@ public class TutorialController : MonoBehaviour
         tutorialPanelQueue[tutorialProgress - 1].SetActive(false);
         tutorialPanelQueue[tutorialProgress].SetActive(true);
     }
-   
-    
+    private List<string> returnAllWallMoves()
+    {
+        List<string> walls = new List<string>();
+        //build all avalible wall moves as strings
+        string move;
+        for (int i = 1; i < 9; i++)
+        {
+            move = "a" + i.ToString() + "v";
+            walls.Add(move);
+            move = "b" + i.ToString() + "v";
+            walls.Add(move);
+            move = "c" + i.ToString() + "v";
+            walls.Add(move);
+            move = "d" + i.ToString() + "v";
+            walls.Add(move);
+            move = "e" + i.ToString() + "v";
+            walls.Add(move);
+            move = "f" + i.ToString() + "v";
+            walls.Add(move);
+            move = "g" + i.ToString() + "v";
+            walls.Add(move);
+            move = "h" + i.ToString() + "v";
+            walls.Add(move);
+        }
+        for (int i = 1; i < 9; i++)
+        {
+            move = "a" + i.ToString() + "h";
+            walls.Add(move);
+            move = "b" + i.ToString() + "h";
+            walls.Add(move);
+            move = "c" + i.ToString() + "h";
+            walls.Add(move);
+            move = "d" + i.ToString() + "h";
+            walls.Add(move);
+            move = "e" + i.ToString() + "h";
+            walls.Add(move);
+            move = "f" + i.ToString() + "h";
+            walls.Add(move);
+            move = "g" + i.ToString() + "h";
+            walls.Add(move);
+            move = "h" + i.ToString() + "h";
+            walls.Add(move);
+        }
+
+        return walls;
+    }
 
         #endregion
 
-    #region player
-    public void StartPlayerTurn(string move, List<string> validWalls, List<string> validMoves)
+        #region player
+        public void StartPlayerTurn(string move, List<string> validWalls, List<string> validMoves)
     {
         if (move.Length == 3)
         {
@@ -326,7 +382,7 @@ public class TutorialController : MonoBehaviour
     }
     public void PlacePlayerWall(Vector3 position, string move)
     {
-        if (!pawnClicked && playerTurn && animationFinished)
+        if (playerTurn && animationFinished)
         {
             playerTurn = false;
             TakeFromWallPool(true);
@@ -337,10 +393,13 @@ public class TutorialController : MonoBehaviour
             newWall.SetActive(true);
             newWall.GetComponent<WallAnimation>().SetDestination(transformation.Item1, true);
             playerMove = move;
+
+            ProgressController();
         }
     }
     public void MovePlayerPawn(GameObject ghost)
     {
+        ProgressController();
         if (playerTurn)
         {
             playerTurn = false;
@@ -367,8 +426,12 @@ public class TutorialController : MonoBehaviour
         DeactivateHoverPads();
         playerTurn = false;
         pawnClicked = false;
-        Debug.Log("Player Move: " + move);
-        GameController.GCInstance.RecieveMoveFromPlayer(move);
+        //make the opponent move
+        if(tutorialProgress == 3)
+        {
+            MoveOpponentPawn("e8");
+        }
+
     }
     #endregion
 
@@ -469,7 +532,7 @@ public class TutorialController : MonoBehaviour
 
     public void ActivateGhostWall(Vector3 position, char orientation)
     {
-        if (playerTurn && !pawnClicked && animationFinished)
+        if (playerTurn && animationFinished)
         {
             var transformation = GetPositionAndRotationFromHoverPad(position, orientation);
             ghostWall.transform.SetPositionAndRotation(transformation.Item1, transformation.Item2);
@@ -504,6 +567,7 @@ public class TutorialController : MonoBehaviour
     #region moves
     private void ActivateGhostMoves(List<string> moves)
     {
+        
         foreach (var move in moves)
         {
             CreateGhostMove(move);
@@ -531,10 +595,16 @@ public class TutorialController : MonoBehaviour
     {
         if (playerTurn && animationFinished)
         {
+            Debug.Log("pawn was Clicked");
+           
             pawnClicked = !pawnClicked;
             foreach (var space in ghostPlayerMoves)
             {
                 space.SetActive(pawnClicked);
+            }
+            if(tutorialProgress == 1)
+            {
+                ProgressController();
             }
         }
     }
