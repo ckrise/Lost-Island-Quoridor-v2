@@ -247,6 +247,15 @@ public class TutorialController : MonoBehaviour
                 activateClickToContinue();
                 break;
             case 7:
+                //this should be where the board resets
+                List<string> playerWallsToPlace = new List<string>();
+                playerWallsToPlace.Add("c7v");
+                playerWallsToPlace.Add("d8h");
+                List<string> opponentWallsToPlace = new List<string>();
+                opponentWallsToPlace.Add("e6h");
+                opponentWallsToPlace.Add("f7v");
+                SetBoard("e7", "d7", playerWallsToPlace, opponentWallsToPlace);
+
                 Debug.Log(tutorialProgress);
                 activateClickToContinue();
                 break;
@@ -357,7 +366,7 @@ public class TutorialController : MonoBehaviour
 
         return walls;
     }
-
+    
         #endregion
 
         #region player

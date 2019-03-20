@@ -1,0 +1,78 @@
+newmtl palm_island_OBJ:Material__74
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Map__2_Gradient.tga
+map_Ka Map__2_Gradient.tga
+Ni 1.50
+Ks 0.31 0.31 0.31
+Ns 30.00
+newmtl palm_island_OBJ:list
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Map__2_Gradient.tga
+map_Ka Map__2_Gradient.tga
+Ni 1.50
+Ks 0.31 0.31 0.31
+Ns 30.00
+newmtl palm_island_OBJ:list_2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Map__2_Gradient.tga
+map_Ka Map__2_Gradient.tga
+Ni 1.50
+Ks 0.31 0.31 0.31
+Ns 30.00
+newmtl palm_island_OBJ:palma
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.00 0.00 0.00
+Ns 10.00
+newmtl palm_island_OBJ:sand
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.00 0.00 0.00
+Ns 10.00
+newmtl palm_island_OBJ:sand_2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.00 0.00 0.00
+Ns 10.00
+newmtl palm_island_OBJ:stebel
+illum 4
+Kd 0.07 0.18 0.01
+Ka 0.07 0.18 0.01
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.29 0.29 0.29
+Ns 36.00
+newmtl palm_island_OBJ:stebel_2
+illum 4
+Kd 0.38 0.25 0.01
+Ka 0.38 0.25 0.01
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.29 0.29 0.29
+Ns 36.00
+newmtl palm_island_OBJ:stone
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.00 0.00 0.00
+Ns 10.00
