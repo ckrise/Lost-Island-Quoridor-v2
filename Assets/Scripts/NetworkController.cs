@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-
 public class NetworkController : MonoBehaviour
 {
     #region Variables
@@ -18,7 +17,6 @@ public class NetworkController : MonoBehaviour
     public GUIController guiController = null;
     private List<string> roomList = new List<string>();
     public PhotonView photonView;
-    
     #endregion
 
     #region references
@@ -284,8 +282,6 @@ public class NetworkController : MonoBehaviour
         Debug.Log(message);
         photonView.RPC("chatMessage", PhotonTargets.Others, message);
     }
-
-   
     #endregion
 
     #region Receive Stuff
