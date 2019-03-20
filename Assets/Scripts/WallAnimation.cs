@@ -9,11 +9,11 @@ public class WallAnimation : MonoBehaviour
     public float startdepth = 2;
     private bool isPlayer = false;
     private bool isAnimated = false;
+    public AudioSource wallPlaceSound;
 
 
     private void Awake()
     {       
-        public AudioSource wallPlaceSound;
         wallPlaceSound = GetComponent <AudioSource>();
         destination = transform.position;
     }
