@@ -230,8 +230,7 @@ public class TutorialController : MonoBehaviour
             case 3:
                 //happens when player moves their pawn
                 Debug.Log(tutorialProgress);
-                //TODO: the enemey makes a move
-
+                //the enemey makes a move during this index
                 activateClickToContinue();
                 break;
             case 4:
@@ -259,13 +258,18 @@ public class TutorialController : MonoBehaviour
                 opponentWallsToPlace.Add("e6h");
                 opponentWallsToPlace.Add("f7v");
                 SetBoard("e7", "d7", playerWallsToPlace, opponentWallsToPlace);
-
+                //activate the player's turn but only allow one wall to be placed
+                List<string> placeableWalls = new List<string>();
+                placeableWalls.Add("c6h");
+                StartPlayerTurn("", placeableWalls, new List<string>());
                 Debug.Log(tutorialProgress);
-                activateClickToContinue();
+                //activateClickToContinue();
                 break;
             case 8:
+                //opponent jumps the player
                 Debug.Log(tutorialProgress);
-                activateClickToContinue();
+               
+                //activateClickToContinue();
                 break;
             case 9:
                 Debug.Log(tutorialProgress);
@@ -407,7 +411,7 @@ public class TutorialController : MonoBehaviour
             newWall.GetComponent<WallAnimation>().Animate(transformation.Item1, true);
             wallsPlaced.Add(newWall);
             playerMove = move;
-
+            
             ProgressController();
         }
     }
@@ -444,6 +448,15 @@ public class TutorialController : MonoBehaviour
         if(tutorialProgress == 3)
         {
             MoveOpponentPawn("e8");
+        }
+        else if(tutorialProgress == 8)
+        {
+            Debug.Log("Opponent Moves");
+            MoveOpponentPawn("f7");
+            List<string>allowedPawnMoves = new List<string>();
+            allowedPawnMoves.Add("f8");
+            Debug.Log("Starting player turn");
+            StartPlayerTurn("", new List<string>(), allowedPawnMoves);
         }
 
     }
@@ -603,6 +616,7 @@ public class TutorialController : MonoBehaviour
     }
 
     #endregion
+
     #region moves
     private void ActivateGhostMoves(List<string> moves)
     {
@@ -641,10 +655,11 @@ public class TutorialController : MonoBehaviour
             {
                 space.SetActive(pawnClicked);
             }
-            if(tutorialProgress == 1)
+            if(tutorialProgress == 1 || tutorialProgress == 8)
             {
                 ProgressController();
             }
+            
         }
     }
     #endregion
@@ -708,6 +723,7 @@ public class TutorialController : MonoBehaviour
         }
     }
     #endregion
+
     #region settings
 
 
@@ -750,6 +766,7 @@ public class TutorialController : MonoBehaviour
         newChat.text = message;
     }
     #endregion
+
     #region helpPanel
     public void showRulesPanel()
     {
