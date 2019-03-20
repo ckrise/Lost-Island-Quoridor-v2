@@ -209,7 +209,7 @@ public class GUIController : MonoBehaviour
             var transformation = GetPositionAndRotationFromHoverPad(position, move[2]);
             newWall.transform.rotation = transformation.Item2;
             newWall.SetActive(true);
-            newWall.GetComponent<WallAnimation>().SetDestination(transformation.Item1, true);
+            newWall.GetComponent<WallAnimation>().Animate(transformation.Item1, true);
             playerMove = move;
         }
     }
@@ -220,7 +220,7 @@ public class GUIController : MonoBehaviour
             playerTurn = false;
             DestroyGhostMoves();
             Vector3 position = ghost.transform.position;
-            playerPawn.GetComponent<PawnAnimation>().SetDestination(position, true);
+            playerPawn.GetComponent<PawnAnimation>().Animate(position, true);
             playerMove = FindCoordinate(position.x, position.z);
         }
     }
@@ -273,7 +273,7 @@ public class GUIController : MonoBehaviour
             position.x++;
         }
         newWall.transform.rotation = Quaternion.Euler(0, rotation, 0);
-        newWall.GetComponent<WallAnimation>().SetDestination(position, false);
+        newWall.GetComponent<WallAnimation>().Animate(position, false);
         newWall.SetActive(true);
     }
     private void MoveOpponentPawn(string coordinate)
@@ -281,7 +281,7 @@ public class GUIController : MonoBehaviour
         //should make the mage play the attack animation
         MageBehavior.Reference.Attack();
         Vector3 newPosition = GetPositionFromCoordinate(coordinate);
-        opponentPawn.GetComponent<PawnAnimation>().SetDestination(newPosition, false);
+        opponentPawn.GetComponent<PawnAnimation>().Animate(newPosition, false);
     }
     #endregion
 
@@ -320,11 +320,11 @@ public class GUIController : MonoBehaviour
     {
         if (isPlayer)
         {
-            playerWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
+            playerWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWallFromPool();
         }
         else
         {
-            opponentWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
+            opponentWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWallFromPool();
         }
     }
 

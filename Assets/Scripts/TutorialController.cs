@@ -61,10 +61,13 @@ public class TutorialController : MonoBehaviour
         { 8, 14.75f },
         { 9, 16.75f },
     };
-    private Stack<GameObject> opponentWallPoolStack, playerWallPoolStack;
+    private List<GameObject> opponentWallPool, playerWallPool;
+    private int opponentWallPoolIndex = 0;
+    private int playerWallPoolIndex = 0;
     private string playerMove;
     private int tutorialProgress = 0;
     private List<GameObject> tutorialPanelQueue = new List<GameObject>();
+    private List<GameObject> wallsPlaced = new List<GameObject>();
 
     #endregion
     #region unity
@@ -80,8 +83,8 @@ public class TutorialController : MonoBehaviour
     private void Start()
     {
         //initialize wall pool stacks
-        playerWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("PlayerWallPool"));
-        opponentWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("OpponentWallPool"));
+        playerWallPool = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlayerWallPool"));
+        opponentWallPool = new List<GameObject>(GameObject.FindGameObjectsWithTag("OpponentWallPool"));
 
         //set music and sfx volume
         musicVolumeSlider.value = PlayerData.MusicVolume;
@@ -247,6 +250,7 @@ public class TutorialController : MonoBehaviour
                 activateClickToContinue();
                 break;
             case 7:
+                CleanBoard();
                 //this should be where the board resets
                 List<string> playerWallsToPlace = new List<string>();
                 playerWallsToPlace.Add("c7v");
@@ -370,7 +374,7 @@ public class TutorialController : MonoBehaviour
         #endregion
 
         #region player
-        public void StartPlayerTurn(string move, List<string> validWalls, List<string> validMoves)
+    public void StartPlayerTurn(string move, List<string> validWalls, List<string> validMoves)
     {
         if (move.Length == 3)
         {
@@ -400,7 +404,8 @@ public class TutorialController : MonoBehaviour
             var transformation = GetPositionAndRotationFromHoverPad(position, move[2]);
             newWall.transform.rotation = transformation.Item2;
             newWall.SetActive(true);
-            newWall.GetComponent<WallAnimation>().SetDestination(transformation.Item1, true);
+            newWall.GetComponent<WallAnimation>().Animate(transformation.Item1, true);
+            wallsPlaced.Add(newWall);
             playerMove = move;
 
             ProgressController();
@@ -414,7 +419,7 @@ public class TutorialController : MonoBehaviour
             playerTurn = false;
             DestroyGhostMoves();
             Vector3 position = ghost.transform.position;
-            playerPawn.GetComponent<PawnAnimation>().SetDestination(position, true);
+            playerPawn.GetComponent<PawnAnimation>().Animate(position, true);
             playerMove = FindCoordinate(position.x, position.z);
         }
     }
@@ -466,19 +471,41 @@ public class TutorialController : MonoBehaviour
             position.x++;
         }
         newWall.transform.rotation = Quaternion.Euler(0, rotation, 0);
-        newWall.GetComponent<WallAnimation>().SetDestination(position, false);
+        newWall.GetComponent<WallAnimation>().Animate(position, false);
         newWall.SetActive(true);
+        wallsPlaced.Add(newWall);
     }
     private void MoveOpponentPawn(string coordinate)
     {
         //should make the mage play the attack animation
         MageBehavior.Reference.Attack();
         Vector3 newPosition = GetPositionFromCoordinate(coordinate);
-        opponentPawn.GetComponent<PawnAnimation>().SetDestination(newPosition, false);
+        opponentPawn.GetComponent<PawnAnimation>().Animate(newPosition, false);
     }
     #endregion
 
     #region setboard
+    private void CleanBoard()
+    {
+        //Remove placed walls on board
+        foreach (GameObject wall in wallsPlaced)
+        {
+            Destroy(wall);
+        }
+        wallsPlaced.Clear();
+        //Add walls back to pool
+        opponentWallPoolIndex = 0;
+        playerWallPoolIndex = 0;
+        foreach (GameObject wall in opponentWallPool)
+        {
+            wall.GetComponent<WallAnimation>().AddWallToPool();
+        }
+        foreach (GameObject wall in playerWallPool)
+        {
+            wall.GetComponent<WallAnimation>().AddWallToPool();
+        }
+    }
+
     private void SetBoard(string playerCoordinate,
                           string opponentCoordinate,
                           List<string> playerWalls,
@@ -514,17 +541,18 @@ public class TutorialController : MonoBehaviour
         }
         newWall.transform.SetPositionAndRotation(position, Quaternion.Euler(0, rotation, 0));
         newWall.SetActive(true);
+        wallsPlaced.Add(newWall);
     }
     private void PlacePawn(string coordinate, bool isPlayer)
     {
         Vector3 newPosition = GetPositionFromCoordinate(coordinate);
         if (isPlayer)
         {
-            playerPawn.transform.position = newPosition;
+            playerPawn.GetComponent<PawnAnimation>().SetPosition(newPosition);
         }
         else
         {
-            opponentPawn.transform.position = newPosition;
+            opponentPawn.GetComponent<PawnAnimation>().SetPosition(newPosition);
         }
     }
     #endregion
@@ -564,11 +592,13 @@ public class TutorialController : MonoBehaviour
     {
         if (isPlayer)
         {
-            playerWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
+            playerWallPool[playerWallPoolIndex].GetComponent<WallAnimation>().RemoveWallFromPool();
+            playerWallPoolIndex++;
         }
         else
         {
-            opponentWallPoolStack.Pop().GetComponent<WallAnimation>().RemoveWall();
+            opponentWallPool[opponentWallPoolIndex].GetComponent<WallAnimation>().RemoveWallFromPool();
+            opponentWallPoolIndex++;
         }
     }
 

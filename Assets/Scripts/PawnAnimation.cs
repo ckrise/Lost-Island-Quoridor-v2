@@ -13,14 +13,12 @@ public class PawnAnimation : MonoBehaviour
     private int b;
     public AudioSource pawnMovementSound;
 
-
     // http://answers.unity.com/answers/1426132/view.html
     // Start is called before the first frame update
     void Start()
     {
         pawnMovementSound = GetComponent<AudioSource>();
         destination = transform.position;
-      
     }
 
     // Update is called once per frame
@@ -54,7 +52,13 @@ public class PawnAnimation : MonoBehaviour
         }
     }
 
-    public void SetDestination(Vector3 value, bool isPlayer)
+    public void SetPosition(Vector3 newPosition)
+    {
+        transform.position = newPosition;
+        destination = newPosition;
+    }
+
+    public void Animate(Vector3 value, bool isPlayer)
     {
         this.isPlayer = isPlayer;
         destination = value;

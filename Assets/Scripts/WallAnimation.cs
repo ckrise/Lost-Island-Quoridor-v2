@@ -8,11 +8,11 @@ public class WallAnimation : MonoBehaviour
     public float speed = 2;
     public float startdepth = 2;
     private bool isPlayer = false;
+    private bool isAnimated = false;
 
 
     private void Awake()
-    {
-       
+    {       
         destination = transform.position;
     }
 
@@ -20,7 +20,7 @@ public class WallAnimation : MonoBehaviour
     void Update()
     {
        
-        if (destination != transform.position)
+        if (isAnimated && destination != transform.position)
         {
             IncrementPosition();
         }
@@ -45,18 +45,27 @@ public class WallAnimation : MonoBehaviour
         }
     }
 
-    public void SetDestination(Vector3 value, bool isPlayer)
+    public void Animate(Vector3 value, bool isPlayer)
     {
+        isAnimated = true;
         this.isPlayer = isPlayer;
         Vector3 start = value;
         start.y -= startdepth;
         transform.position = start;
         destination = value;
     }
-    public void RemoveWall()
+    public void RemoveWallFromPool()
     {
+        isAnimated = true;
         Vector3 end = transform.position;
         end.y -= startdepth;
         destination = end;
+    }
+    public void AddWallToPool()
+    {
+        isAnimated = false;
+        Vector3 newPosition = transform.position;
+        newPosition.y = .05f;
+        transform.position = newPosition;
     }
 }
