@@ -13,13 +13,14 @@ public class WallAnimation : MonoBehaviour
 
     private void Awake()
     {       
+        public AudioSource wallPlaceSound;
+        wallPlaceSound = GetComponent <AudioSource>();
         destination = transform.position;
     }
 
     // Update is called once per frame
     void Update()
-    {
-       
+    {       
         if (isAnimated && destination != transform.position)
         {
             IncrementPosition();
@@ -57,6 +58,7 @@ public class WallAnimation : MonoBehaviour
     public void RemoveWallFromPool()
     {
         isAnimated = true;
+        wallPlaceSound.Play();
         Vector3 end = transform.position;
         end.y -= startdepth;
         destination = end;
