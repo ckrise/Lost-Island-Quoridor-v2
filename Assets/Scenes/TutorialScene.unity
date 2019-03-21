@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.68841255, g: 0.62281877, b: 0.52420396, a: 1}
+  m_IndirectSpecularColor: {r: 0.688335, g: 0.62282234, b: 0.52414584, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1839,7 +1839,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1591136323}
         m_MethodName: showRulesPanel
         m_Mode: 1
         m_Arguments:
@@ -10624,8 +10624,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ShowChatMenu
+      - m_Target: {fileID: 1591136323}
+        m_MethodName: ShowChat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25797,16 +25797,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6595785048022531160, guid: 1ea670c069e4a68448d4626406e1f3d8,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: cfb24df3f44b1de469ed949e4964ae43, type: 2}
     - target: {fileID: 3871271971423313165, guid: 1ea670c069e4a68448d4626406e1f3d8,
         type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6595785048022531160, guid: 1ea670c069e4a68448d4626406e1f3d8,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cfb24df3f44b1de469ed949e4964ae43, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ea670c069e4a68448d4626406e1f3d8, type: 3}
 --- !u!1 &772054947 stripped
@@ -39285,8 +39285,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ShowHelpMenu
+      - m_Target: {fileID: 1591136323}
+        m_MethodName: ShowHelp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -57080,17 +57080,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: LeaveGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 775448461}
         m_MethodName: PlayOneShot
         m_Mode: 2
@@ -59745,6 +59734,7 @@ MonoBehaviour:
   sfxVolumeSlider: {fileID: 575124229}
   animationFinished: 0
   gameOver: 0
+  tutorialPanel: {fileID: 1749785928}
   introPanel: {fileID: 2074727295}
   movingPawn1Panel: {fileID: 869152683}
   movingPawn2panel: {fileID: 1856095694}
@@ -64597,7 +64587,7 @@ GameObject:
   - component: {fileID: 1749785931}
   - component: {fileID: 1749785930}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: TutorialPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67322,7 +67312,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1829793619}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1871655489}
+        m_MethodName: LoadLevel
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MainMenu
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1829793619
@@ -68281,7 +68282,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1591136323}
         m_MethodName: showGameplayPanel
         m_Mode: 1
         m_Arguments:
@@ -72056,8 +72057,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ShowSettingsMenu
+      - m_Target: {fileID: 1591136323}
+        m_MethodName: ShowSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

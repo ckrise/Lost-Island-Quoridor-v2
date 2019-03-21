@@ -24,6 +24,7 @@ public class TutorialController : MonoBehaviour
     public bool animationFinished = false;
     public bool gameOver = false;
     //tutorial panels
+    public GameObject tutorialPanel;
     public GameObject introPanel, movingPawn1Panel, movingPawn2panel, wallPlacement1Panel,
                      wallPlacement2Panel, wallplacement3Panel, transitionPanel, turningTablesPanel,
                      jumping1Panel, jumping2Panel, invalidWallPlacementPanel, endGameplayPanel,
@@ -204,15 +205,19 @@ public class TutorialController : MonoBehaviour
     #endregion
 
     #region tutorial controller
-    
+    public void SkipTutorial()
+    {
+        Debug.Log("skipped");
+        LeaveGame();
+    }
 
     private void ProgressController()
     {
         tutorialProgress++;
-        advancePanels();
         switch (tutorialProgress)
         {
             case 1:
+                advancePanels();
                 Debug.Log(tutorialProgress);
                 //deactivate all the hover pads becuase they are all active at the start
                 DeactivateHoverPads();
@@ -224,16 +229,19 @@ public class TutorialController : MonoBehaviour
                 StartPlayerTurn("", new List<string>(), allowedPawnMoves);
                 break;
             case 2:
+                advancePanels();
                 Debug.Log(tutorialProgress);
                 //happens when player clicks thier pawn
                 break;
             case 3:
+                advancePanels();
                 //happens when player moves their pawn
                 Debug.Log(tutorialProgress);
                 //the enemey makes a move during this index
                 activateClickToContinue();
                 break;
             case 4:
+                advancePanels();
                 //happens aftert the enemy has finished making a move and 
                 //the player clicked to continue
                 Debug.Log(tutorialProgress);
@@ -241,14 +249,17 @@ public class TutorialController : MonoBehaviour
                 StartPlayerTurn("", returnAllWallMoves(), new List<string>());
                 break;
             case 5:
+                advancePanels();
                 Debug.Log(tutorialProgress);
                 activateClickToContinue();
                 break;
             case 6:
+                advancePanels();
                 Debug.Log(tutorialProgress);
                 activateClickToContinue();
                 break;
             case 7:
+                advancePanels();
                 CleanBoard();
                 //this should be where the board resets
                 List<string> playerWallsToPlace = new List<string>();
@@ -263,55 +274,63 @@ public class TutorialController : MonoBehaviour
                 placeableWalls.Add("c6h");
                 StartPlayerTurn("", placeableWalls, new List<string>());
                 Debug.Log(tutorialProgress);
-                //activateClickToContinue();
+              
                 break;
             case 8:
+                advancePanels();
                 //opponent jumps the player
                 Debug.Log(tutorialProgress);
-               
-                //activateClickToContinue();
                 break;
             case 9:
+                advancePanels();
                 Debug.Log(tutorialProgress);
-                activateClickToContinue();
                 break;
             case 10:
+                advancePanels();
                 Debug.Log(tutorialProgress);
                 activateClickToContinue();
                 break;
             case 11:
+                advancePanels();
                 Debug.Log(tutorialProgress);
-                activateClickToContinue();
                 break;
             case 12:
+                advancePanels();
                 Debug.Log(tutorialProgress);
-                activateClickToContinue();
                 break;
             case 13:
+                advancePanels();
                 Debug.Log(tutorialProgress);
                 activateClickToContinue();
                 break;
             case 14:
+                advancePanels();
+                helpPanel.SetActive(false);
                 Debug.Log(tutorialProgress);
-                activateClickToContinue();
                 break;
             case 15:
+                advancePanels();
                 Debug.Log(tutorialProgress);
                 activateClickToContinue();
                 break;
             case 16:
+                advancePanels();
+                chatPanel.SetActive(false);
                 Debug.Log(tutorialProgress);
-                activateClickToContinue();
+                List<string> winningMove = new List<string>();
+                winningMove.Add("f9");
+                StartPlayerTurn("", new List<string>(), winningMove );
                 break;
             case 17:
-               
+                Debug.Log(tutorialProgress);
+                tutorialPanel.SetActive(false);
+                //end the game
+                GameOver(true);
                 break;
             default:
                 break;
         }
     }
-
-   
 
     public void Continue()
     {
@@ -458,7 +477,11 @@ public class TutorialController : MonoBehaviour
             Debug.Log("Starting player turn");
             StartPlayerTurn("", new List<string>(), allowedPawnMoves);
         }
-
+        else if(tutorialProgress == 10)
+        {
+            Debug.Log("Opponent Moves");
+            MoveOpponentPawn("e7");
+        }
     }
     #endregion
 
@@ -659,7 +682,6 @@ public class TutorialController : MonoBehaviour
             {
                 ProgressController();
             }
-            
         }
     }
     #endregion
@@ -684,7 +706,7 @@ public class TutorialController : MonoBehaviour
             Debug.Log("NetworkGame");
             GameData.NetworkController.gameOver();
         }
-        //SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     #endregion
@@ -725,7 +747,14 @@ public class TutorialController : MonoBehaviour
     #endregion
 
     #region settings
-
+    public void ShowSettings()
+    {
+        if(tutorialProgress == 11)
+        {
+            ProgressController();
+            settingsPanel.SetActive(true);
+        }
+    }
 
     public void UpdatePlayerMusicVolume(float vol)
     {
@@ -741,6 +770,16 @@ public class TutorialController : MonoBehaviour
 
 
     #region chat
+    public void ShowChat()
+    {
+        if(tutorialProgress == 14)
+        {
+            ProgressController();
+            chatPanel.SetActive(true);
+            
+        }
+    }
+
     public void ReceiveMessage(string message)
     {
         //update message window
@@ -768,6 +807,17 @@ public class TutorialController : MonoBehaviour
     #endregion
 
     #region helpPanel
+    public void ShowHelp()
+    {
+        if(tutorialProgress == 12)
+        {
+
+            settingsPanel.SetActive(false);
+            ProgressController();
+            helpPanel.SetActive(true);
+
+        }
+    }
     public void showRulesPanel()
     {
         gameplayPanel.SetActive(false);
