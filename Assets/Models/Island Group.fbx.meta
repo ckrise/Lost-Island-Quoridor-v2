@@ -1367,6 +1367,23 @@ ModelImporter:
     4300028: polySurface195
     4300030: polySurface146
     4300032: polySurface95
+    6400000: polySurface10
+    6400002: polySurface11
+    6400004: polySurface146
+    6400006: polySurface164
+    6400008: polySurface165
+    6400010: polySurface195
+    6400012: polySurface2
+    6400014: polySurface3
+    6400016: polySurface4
+    6400018: polySurface46
+    6400020: polySurface5
+    6400022: polySurface6
+    6400024: polySurface7
+    6400026: polySurface71
+    6400028: polySurface8
+    6400030: polySurface9
+    6400032: polySurface95
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -1400,7 +1417,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1
