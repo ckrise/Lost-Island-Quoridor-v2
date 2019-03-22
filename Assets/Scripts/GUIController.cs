@@ -57,6 +57,7 @@ public class GUIController : MonoBehaviour
     };
     private Stack<GameObject> opponentWallPoolStack, playerWallPoolStack;
     private string playerMove;
+    private musicScript musicReference;
     #endregion
     #region unity
     void Awake()
@@ -371,6 +372,7 @@ public class GUIController : MonoBehaviour
     #region game end
     public void GameOver(bool isWinner, string move = "")
     {
+        musicReference = musicScript.musicScriptReference;
         gameOver = true;
         if (move != "")
         {
@@ -379,10 +381,12 @@ public class GUIController : MonoBehaviour
         if(isWinner)
         {
             winPanel.SetActive(true);
+            musicReference.playWin();
         }
         else
         {
             losePanel.SetActive(true);
+            musicReference.playLose();
         }
    }
     public void LeaveGame()
