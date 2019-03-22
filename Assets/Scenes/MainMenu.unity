@@ -2224,6 +2224,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1200732121f0fc843aef999e09aa1f82, type: 2}
+    - target: {fileID: 400000, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
 --- !u!1 &267114383
@@ -8101,18 +8109,18 @@ Terrain:
   m_TerrainData: {fileID: 15600000, guid: 3d530d3f14bc72a45bcf646131537adc, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
-  m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
+  m_TreeCrossFadeLength: 37.2
+  m_TreeMaximumFullLODCount: 759
   m_DetailObjectDistance: 80
-  m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
+  m_DetailObjectDensity: 0
+  m_HeightmapPixelError: 1
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
   m_CastShadows: 1
   m_DrawHeightmap: 1
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 3
   m_MaterialType: 0
   m_LegacySpecular:
     serializedVersion: 2
