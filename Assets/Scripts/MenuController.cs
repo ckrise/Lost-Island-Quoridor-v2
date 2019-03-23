@@ -18,7 +18,7 @@ public class MenuController : MonoBehaviour
         storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
         settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel,
         failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel, 
-        disconnectedFromMultiplayerPanel, levelPanel; 
+        disconnectedFromMultiplayerPanel, levelPanel, helpArrow; 
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
@@ -47,7 +47,7 @@ public class MenuController : MonoBehaviour
             mainPanel.SetActive(true);
         }
         helpPanels = new List<GameObject>{ storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
-                                           settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel };
+                                           settingsHelpPanel, helpHelpPanel, quitHelpPanel };
 
         //initialize fullscreen toggle
         fullscreenToggle.isOn = Screen.fullScreen;
@@ -206,8 +206,7 @@ public class MenuController : MonoBehaviour
     {
         HideAllHelp();
         panel.SetActive(true);
-    }
-
+    }    
     #endregion
 
     #region Networking Multiplayer
