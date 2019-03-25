@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.68833274, g: 0.62281364, b: 0.52414554, a: 1}
+  m_IndirectSpecularColor: {r: 0.68841255, g: 0.62281877, b: 0.52420396, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -29211,9 +29211,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "\tAha! Notice how some of the spaces around your pawn were highlighted
     in blue when you clicked your pawn? These are the spaces that you can move your
-    pawn to. Normally, the pawn can only move one space at a time. To make the pawn
-    move just click on the highlighted space that you want your pawn to move to. Try
-    moving to one of the spaces!\n"
+    pawn to. The pawn can only move one space at a time. To make the pawn move just
+    click on the highlighted space that you want your pawn to move to. Try moving
+    to one of the spaces!\n"
 --- !u!222 &860026027
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32136,9 +32136,7 @@ MonoBehaviour:
   m_Text: "\tSo how do you place a wall? Well if you\u2019ll notice, as you hover
     your mouse in areas that are between the spaces on the board, a blue highlighted
     wall appears. This highlighted wall shows you what wall would be placed if you
-    chose that spot as your place for a wall. Once you have the highlighted wall in
-    the position you want, simply click and the highlighted wall will be replaced
-    with a real one. Go ahead and try to place one!"
+    click there. Go ahead and try to place one!"
 --- !u!222 &928793970
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32752,13 +32750,11 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Alright! Let\u2019s teach you how to play Quoridor! \r\n\tThe first thing
-    you need to know is that Quoridor is a turn based game, which means that you and
-    your opponent will take turns interacting with the board. You can do a couple
-    of things when it is your turn but we will get into that a bit later. For now,
-    I bet you\u2019re wondering: \u201CHow do I win?!\u201D The whole point of Quoridor
-    is to move your pawn from the side of the board that is closest to you all the
-    way across to your opponent\u2019s side of the board. The first player to have
-    their pawn reach the opposite side of the board wins the game!\r\n"
+    you need to know is that you and your opponent will take turns interacting with
+    the board. You can either place a wall or move your pawn when it is your turn.
+    For now, I bet you\u2019re wondering: \u201CHow do I win?!\u201D The whole point
+    of Quoridor is to move your pawn to the other side of the board. The first player
+    to have their pawn reach the opposite side of the board wins the game!\r\n"
 --- !u!222 &945248854
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48455,14 +48451,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\tWell that was a silly move he just made. He could have jumped you again!
-    Oh well. There's one last thing you should know about the rules of Quoridor: you
-    can\u2019t completely block yourself or your opponent from reaching the side they
-    are trying to get to. If you hover your mouse around the area that would normally
-    let you place the wall which could block both of you into this square, you\u2019ll
-    realize that no blue highlighted wall pops up. This is because that wall is invalid.
-    If you ever run across other places that don\u2019t have a blue highlighted wall
-    then that means they are also invalid. "
+  m_Text: "\tYou can't place any invalid walls, if you hover over a invalid wall spot
+    no highlighted wall will appear. For example, you can't place any walls that competly
+    prevent your opponent from reaching the other side."
 --- !u!222 &1440176414
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -58679,9 +58670,9 @@ MonoBehaviour:
   m_Text: "\tThe other action that you could take during your turn is to place a wall.
     Walls are used to make your opponent\u2019s path to the other side longer since
     pawns cannot jump over them. Each wall is the same length as two of the spaces
-    on the board and can be placed in-between those spaces. You can only place one
-    wall at a time. When placing walls, you have to be careful though because your
-    own walls could end up getting in your way as you move around the board. "
+    on the board and can be placed in-between those spaces. When placing walls, you
+    have to be careful though because your own walls could end up getting in your
+    way as you move around the board. "
 --- !u!222 &1575152980
 CanvasRenderer:
   m_ObjectHideFlags: 0

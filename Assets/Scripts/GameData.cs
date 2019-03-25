@@ -12,7 +12,31 @@ public static class GameData
     private static string scene = "AztecScene";
     private static string playerMove = "";
     private static string aiMove = "";
+    private static bool inAdventureMode = false;
+    private static int adventureProgress = 0;
 
+    public static int AdventureProgress
+    {
+        get
+        {
+            return adventureProgress;
+        }
+        set
+        {
+            adventureProgress = value;
+        }
+    }
+    public static bool InAdventureMove
+    {
+        get
+        {
+            return inAdventureMode;
+        }
+        set
+        {
+            inAdventureMode = value;
+        }
+    }
     public static string PlayerMove
     {
         get

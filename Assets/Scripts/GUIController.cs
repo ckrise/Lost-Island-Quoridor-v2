@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -281,6 +282,12 @@ public class GUIController : MonoBehaviour
     {
         //should make the mage play the attack animation
         MageBehavior.Reference.Attack();
+        StartCoroutine("MoveOpponentPawnOnTime", coordinate);
+    }
+
+    private IEnumerator MoveOpponentPawnOnTime(string coordinate)
+    {
+        yield return new WaitForSeconds(.5f);
         Vector3 newPosition = GetPositionFromCoordinate(coordinate);
         opponentPawn.GetComponent<PawnAnimation>().Animate(newPosition, false);
     }
