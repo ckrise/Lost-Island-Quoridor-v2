@@ -11470,12 +11470,12 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 3
   m_TerrainData: {fileID: 15600000, guid: 3d530d3f14bc72a45bcf646131537adc, type: 2}
-  m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeDistance: 977
+  m_TreeBillboardDistance: 91
   m_TreeCrossFadeLength: 77
   m_TreeMaximumFullLODCount: 759
-  m_DetailObjectDistance: 92
-  m_DetailObjectDensity: 0
+  m_DetailObjectDistance: 250
+  m_DetailObjectDensity: 1
   m_HeightmapPixelError: 1
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
