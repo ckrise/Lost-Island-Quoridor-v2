@@ -24,6 +24,7 @@ public class NetworkController : MonoBehaviour
     #region references
     private void Start()
     {
+        PhotonNetwork.automaticallySyncScene = true;
         networkController = this;
         gameController = GameController.GCInstance;
         guiController = GUIController.Instance;
@@ -130,6 +131,7 @@ public class NetworkController : MonoBehaviour
         myRoom = PhotonNetwork.room.Name;
         menuController.SetLobbyName(myRoom);
         menuController.CreateRoom();
+        PhotonNetwork.SetMasterClient(PhotonNetwork.player);
     }
 
     private void OnPhotonCreateRoomFailed()
@@ -151,13 +153,10 @@ public class NetworkController : MonoBehaviour
     private void OnJoinedRoom()
     {
         myRoom = PhotonNetwork.room.Name;
-        if (PhotonNetwork.room.PlayerCount == 2)
-        {
-            GameData.PlayerGoesFirst = false;
-            networkGame();
-           PhotonNetwork.LoadLevel("TempleScene");
-           
-        }
+        
+        GameData.PlayerGoesFirst = false;
+        networkGame();
+        //PhotonNetwork.LoadLevel("TempleScene");
         Debug.Log("JOINED ROOM!");
         Debug.Log(PhotonNetwork.room.Name);
     }
