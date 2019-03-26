@@ -13,8 +13,7 @@ public class MageBehavior : MonoBehaviour
     }
     void Start()
     {
-        animator = GetComponent<Animator>();
-        
+        animator = GetComponent<Animator>();        
     }
 
     public void Summon()
@@ -24,6 +23,5 @@ public class MageBehavior : MonoBehaviour
     public void Attack()
     {
         animator.SetTrigger("attack");
-    }
-   
+    }   
 }
