@@ -185,6 +185,11 @@ public class MenuController : MonoBehaviour
         Application.Quit();
     }
 
+    public void SetSceneVariable(string scene)
+    {
+        GameData.Scene = scene;
+        Debug.Log("Scene: " + GameData.Scene);
+    }
 
     #region Help
     void Help()

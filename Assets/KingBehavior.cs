@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MageBehavior : MonoBehaviour
+public class KingBehavior : MonoBehaviour
 {
-    public static MageBehavior Reference;
+    public static KingBehavior Reference;
     private Animator animator;
     // Start is called before the first frame update
     void Awake()
@@ -13,15 +13,15 @@ public class MageBehavior : MonoBehaviour
     }
     void Start()
     {
-        animator = GetComponent<Animator>();        
+        animator = GetComponent<Animator>();
     }
 
     public void RaiseWall()
     {
-        animator.SetTrigger("summon");
+        animator.SetTrigger("raise");
     }
     public void MovePawn()
     {
-        animator.SetTrigger("attack");
-    }   
+        animator.SetTrigger("attack1");
+    }
 }
