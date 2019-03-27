@@ -16,11 +16,11 @@ public class MageBehavior : MonoBehaviour
         animator = GetComponent<Animator>();        
     }
 
-    public void Summon()
+    public void RaiseWall()
     {
         animator.SetTrigger("summon");
     }
-    public void Attack()
+    public void MovePawn()
     {
         animator.SetTrigger("attack");
     }   
