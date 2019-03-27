@@ -295,16 +295,16 @@ public class GUIController : MonoBehaviour
 
     private void PlayRaiseWall()
     {
-        Debug.Log("Scene: " + GameData.Scene);
-        if(GameData.Scene == "TempleScene")
+        Debug.Log("Scene: " + scene);
+        if(scene == "TempleScene")
         {
             KingBehavior.Reference.RaiseWall();
         }
-        else if(GameData.Scene == "JungleScene")
+        else if(scene == "JungleScene")
         {
             MageBehavior.Reference.RaiseWall();
         }
-        else if (GameData.Scene == "BeachScene")
+        else if (scene == "BeachScene")
         {
             GruntBehavior.Reference.RaiseWall();
             //TODO:
@@ -315,16 +315,16 @@ public class GUIController : MonoBehaviour
 
     private void PlayMovePawn()
     {        
-        Debug.Log("Scene: " + GameData.Scene);
-        if (GameData.Scene == "TempleScene")
+        Debug.Log("Scene: " + scene);
+        if (scene == "TempleScene")
         {
             KingBehavior.Reference.MovePawn();
         }
-        else if (GameData.Scene == "JungleScene")
+        else if (scene == "JungleScene")
         {
             MageBehavior.Reference.MovePawn();
         }
-        else if (GameData.Scene == "BeachScene")
+        else if (scene == "BeachScene")
         {
             GruntBehavior.Reference.MovePawn();
             //TODO:
@@ -537,8 +537,8 @@ public class GUIController : MonoBehaviour
     {
         if (chatInputField.text != "")
         {
-            string messageToSend = PlayerData.PlayerName + ": " + chatInputField.text;
-            string messageToDisplay = "You: " + chatInputField.text;
+            string messageToSend = "[" + PlayerData.PlayerName + "]: " + chatInputField.text;
+            string messageToDisplay = "[You]: " + chatInputField.text;
             chatInputField.text = "";
             UpdateChat(messageToDisplay);
             GameData.NetworkController.onMessageToSend(messageToSend);
