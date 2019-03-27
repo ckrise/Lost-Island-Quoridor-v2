@@ -306,7 +306,7 @@ public class GUIController : MonoBehaviour
         }
         else if (GameData.Scene == "BeachScene")
         {
-            MageBehavior.Reference.RaiseWall();
+            GruntBehavior.Reference.RaiseWall();
             //TODO:
             //Add skeleton grunt animation
         }
@@ -326,7 +326,7 @@ public class GUIController : MonoBehaviour
         }
         else if (GameData.Scene == "BeachScene")
         {
-            MageBehavior.Reference.MovePawn();
+            GruntBehavior.Reference.MovePawn();
             //TODO:
             //Add skeleton grunt animation
         }
