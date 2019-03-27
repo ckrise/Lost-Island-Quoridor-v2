@@ -9,7 +9,7 @@ public static class GameData
     private static bool playerGoesFirst = true;
     private static string aiDifficulty = "Easy";
     private static NetworkController networkController;
-    private static string scene = "AztecScene";
+    private static string scene = "TempleScene";
     private static string playerMove = "";
     private static string aiMove = "";
     private static bool inAdventureMode = false;

@@ -71,6 +71,7 @@ public class GUIController : MonoBehaviour
 
     private void Start()
     {
+        
         if (GameData.IsAIGame)
         {
             chatButton.gameObject.SetActive(false);
@@ -257,7 +258,7 @@ public class GUIController : MonoBehaviour
     private void PlaceOpponentWall(string coordinate)
     {
         //should make the mage do a little move before placing a wall
-        MageBehavior.Reference.Summon();
+        PlayRaiseWall();
         Debug.Log("summon should have been called");
 
         TakeFromWallPool(false);
@@ -281,7 +282,7 @@ public class GUIController : MonoBehaviour
     private void MoveOpponentPawn(string coordinate)
     {
         //should make the mage play the attack animation
-        MageBehavior.Reference.Attack();
+        PlayMovePawn();
         StartCoroutine("MoveOpponentPawnOnTime", coordinate);
     }
 
@@ -291,6 +292,47 @@ public class GUIController : MonoBehaviour
         Vector3 newPosition = GetPositionFromCoordinate(coordinate);
         opponentPawn.GetComponent<PawnAnimation>().Animate(newPosition, false);
     }
+
+    private void PlayRaiseWall()
+    {
+        Debug.Log("Scene: " + GameData.Scene);
+        if(GameData.Scene == "TempleScene")
+        {
+            KingBehavior.Reference.RaiseWall();
+        }
+        else if(GameData.Scene == "JungleScene")
+        {
+            MageBehavior.Reference.RaiseWall();
+        }
+        else if (GameData.Scene == "BeachScene")
+        {
+            GruntBehavior.Reference.RaiseWall();
+            //TODO:
+            //Add skeleton grunt animation
+        }
+        
+    }
+
+    private void PlayMovePawn()
+    {
+        Debug.Log("Scene: " + GameData.Scene);
+        if (GameData.Scene == "TempleScene")
+        {
+            KingBehavior.Reference.MovePawn();
+        }
+        else if (GameData.Scene == "JungleScene")
+        {
+            MageBehavior.Reference.MovePawn();
+        }
+        else if (GameData.Scene == "BeachScene")
+        {
+            GruntBehavior.Reference.MovePawn();
+            //TODO:
+            //Add skeleton grunt animation
+        }
+
+    }
+
     #endregion
 
     #region walls
