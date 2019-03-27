@@ -489,7 +489,7 @@ public class TutorialController : MonoBehaviour
     private void PlaceOpponentWall(string coordinate)
     {
         //should make the mage do a little move before placing a wall
-        MageBehavior.Reference.RaiseWall();
+        CrocBehavior.Reference.RaiseWall();
         Debug.Log("summon should have been called");
 
         TakeFromWallPool(false);
@@ -514,7 +514,7 @@ public class TutorialController : MonoBehaviour
     private void MoveOpponentPawn(string coordinate)
     {
         //should make the mage play the attack animation
-        MageBehavior.Reference.MovePawn();
+        CrocBehavior.Reference.MovePawn();
         Vector3 newPosition = GetPositionFromCoordinate(coordinate);
         opponentPawn.GetComponent<PawnAnimation>().Animate(newPosition, false);
     }

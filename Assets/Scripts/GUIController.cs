@@ -27,8 +27,8 @@ public class GUIController : MonoBehaviour
     #endregion
     #region private variables
     //tile objects that are invisible until pawn is clicked
-    private List<GameObject> ghostPlayerMoves;   
-    private string playerNumber = "Player1";
+    private string scene;
+    private List<GameObject> ghostPlayerMoves;
     private NetworkController networkController;
     private bool pawnClicked;
     private bool playerTurn;
@@ -67,11 +67,11 @@ public class GUIController : MonoBehaviour
         pawnClicked = false;
         playerTurn = false;
         ghostPlayerMoves = new List<GameObject>();
+        scene = SceneManager.GetActiveScene().name;
     }
 
     private void Start()
-    {
-        
+    {        
         if (GameData.IsAIGame)
         {
             chatButton.gameObject.SetActive(false);
@@ -295,16 +295,16 @@ public class GUIController : MonoBehaviour
 
     private void PlayRaiseWall()
     {
-        Debug.Log("Scene: " + GameData.Scene);
-        if(GameData.Scene == "TempleScene")
+        Debug.Log("Scene: " + scene);
+        if(scene == "TempleScene")
         {
             KingBehavior.Reference.RaiseWall();
         }
-        else if(GameData.Scene == "JungleScene")
+        else if(scene == "JungleScene")
         {
             MageBehavior.Reference.RaiseWall();
         }
-        else if (GameData.Scene == "BeachScene")
+        else if (scene == "BeachScene")
         {
             GruntBehavior.Reference.RaiseWall();
             //TODO:
@@ -314,17 +314,17 @@ public class GUIController : MonoBehaviour
     }
 
     private void PlayMovePawn()
-    {
-        Debug.Log("Scene: " + GameData.Scene);
-        if (GameData.Scene == "TempleScene")
+    {        
+        Debug.Log("Scene: " + scene);
+        if (scene == "TempleScene")
         {
             KingBehavior.Reference.MovePawn();
         }
-        else if (GameData.Scene == "JungleScene")
+        else if (scene == "JungleScene")
         {
             MageBehavior.Reference.MovePawn();
         }
-        else if (GameData.Scene == "BeachScene")
+        else if (scene == "BeachScene")
         {
             GruntBehavior.Reference.MovePawn();
             //TODO:
@@ -537,8 +537,8 @@ public class GUIController : MonoBehaviour
     {
         if (chatInputField.text != "")
         {
-            string messageToSend = PlayerData.PlayerName + ": " + chatInputField.text;
-            string messageToDisplay = "You: " + chatInputField.text;
+            string messageToSend = "[" + PlayerData.PlayerName + "]: " + chatInputField.text;
+            string messageToDisplay = "[You]: " + chatInputField.text;
             chatInputField.text = "";
             UpdateChat(messageToDisplay);
             GameData.NetworkController.onMessageToSend(messageToSend);
