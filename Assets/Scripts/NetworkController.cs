@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using System.Timers;
+
 
 public class NetworkController : MonoBehaviour
 {
@@ -18,7 +20,9 @@ public class NetworkController : MonoBehaviour
     public GUIController guiController = null;
     private List<string> roomList = new List<string>();
     public PhotonView photonView;
-    
+    private float moveTime = 30.0f;
+    private float timer = 0.0f;
+
     #endregion
 
     #region references
@@ -28,9 +32,20 @@ public class NetworkController : MonoBehaviour
         networkController = this;
         gameController = GameController.GCInstance;
         guiController = GUIController.Instance;
-        
+       
     }
     #endregion
+
+    private void Update()
+    {
+        //if()
+        timer += Time.deltaTime;
+        if(timer >= moveTime)
+        {
+            DisplayMessage();
+            timer = timer - moveTime;
+        }
+    }
 
     #region Multiplayer Connect
     public void connectToPhoton()
@@ -127,8 +142,6 @@ public class NetworkController : MonoBehaviour
     private void OnCreatedRoom()
     {
         Debug.Log("CreatedRoom");
-        GameData.PlayerGoesFirst = true;
-        myRoom = PhotonNetwork.room.Name;
         menuController.SetLobbyName(myRoom);
         menuController.CreateRoom();
         PhotonNetwork.SetMasterClient(PhotonNetwork.player);
@@ -153,12 +166,24 @@ public class NetworkController : MonoBehaviour
     private void OnJoinedRoom()
     {
         myRoom = PhotonNetwork.room.Name;
-        
-        GameData.PlayerGoesFirst = false;
+        if(PhotonNetwork.player.IsMasterClient)
+        {
+            GameData.PlayerGoesFirst = true;
+            Debug.Log("GOING FIRST");
+        }
+        else
+        {
+            GameData.PlayerGoesFirst = false;
+            Debug.Log("GOING SECOND");
+        }
         networkGame();
         //PhotonNetwork.LoadLevel("TempleScene");
         Debug.Log("JOINED ROOM!");
         Debug.Log(PhotonNetwork.room.Name);
+        if(PhotonNetwork.room.PlayerCount == 2)
+        {
+            sendStartGameMessage();
+        }
     }
 
     private void OnPhotonJoinRoomFailed()
@@ -230,7 +255,7 @@ public class NetworkController : MonoBehaviour
         if(PhotonNetwork.room.PlayerCount == 2)
         {
             networkGame();
-            PhotonNetwork.LoadLevel("TempleScene");
+            //PhotonNetwork.LoadLevel("TempleScene");
         }
         else
         {
@@ -245,7 +270,10 @@ public class NetworkController : MonoBehaviour
         photonView = PhotonView.Get(this);
         guiController = GUIController.Instance;
         GameData.IsAIGame = false;
-
+        if(!GameData.PlayerGoesFirst)
+        {
+           
+        }
         if (photonView == null)
         {
             Debug.Log("null object");
@@ -275,13 +303,21 @@ public class NetworkController : MonoBehaviour
 
     public void onMoveToSend(string moveToSend)
     {
+        Debug.Log("Sent Move");
         photonView.RPC("sendMove", PhotonTargets.Others, moveToSend);
+       
     }
 
     public void onMessageToSend(string message)
     {
         Debug.Log(message);
         photonView.RPC("chatMessage", PhotonTargets.Others, message);
+      
+    }
+
+    public void sendStartGameMessage()
+    {
+        photonView.RPC("startGame", PhotonTargets.Others);
     }
 
    
@@ -305,6 +341,14 @@ public class NetworkController : MonoBehaviour
         moveToSend = changeOrientation(newMove);
         gameController.RecieveMoveFromNetwork(moveToSend);
         Debug.Log(move);
+        
+    }
+
+    [PunRPC]
+    public void startGame()
+    {
+        Debug.Log("Received start game message");
+        PhotonNetwork.LoadLevel("BeachScene");
     }
 
     public string changeOrientation(string move)
@@ -325,4 +369,10 @@ public class NetworkController : MonoBehaviour
         return $"{letter}{number}{orientation}";  
     }
     #endregion
+
+    private void DisplayMessage()
+    {
+        Debug.Log("move time up");
+    }
+ 
 }

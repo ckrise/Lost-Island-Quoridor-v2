@@ -40,4 +40,5 @@ MonoBehaviour:
   - chatMessage
   - forfeit
   - sendMove
+  - startGame
   DisableAutoOpenWizard: 1
