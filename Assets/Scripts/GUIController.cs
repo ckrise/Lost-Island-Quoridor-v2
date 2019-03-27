@@ -27,8 +27,8 @@ public class GUIController : MonoBehaviour
     #endregion
     #region private variables
     //tile objects that are invisible until pawn is clicked
-    private List<GameObject> ghostPlayerMoves;   
-    private string playerNumber = "Player1";
+    private string scene;
+    private List<GameObject> ghostPlayerMoves;
     private NetworkController networkController;
     private bool pawnClicked;
     private bool playerTurn;
@@ -67,11 +67,11 @@ public class GUIController : MonoBehaviour
         pawnClicked = false;
         playerTurn = false;
         ghostPlayerMoves = new List<GameObject>();
+        scene = SceneManager.GetActiveScene().name;
     }
 
     private void Start()
-    {
-        
+    {        
         if (GameData.IsAIGame)
         {
             chatButton.gameObject.SetActive(false);
@@ -314,7 +314,7 @@ public class GUIController : MonoBehaviour
     }
 
     private void PlayMovePawn()
-    {
+    {        
         Debug.Log("Scene: " + GameData.Scene);
         if (GameData.Scene == "TempleScene")
         {
