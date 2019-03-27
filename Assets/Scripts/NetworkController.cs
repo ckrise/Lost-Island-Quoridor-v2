@@ -180,7 +180,7 @@ public class NetworkController : MonoBehaviour
         //PhotonNetwork.LoadLevel("TempleScene");
         Debug.Log("JOINED ROOM!");
         Debug.Log(PhotonNetwork.room.Name);
-        if(PhotonNetwork.room.PlayerCount == 2)
+        if(PhotonNetwork.room.PlayerCount == 2 && !PhotonNetwork.player.IsMasterClient)
         {
             sendStartGameMessage();
         }
@@ -348,7 +348,7 @@ public class NetworkController : MonoBehaviour
     public void startGame()
     {
         Debug.Log("Received start game message");
-        PhotonNetwork.LoadLevel("BeachScene");
+        PhotonNetwork.LoadLevel(GameData.Scene);
     }
 
     public string changeOrientation(string move)

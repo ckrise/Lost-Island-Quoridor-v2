@@ -13,12 +13,13 @@ public class MenuController : MonoBehaviour
         settingsButton, helpButton, backButton, easyButton, hardButton,
         joinRoom, createRoom;
     public GameObject mainPanel, multiplayerPanel, settingsPanel,
-        helpPanel, storyPanel, quickplayPanel, lobbyPanel,
+        helpPanel, storyPanel, quickplayPanel, roomPanel,
         connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab,
         storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
         settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel,
         failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel, 
-        disconnectedFromMultiplayerPanel, levelPanel, helpArrow, multiplayerPanelHelpPanel, quickplayPanelHelpPanel; 
+        disconnectedFromMultiplayerPanel, levelPanel, helpArrow, multiplayerPanelHelpPanel, 
+        quickplayPanelHelpPanel, multiplayerLevelSelect; 
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
@@ -159,15 +160,20 @@ public class MenuController : MonoBehaviour
     
     public void Back()
     {
-        if (lobbyPanel.activeSelf)
+        if (roomPanel.activeSelf)
         {
-            lobbyPanel.SetActive(false);
+            roomPanel.SetActive(false);
             multiplayerPanel.SetActive(true);
         }
         else if (levelPanel.activeSelf)
         {
             levelPanel.SetActive(false);
             quickplayPanel.SetActive(true);
+        }
+        else if (multiplayerLevelSelect.activeSelf)
+        {
+            multiplayerLevelSelect.SetActive(false);
+            multiplayerPanel.SetActive(true);
         }
         else
         {
@@ -241,7 +247,6 @@ public class MenuController : MonoBehaviour
         mainPanel.SetActive(false);
         connectingPanel.SetActive(false);
         multiplayerPanel.SetActive(true);
-        createRoom.onClick.AddListener(CreatingRoom);
     }
 
     void MultiPlayerConnect()
@@ -268,18 +273,18 @@ public class MenuController : MonoBehaviour
         changeLoadingText("Creating Room...");
     }
 
-    public void MultiplayerToLobby()
+    public void MultiplayerSelectLevel()
     {
         multiplayerPanel.SetActive(false);
         connectingPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
+        multiplayerLevelSelect.SetActive(true);
     }
 
     public void CreateRoom()
     {
-        multiplayerPanel.SetActive(false);
+        multiplayerLevelSelect.SetActive(false);
         connectingPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
+        roomPanel.SetActive(true);
     }
 
     public void UpdateRoomList(List<string> roomNames)

@@ -45,6 +45,7 @@ public class PawnAnimation : MonoBehaviour
             }
             else
             {
+                pawnMovementSound.Play();
                 Debug.Log("Played Sound");
                 GUIController.Instance.AnimationCompleted(isPlayer);
             }
@@ -59,7 +60,7 @@ public class PawnAnimation : MonoBehaviour
 
     public void Animate(Vector3 value, bool isPlayer)
     {
-        pawnMovementSound.Play();
+        
         this.isPlayer = isPlayer;
         destination = value;
         startPosition = transform.position;
