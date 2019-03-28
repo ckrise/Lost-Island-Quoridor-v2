@@ -151,9 +151,21 @@ public class MenuController : MonoBehaviour
     }
     #endregion
 
+    #region story
+    public void StartNewStory()
+    {
+        GameData.InAdventureMode = true;
+        GameData.AdventureProgress = 0; 
+    }
+    public void ContinueStory()
+    {
+
+    }
+
+    #endregion
+
     void StoryMode()
     {
-        PlayerPrefs.SetString("PLAY_MODE", "STORY");
         mainPanel.SetActive(false);
         storyPanel.SetActive(true);
     }
