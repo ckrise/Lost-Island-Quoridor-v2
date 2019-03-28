@@ -36,11 +36,8 @@ public class WaterAnimation : MonoBehaviour
                 transform.position.y <= minLevel)
             {
                 rise = !rise;
-                pause = 30;
+                pause = 10;
             }
-
-            //upIncrement = new Vector3(0, upIncrement.y / 1.5f, 0);
-            //downIncrement = new Vector3(0, downIncrement.y / 1.5f, 0);
         }
         else
         {
