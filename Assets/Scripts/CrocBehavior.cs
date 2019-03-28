@@ -5,25 +5,22 @@ using UnityEngine;
 public class CrocBehavior : MonoBehaviour
 {
     public static CrocBehavior Reference;
-    private Animation animator;
-    // Start is called before the first frame update
+    private Animator animator;
     void Awake()
     {
         Reference = this;
     }
     void Start()
     {
-        animator = GetComponent<Animation>();
+        animator = GetComponent<Animator>();
     }
-
     public void RaiseWall()
     {
-        animator.Play("Jump Up Crocodile");
-        animator.Play("Idle Crocodile");
+        animator.SetTrigger("thumbsDown");
     }
     public void MovePawn()
     {
-        animator.Play("Success Crocodile");
-        animator.Play("Idle Crocodile");
+        animator.SetTrigger("think");
     }
+
 }
