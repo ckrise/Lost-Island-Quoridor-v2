@@ -20,8 +20,9 @@ public class NetworkController : MonoBehaviour
     public GUIController guiController = null;
     private List<string> roomList = new List<string>();
     public PhotonView photonView;
-    private float moveTime = 30.0f;
+    private float moveTime = 5.0f;
     private float timer = 0.0f;
+    private bool getAnswer = false;
 
     #endregion
 
@@ -38,13 +39,8 @@ public class NetworkController : MonoBehaviour
 
     private void Update()
     {
-        //if()
-        timer += Time.deltaTime;
-        if(timer >= moveTime)
-        {
-            DisplayMessage();
-            timer = timer - moveTime;
-        }
+        //Debug.Log("1");
+        timerCheck();
     }
 
     #region Multiplayer Connect
@@ -252,21 +248,12 @@ public class NetworkController : MonoBehaviour
     #region Network Game
     private void OnPhotonPlayerConnected()
     {
-        if(PhotonNetwork.room.PlayerCount == 2)
-        {
-            networkGame();
-            //PhotonNetwork.LoadLevel("TempleScene");
-        }
-        else
-        {
-            Debug.Log("Player count not at 2");
-        }
+        Debug.Log("player connected");
     }
 
     public void networkGame()
     {
-        Debug.Log("Start network game");
-        //Setting some things up before we start the game
+        Debug.Log("setting up game");
         photonView = PhotonView.Get(this);
         guiController = GUIController.Instance;
         GameData.IsAIGame = false;
@@ -278,6 +265,7 @@ public class NetworkController : MonoBehaviour
         {
             Debug.Log("null object");
         }
+        
     }
     #endregion
 
@@ -318,6 +306,7 @@ public class NetworkController : MonoBehaviour
     public void sendStartGameMessage()
     {
         photonView.RPC("startGame", PhotonTargets.Others);
+        Debug.Log("sending start game");
     }
 
    
@@ -327,6 +316,8 @@ public class NetworkController : MonoBehaviour
     [PunRPC]
     public void chatMessage(string message)
     {
+        timer -= timer;
+        Debug.Log(timer);
         string messageToDisplay = message;
         //NEW CHANGE
         guiController.ReceiveMessage(message);
@@ -370,9 +361,25 @@ public class NetworkController : MonoBehaviour
     }
     #endregion
 
+    private void timerCheck()
+    {
+        //Debug.Log("this is getting called");
+       // Debug.Log(gameStarted);
+        if (SceneManager.GetActiveScene().name != "MainMenu" && !getAnswer)
+        {
+           // Debug.Log("game started update timer: ");
+            timer += Time.deltaTime;
+            if (timer >= moveTime)
+            {
+                DisplayMessage();
+                timer = timer - moveTime;
+                getAnswer = true;
+            }
+        }
+    }
+
     private void DisplayMessage()
     {
         Debug.Log("move time up");
-    }
- 
+    } 
 }
