@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39303762, g: 0.43488893, b: 0.49600667, a: 1}
+  m_IndirectSpecularColor: {r: 0.39305365, g: 0.43482763, b: 0.49597704, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3442,21 +3442,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ziggurat FBX
       objectReference: {fileID: 0}
-    - target: {fileID: 100390, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 400390, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 219.8
+      value: 221.3
       objectReference: {fileID: 0}
     - target: {fileID: 400390, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 400390, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 227.7
+      value: 213.5
       objectReference: {fileID: 0}
     - target: {fileID: 400390, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3501,18 +3497,6 @@ PrefabInstance:
     - target: {fileID: 400390, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
       propertyPath: m_LocalScale.z
       value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 1200732121f0fc843aef999e09aa1f82, type: 2}
-    - target: {fileID: 400000, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.08
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 335a9db2370323d4e990135a0b2fdbc6, type: 3}
