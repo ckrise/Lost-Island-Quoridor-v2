@@ -26,7 +26,7 @@ public static class GameData
             adventureProgress = value;
         }
     }
-    public static bool InAdventureMove
+    public static bool InAdventureMode
     {
         get
         {
