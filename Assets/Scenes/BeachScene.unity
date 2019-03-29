@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -7709,7 +7709,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 698811280}
         m_MethodName: set_volume
         m_Mode: 0
         m_Arguments:
@@ -7720,7 +7720,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 263531272}
+        m_MethodName: set_volume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1849270196}
+        m_MethodName: set_volume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1854465210}
         m_MethodName: set_volume
         m_Mode: 0
         m_Arguments:
@@ -25625,6 +25647,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1849270194}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1849270196 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 831551144, guid: b9d701bd4bd2e6a459ed9c2f56f927e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1849270194}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1854465208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25700,6 +25728,12 @@ PrefabInstance:
 --- !u!1 &1854465209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1854465209, guid: 458eeb09d9b13184596529555175f33d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1854465208}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1854465210 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1854465210, guid: 458eeb09d9b13184596529555175f33d,
     type: 3}
   m_PrefabInstance: {fileID: 1854465208}
   m_PrefabAsset: {fileID: 0}
@@ -28023,17 +28057,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: set_volume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 695291495}
         m_MethodName: UpdatePlayerMusicVolume
         m_Mode: 0
@@ -28045,7 +28068,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 540676075}
         m_MethodName: set_volume
         m_Mode: 0
         m_Arguments:
@@ -28056,7 +28079,40 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 37247923}
+        m_MethodName: set_volume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 324879870}
+        m_MethodName: set_volume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1905051760}
+        m_MethodName: set_volume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2135734485}
         m_MethodName: set_volume
         m_Mode: 0
         m_Arguments:

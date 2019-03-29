@@ -17079,7 +17079,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1916516254}
         m_MethodName: set_volume
         m_Mode: 0
         m_Arguments:
@@ -17090,7 +17090,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 414094274}
+        m_MethodName: set_volume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 624083632}
+        m_MethodName: set_volume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1845889422}
         m_MethodName: set_volume
         m_Mode: 0
         m_Arguments:
@@ -18139,6 +18161,12 @@ PrefabInstance:
       objectReference: {fileID: 1916516254}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
+--- !u!82 &624083632 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 831551144, guid: b9d701bd4bd2e6a459ed9c2f56f927e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 624083631}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &624336506
 GameObject:
   m_ObjectHideFlags: 0
@@ -63253,6 +63281,12 @@ PrefabInstance:
       objectReference: {fileID: 1916516254}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6eb37b61260e6342b473eea3b52f4aa, type: 3}
+--- !u!82 &1845889422 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 171052200, guid: a6eb37b61260e6342b473eea3b52f4aa,
+    type: 3}
+  m_PrefabInstance: {fileID: 1845889421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1846993184
 GameObject:
   m_ObjectHideFlags: 0
@@ -70343,7 +70377,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 690794493}
+      - m_Target: {fileID: 1564277450}
         m_MethodName: set_volume
         m_Mode: 0
         m_Arguments:
@@ -70365,7 +70399,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1499383098}
+      - m_Target: {fileID: 690794493}
         m_MethodName: set_volume
         m_Mode: 0
         m_Arguments:
@@ -70376,12 +70410,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 629429635}
-        m_MethodName: set_volume
-        m_Mode: 0
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
