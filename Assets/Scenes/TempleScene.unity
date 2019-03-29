@@ -5656,17 +5656,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 695291495}
-        m_MethodName: LeaveGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 775448461}
         m_MethodName: PlayOneShot
         m_Mode: 2
@@ -5679,15 +5668,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1871655489}
-        m_MethodName: LoadLevel
-        m_Mode: 5
+      - m_Target: {fileID: 1828805142}
+        m_MethodName: continueWaiting
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: MainMenu
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 695291495}
+        m_MethodName: closeMoveTimerPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -20048,6 +20048,7 @@ MonoBehaviour:
   opponentTurnPanel: {fileID: 985612183}
   adventureWinPanel: {fileID: 930849103}
   adventureLosePanel: {fileID: 1483019583}
+  moveTimerPanel: {fileID: 1575808582}
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
   levelLoader: {fileID: 0}
@@ -20061,6 +20062,7 @@ MonoBehaviour:
   sfxVolumeSlider: {fileID: 575124229}
   animationFinished: 0
   gameOver: 0
+  playerTurn: 0
 --- !u!1001 &696729873
 PrefabInstance:
   m_ObjectHideFlags: 0

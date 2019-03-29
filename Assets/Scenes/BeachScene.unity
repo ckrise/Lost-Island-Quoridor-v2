@@ -7943,6 +7943,7 @@ MonoBehaviour:
   opponentTurnPanel: {fileID: 985612183}
   adventureWinPanel: {fileID: 1966548541}
   adventureLosePanel: {fileID: 1604164139}
+  moveTimerPanel: {fileID: 1679671674}
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
   levelLoader: {fileID: 1871655488}

@@ -20,9 +20,9 @@ public class NetworkController : MonoBehaviour
     public GUIController guiController = null;
     private List<string> roomList = new List<string>();
     public PhotonView photonView;
-    private float moveTime = 5.0f;
+    private float moveTime = 30.0f;
     private float timer = 0.0f;
-    private bool getAnswer = false;
+    private static bool isNetworkingGame = false;
 
     #endregion
 
@@ -172,7 +172,7 @@ public class NetworkController : MonoBehaviour
             GameData.PlayerGoesFirst = false;
             Debug.Log("GOING SECOND");
         }
-        networkGame();
+        //networkGame();
         //PhotonNetwork.LoadLevel("TempleScene");
         Debug.Log("JOINED ROOM!");
         Debug.Log(PhotonNetwork.room.Name);
@@ -257,15 +257,11 @@ public class NetworkController : MonoBehaviour
         photonView = PhotonView.Get(this);
         guiController = GUIController.Instance;
         GameData.IsAIGame = false;
-        if(!GameData.PlayerGoesFirst)
-        {
-           
-        }
         if (photonView == null)
         {
             Debug.Log("null object");
         }
-        
+        isNetworkingGame = true;
     }
     #endregion
 
@@ -305,6 +301,7 @@ public class NetworkController : MonoBehaviour
 
     public void sendStartGameMessage()
     {
+        networkGame();
         photonView.RPC("startGame", PhotonTargets.Others);
         Debug.Log("sending start game");
     }
@@ -338,6 +335,7 @@ public class NetworkController : MonoBehaviour
     [PunRPC]
     public void startGame()
     {
+        networkGame();
         Debug.Log("Received start game message");
         PhotonNetwork.LoadLevel(GameData.Scene);
     }
@@ -364,22 +362,36 @@ public class NetworkController : MonoBehaviour
     private void timerCheck()
     {
         //Debug.Log("this is getting called");
-       // Debug.Log(gameStarted);
-        if (SceneManager.GetActiveScene().name != "MainMenu" && !getAnswer)
+        // Debug.Log(gameStarted);
+        if (SceneManager.GetActiveScene().name != "MainMenu" && guiController != null && isNetworkingGame)
         {
-           // Debug.Log("game started update timer: ");
-            timer += Time.deltaTime;
-            if (timer >= moveTime)
+            if (!guiController.playerTurn)
             {
-                DisplayMessage();
-                timer = timer - moveTime;
-                getAnswer = true;
+                Debug.Log("game started update timer: ");
+                timer += Time.deltaTime;
+                if (timer >= moveTime)
+                {
+
+                    DisplayMessage();
+                    timer = timer - moveTime;
+                }
             }
         }
+    }
+
+    public void continueWaiting()
+    {
+        timer -= timer;
+    }
+
+    public void resetTimer()
+    {
+        timer = 0.0f;
     }
 
     private void DisplayMessage()
     {
         Debug.Log("move time up");
+        guiController.displayMoveTimerPanel();
     } 
 }

@@ -14,7 +14,7 @@ public class GUIController : MonoBehaviour
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
         settingsPanel, helpPanel, opponentDisconnectedPanel, disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
-        adventureWinPanel, adventureLosePanel;
+        adventureWinPanel, adventureLosePanel, moveTimerPanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
@@ -25,6 +25,7 @@ public class GUIController : MonoBehaviour
     public Slider musicVolumeSlider, sfxVolumeSlider;
     public bool animationFinished = false;
     public bool gameOver = false;
+    public bool playerTurn;
     #endregion
     #region private variables
     //tile objects that are invisible until pawn is clicked
@@ -32,7 +33,6 @@ public class GUIController : MonoBehaviour
     private List<GameObject> ghostPlayerMoves;
     private NetworkController networkController;
     private bool pawnClicked;
-    private bool playerTurn;
     private readonly static Dictionary<char, float> COLUMN_MIDPOINT = new Dictionary<char, float>()
     {
         { 'a', .75f },
@@ -234,6 +234,7 @@ public class GUIController : MonoBehaviour
         if (isPlayer)
         {
             EndTurn(playerMove);
+            networkController.resetTimer();
         }
         else
         {
@@ -584,7 +585,17 @@ public class GUIController : MonoBehaviour
         gameplayPanel.SetActive(true);
     }
     #endregion
+    #region Move Timer panel
+    public void displayMoveTimerPanel()
+    {
+        moveTimerPanel.SetActive(true);
+    }
 
+    public void closeMoveTimerPanel()
+    {
+        moveTimerPanel.SetActive(false);
+    }
+    #endregion
     #region story
     public void ContinueStory()
     {
