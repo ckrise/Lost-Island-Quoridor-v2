@@ -25,9 +25,10 @@ public class MenuController : MonoBehaviour
     public ScrollRect roomScrollView;
     public Slider musicVolumeSlider, sfxVolumeSlider;
     public Toggle fullscreenToggle;
+    public GameObject levelLoader;
     #endregion
     #region private variables
-    private GameObject levelLoader;
+
     private List<GameObject> roomListings = new List<GameObject>();
     private List<GameObject> helpPanels;
     #endregion
@@ -159,15 +160,36 @@ public class MenuController : MonoBehaviour
     }
     public void ContinueStory()
     {
-
+        GameData.InAdventureMode = true;
+        switch(GameData.AdventureProgress)
+        {
+            case 1:
+                levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
+                break;
+            case 2:
+                levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
+                break;
+            case 3:
+                levelLoader.GetComponent<LevelLoader>().LoadLevel("TempleScene");
+                break;
+        }
     }
 
     #endregion
 
     void StoryMode()
     {
-        mainPanel.SetActive(false);
-        storyPanel.SetActive(true);
+        if(GameData.AdventureProgress == 0)
+        {
+            StartNewStory();
+            levelLoader.GetComponent<LevelLoader>().LoadLevel("TutorialScene");
+        }
+        else
+        {
+            mainPanel.SetActive(false);
+            storyPanel.SetActive(true);
+        }
+        
     }
     
     public void Back()

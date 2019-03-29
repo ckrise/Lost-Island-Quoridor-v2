@@ -7,7 +7,7 @@ public static class GameData
     private static bool isAIGame = true;
     private static bool isTutorial = false;
     private static bool playerGoesFirst = true;
-    private static string aiDifficulty = "Easy";
+    private static string aiDifficulty = "easy";
     private static NetworkController networkController;
     private static string scene = "TempleScene";
     private static string playerMove = "";
