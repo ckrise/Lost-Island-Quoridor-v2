@@ -443,10 +443,15 @@ public class TutorialController : MonoBehaviour
         {
             playerTurn = false;
             DestroyGhostMoves();
+            playerPawn.GetComponent<PawnBehavior>().SetOpaque();
             Vector3 position = ghost.transform.position;
             playerPawn.GetComponent<PawnAnimation>().Animate(position, true);
             playerMove = FindCoordinate(position.x, position.z);
         }
+    }
+    public bool IsPlayerTurn()
+    {
+        return playerTurn && animationFinished;
     }
     public void AnimationCompleted(bool isPlayer)
     {
@@ -680,7 +685,15 @@ public class TutorialController : MonoBehaviour
             {
                 space.SetActive(pawnClicked);
             }
-            if(tutorialProgress == 1 || tutorialProgress == 8)
+            if (pawnClicked)
+            {
+                playerPawn.GetComponent<PawnBehavior>().SetTransparent();
+            }
+            else
+            {
+                playerPawn.GetComponent<PawnBehavior>().SetOpaque();
+            }
+            if (tutorialProgress == 1 || tutorialProgress == 8)
             {
                 ProgressController();
             }

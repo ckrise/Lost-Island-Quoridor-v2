@@ -223,10 +223,15 @@ public class GUIController : MonoBehaviour
         {
             playerTurn = false;
             DestroyGhostMoves();
+            playerPawn.GetComponent<PawnBehavior>().SetOpaque();
             Vector3 position = ghost.transform.position;
             playerPawn.GetComponent<PawnAnimation>().Animate(position, true);
             playerMove = FindCoordinate(position.x, position.z);
         }
+    }
+    public bool IsPlayerTurn()
+    {
+        return playerTurn && animationFinished;
     }
     public void AnimationCompleted(bool isPlayer)
     {
@@ -234,7 +239,10 @@ public class GUIController : MonoBehaviour
         if (isPlayer)
         {
             EndTurn(playerMove);
-            networkController.resetTimer();
+            if (!GameData.IsAIGame)
+            {
+                networkController.resetTimer();
+            }
         }
         else
         {
@@ -410,11 +418,19 @@ public class GUIController : MonoBehaviour
     public void ShowGhostMoves()
     {
         if (playerTurn && animationFinished)
-        {
+        {            
             pawnClicked = !pawnClicked;
             foreach (var space in ghostPlayerMoves)
             {
                 space.SetActive(pawnClicked);
+            }
+            if (pawnClicked)
+            {
+                playerPawn.GetComponent<PawnBehavior>().SetTransparent();
+            }
+            else
+            {
+                playerPawn.GetComponent<PawnBehavior>().SetOpaque();
             }
         }
     }
