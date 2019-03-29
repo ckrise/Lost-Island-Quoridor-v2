@@ -74,7 +74,9 @@ public class TutorialController : MonoBehaviour
     #region unity
     void Awake()
     {
+        //don't think we need this thing anymore.
         GameData.IsTutorial = true;
+        /////////////////////////////
         Instance = this;
         pawnClicked = false;
         playerTurn = false;
@@ -714,15 +716,25 @@ public class TutorialController : MonoBehaviour
             Debug.Log("NetworkGame");
             GameData.NetworkController.gameOver();
         }
+        if(GameData.InAdventureMode)
+        {
+            GameData.InAdventureMode = false;
+        }
+        //should probably change this not sure to what it's here for rn.
         SceneManager.LoadScene("MainMenu");
     }
 
     public void ContinueStory()
     {
         GameData.AdventureProgress++;
+        Debug.Log("Adventure Progress: " + GameData.AdventureProgress);
         levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
     }
-
+    public void LeaveStory()
+    {
+        GameData.InAdventureMode = false;
+        levelLoader.GetComponent<LevelLoader>().LoadLevel("MainMenu");
+    }
     #endregion
 
     #region menu

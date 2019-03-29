@@ -462,6 +462,10 @@ public class GUIController : MonoBehaviour
             Debug.Log("NetworkGame");
             GameData.NetworkController.gameOver();
         }
+        if(GameData.InAdventureMode == true)
+        {
+            GameData.InAdventureMode = false;
+        }
         //SceneManager.LoadScene("MainMenu");
     }
     public void OpponentLeft()
@@ -595,6 +599,15 @@ public class GUIController : MonoBehaviour
             levelLoader.GetComponent<LevelLoader>().LoadLevel("TempleScene");
         }
     }
-    
+    public void EndStory()
+    {
+        //TODO play the last cutscene
+        //Set everything back to it's original state.
+    }
+    public void LeaveStory()
+    {
+        GameData.InAdventureMode = false;
+        levelLoader.GetComponent<LevelLoader>().LoadLevel("MainMenu");
+    }
     #endregion
 }

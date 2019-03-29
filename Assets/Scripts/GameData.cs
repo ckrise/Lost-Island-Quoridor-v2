@@ -12,8 +12,8 @@ public static class GameData
     private static string scene = "TempleScene";
     private static string playerMove = "";
     private static string aiMove = "";
-    private static bool inAdventureMode = true;
-    private static int adventureProgress = 1;
+    private static bool inAdventureMode = false;
+    private static int adventureProgress = 0;
 
     public static int AdventureProgress
     {
