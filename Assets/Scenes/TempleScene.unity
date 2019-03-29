@@ -17973,30 +17973,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1797344000048365043, guid: b9d701bd4bd2e6a459ed9c2f56f927e0,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1797344000048365043, guid: b9d701bd4bd2e6a459ed9c2f56f927e0,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1797344000048365043, guid: b9d701bd4bd2e6a459ed9c2f56f927e0,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 831551142, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
       propertyPath: pawnMovementSound
       value: 
       objectReference: {fileID: 1916516254}
-    - target: {fileID: 5524704839735586244, guid: b9d701bd4bd2e6a459ed9c2f56f927e0,
-        type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
 --- !u!1 &624336506
