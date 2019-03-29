@@ -26,4 +26,9 @@ public class musicScript : MonoBehaviour
         mainGameMusic.Stop();
         defeatMusic.Play();
     }
+    
+    public void Volume(float volume)
+    {
+        mainGameMusic.volume = defeatMusic.volume = winMusic.volume = volume;
+}
 }

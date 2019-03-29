@@ -30154,9 +30154,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 395403484}
-        m_MethodName: set_volume
-        m_Mode: 0
+      - m_Target: {fileID: 395403485}
+        m_MethodName: Volume
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
