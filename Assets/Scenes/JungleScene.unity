@@ -18221,6 +18221,10 @@ PrefabInstance:
       propertyPath: pawnMovementSound
       value: 
       objectReference: {fileID: 2116067662}
+    - target: {fileID: 1205420917, guid: 70a92530706f4af47be1b8305f2ff597, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70a92530706f4af47be1b8305f2ff597, type: 3}
 --- !u!1 &1205420916 stripped

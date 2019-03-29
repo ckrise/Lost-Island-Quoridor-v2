@@ -25596,6 +25596,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1654792543, guid: c20c21a5d1c0dbe4c980160a20a33cba, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1654792542, guid: c20c21a5d1c0dbe4c980160a20a33cba, type: 3}
       propertyPath: pawnMovementSound
       value: 
