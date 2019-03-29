@@ -13,10 +13,11 @@ public class GUIController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
-        settingsPanel, helpPanel, opponentDisconnectedPanel, disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel;
+        settingsPanel, helpPanel, opponentDisconnectedPanel, disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
+        adventureWinPanel, adventureLosePanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
-
+    public GameObject levelLoader;
     public Text messageText;
     public InputField chatInputField;
     public Button winButton, chatButton;
@@ -429,13 +430,29 @@ public class GUIController : MonoBehaviour
         }
         if(isWinner)
         {
-            winPanel.SetActive(true);
             musicReference.playWin();
+            if (GameData.InAdventureMode)
+            {
+                adventureWinPanel.SetActive(true);
+            }
+            else
+            {
+                winPanel.SetActive(true);
+            }
+            
+            
         }
         else
         {
-            losePanel.SetActive(true);
             musicReference.playLose();
+            if(GameData.InAdventureMode)
+            {
+                adventureLosePanel.SetActive(true);
+            }
+            else
+            {
+                losePanel.SetActive(true);
+            }
         }
    }
     public void LeaveGame()
@@ -564,4 +581,20 @@ public class GUIController : MonoBehaviour
     }
     #endregion
 
+    #region story
+    public void ContinueStory()
+    {
+        if(GameData.AdventureProgress == 1)
+        {
+            GameData.AdventureProgress++;
+            levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
+        }
+        else if(GameData.AdventureProgress == 2)
+        {
+            GameData.AdventureProgress++;
+            levelLoader.GetComponent<LevelLoader>().LoadLevel("TempleScene");
+        }
+    }
+    
+    #endregion
 }

@@ -7,13 +7,13 @@ public static class GameData
     private static bool isAIGame = true;
     private static bool isTutorial = false;
     private static bool playerGoesFirst = true;
-    private static string aiDifficulty = "Easy";
+    private static string aiDifficulty = "easy";
     private static NetworkController networkController;
     private static string scene = "TempleScene";
     private static string playerMove = "";
     private static string aiMove = "";
-    private static bool inAdventureMode = false;
-    private static int adventureProgress = 0;
+    private static bool inAdventureMode = true;
+    private static int adventureProgress = 1;
 
     public static int AdventureProgress
     {

@@ -12,10 +12,10 @@ public class TutorialController : MonoBehaviour
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, chatPanel,
         settingsPanel, helpPanel, playerTurnPanel, opponentTurnPanel,
-        clickReceiverPanel;
+        clickReceiverPanel, adventureWinPanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
-
+    public GameObject levelLoader;
     public Text messageText;
     public InputField chatInputField;
     public Button winButton, chatButton;
@@ -396,7 +396,7 @@ public class TutorialController : MonoBehaviour
     
         #endregion
 
-        #region player
+    #region player
     public void StartPlayerTurn(string move, List<string> validWalls, List<string> validMoves)
     {
         if (move.Length == 3)
@@ -696,7 +696,15 @@ public class TutorialController : MonoBehaviour
         }
         if (isWinner)
         {
-            winPanel.SetActive(true);
+            if(GameData.InAdventureMode)
+            {
+                adventureWinPanel.SetActive(true);
+            }
+            else
+            {
+                winPanel.SetActive(true);
+            }
+            
         }
     }
     public void LeaveGame()
@@ -707,6 +715,12 @@ public class TutorialController : MonoBehaviour
             GameData.NetworkController.gameOver();
         }
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void ContinueStory()
+    {
+        GameData.AdventureProgress++;
+        levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
     }
 
     #endregion
