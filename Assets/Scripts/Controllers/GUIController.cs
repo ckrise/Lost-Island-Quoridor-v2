@@ -561,11 +561,24 @@ public class GUIController : MonoBehaviour
         PlayerData.SfxVolume = vol;
     }
 
-    #endregion
+    //set wall volume
+    public void SetWallVolume(float vol)
+    {
+        foreach (var wall in opponentWallPoolStack)
+        {
+            wall.GetComponent<AudioSource>().volume = vol;
+        }
+        foreach (var wall in playerWallPoolStack)
+        {
+            wall.GetComponent<AudioSource>().volume = vol;
+        }
+    }
+
+#endregion
 
 
-    #region chat
-    public void ReceiveMessage(string message)
+#region chat
+public void ReceiveMessage(string message)
     {
         //update message window
         UpdateChat(message);

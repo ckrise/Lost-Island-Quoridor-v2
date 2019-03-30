@@ -810,6 +810,19 @@ public class TutorialController : MonoBehaviour
         PlayerData.SfxVolume = vol;
     }
 
+    //set wall volume
+    public void SetWallVolume(float vol)
+    {
+        foreach (var wall in opponentWallPool)
+        {
+            wall.GetComponent<AudioSource>().volume = vol;
+        }
+        foreach (var wall in playerWallPool)
+        {
+            wall.GetComponent<AudioSource>().volume = vol;
+        }
+    }
+
     #endregion
 
 
