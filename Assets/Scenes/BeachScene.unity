@@ -23421,7 +23421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minLevel: -5
   maxLevel: -3.5
-  increment: 0.025
+  increment: 0.01
 --- !u!1001 &1705637319
 PrefabInstance:
   m_ObjectHideFlags: 0
