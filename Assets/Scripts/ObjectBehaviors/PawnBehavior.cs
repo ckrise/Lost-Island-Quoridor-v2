@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PawnBehavior : MonoBehaviour
 {
-    private void Start()
-    {
-        
-    }
     public void SetTransparent()
     {
         Color c = GetComponent<Renderer>().material.color;

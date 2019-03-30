@@ -26,8 +26,16 @@ public class PawnAnimation : MonoBehaviour
     {
         if (destination != gameObject.transform.position)
         {
-            IncrementPosition();
-            AnimateY();
+            if (isPlayer || GameData.IsTutorial)
+            {
+                IncrementPosition();
+                AnimateY();
+            }
+            else if (GUIController.Instance.IsCameraFinished())
+            {
+                IncrementPosition();
+                AnimateY();
+            }
         }
     }
 

@@ -165,6 +165,7 @@ public class NetworkController : MonoBehaviour
         if(PhotonNetwork.player.IsMasterClient)
         {
             GameData.PlayerGoesFirst = true;
+            menuController.SetLobbyName(myRoom);
             Debug.Log("GOING FIRST");
         }
         else

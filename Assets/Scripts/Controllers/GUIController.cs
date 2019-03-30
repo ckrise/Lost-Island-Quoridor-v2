@@ -232,6 +232,10 @@ public class GUIController : MonoBehaviour
     {
         return playerTurn && animationFinished;
     }
+    public bool IsCameraFinished()
+    {
+        return FindObjectOfType<Camera>().GetComponent<CameraBehavior>().IsAnimated;
+    }
     public void AnimationCompleted(bool isPlayer)
     {
         animationFinished = true;
