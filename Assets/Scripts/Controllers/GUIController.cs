@@ -31,7 +31,6 @@ public class GUIController : MonoBehaviour
     //tile objects that are invisible until pawn is clicked
     private string scene;
     private List<GameObject> ghostPlayerMoves;
-    private NetworkController networkController;
     private bool pawnClicked;
     private readonly static Dictionary<char, float> COLUMN_MIDPOINT = new Dictionary<char, float>()
     {
@@ -241,7 +240,7 @@ public class GUIController : MonoBehaviour
             EndTurn(playerMove);
             if (!GameData.IsAIGame)
             {
-                networkController.resetTimer();
+                GameData.NetworkController.resetTimer();
             }
         }
         else

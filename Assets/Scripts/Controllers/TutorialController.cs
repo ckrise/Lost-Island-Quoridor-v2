@@ -35,7 +35,6 @@ public class TutorialController : MonoBehaviour
     #region private variables
     //tile objects that are invisible until pawn is clicked
     private List<GameObject> ghostPlayerMoves;
-    private string playerNumber = "Player1";
     private bool pawnClicked;
     private bool playerTurn;
     private readonly static Dictionary<char, float> COLUMN_MIDPOINT = new Dictionary<char, float>()
