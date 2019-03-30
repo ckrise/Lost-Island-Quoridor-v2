@@ -29,7 +29,14 @@ public class PawnHighlight : MonoBehaviour
     }
     private void Show()
     {
-        if (GameData.IsTutorial && TutorialController.Instance.IsPlayerTurn() || GUIController.Instance.IsPlayerTurn())
+        if (GameData.IsTutorial)
+        {
+            if (TutorialController.Instance.IsPlayerTurn())
+            {
+                GetComponent<Renderer>().enabled = true;
+            }
+        }
+        else if (GUIController.Instance.IsPlayerTurn())
         {
             GetComponent<Renderer>().enabled = true;
         }

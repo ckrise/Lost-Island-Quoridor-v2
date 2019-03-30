@@ -37,6 +37,7 @@ public class TutorialController : MonoBehaviour
     private List<GameObject> ghostPlayerMoves;
     private bool pawnClicked;
     private bool playerTurn;
+    private bool allowPawnClick = false;
     private readonly static Dictionary<char, float> COLUMN_MIDPOINT = new Dictionary<char, float>()
     {
         { 'a', .75f },
@@ -227,9 +228,11 @@ public class TutorialController : MonoBehaviour
                 allowedPawnMoves.Add("d1");
                 allowedPawnMoves.Add("e2");
                 allowedPawnMoves.Add("f1");
+                allowPawnClick = true;
                 StartPlayerTurn("", new List<string>(), allowedPawnMoves);
                 break;
             case 2:
+                allowPawnClick = false;
                 advancePanels();
                 Debug.Log(tutorialProgress);
                 //happens when player clicks thier pawn
@@ -247,7 +250,7 @@ public class TutorialController : MonoBehaviour
                 //the player clicked to continue
                 Debug.Log(tutorialProgress);
                 //start the player's turn with only walls as a placement possibility
-                StartPlayerTurn("", returnAllWallMoves(), new List<string>());
+                StartPlayerTurn("", returnAllWallMoves(), new List<string>());                
                 break;
             case 5:
                 advancePanels();
@@ -272,17 +275,18 @@ public class TutorialController : MonoBehaviour
                 SetBoard("e7", "d7", playerWallsToPlace, opponentWallsToPlace);
                 //activate the player's turn but only allow one wall to be placed
                 List<string> placeableWalls = new List<string>();
-                placeableWalls.Add("c6h");
+                placeableWalls.Add("c6h");                
                 StartPlayerTurn("", placeableWalls, new List<string>());
-                Debug.Log(tutorialProgress);
-              
+                Debug.Log(tutorialProgress);              
                 break;
             case 8:
+                allowPawnClick = true;
                 advancePanels();
                 //opponent jumps the player
                 Debug.Log(tutorialProgress);
                 break;
             case 9:
+                allowPawnClick = false;
                 advancePanels();
                 Debug.Log(tutorialProgress);
                 break;
@@ -320,9 +324,11 @@ public class TutorialController : MonoBehaviour
                 Debug.Log(tutorialProgress);
                 List<string> winningMove = new List<string>();
                 winningMove.Add("f9");
+                allowPawnClick = true;
                 StartPlayerTurn("", new List<string>(), winningMove );
                 break;
             case 17:
+                allowPawnClick = false;
                 Debug.Log(tutorialProgress);
                 tutorialPanel.SetActive(false);
                 //end the game
@@ -450,7 +456,7 @@ public class TutorialController : MonoBehaviour
     }
     public bool IsPlayerTurn()
     {
-        return playerTurn && animationFinished;
+        return allowPawnClick && playerTurn && animationFinished;
     }
     public void AnimationCompleted(bool isPlayer)
     {
@@ -675,7 +681,7 @@ public class TutorialController : MonoBehaviour
     }
     public void ShowGhostMoves()
     {
-        if (playerTurn && animationFinished)
+        if (allowPawnClick && playerTurn && animationFinished)
         {
             Debug.Log("pawn was Clicked");
            
