@@ -11,7 +11,7 @@ public class CameraRotate : MonoBehaviour
     void Update()
     {
         // https://forum.unity.com/threads/rotate-the-camera-around-the-object.47353/
-        transform.Translate(Vector3.right * Time.deltaTime * speed);
+        transform.Translate(Vector3.left * Time.deltaTime * speed);
         transform.LookAt(target);
     }
 }
