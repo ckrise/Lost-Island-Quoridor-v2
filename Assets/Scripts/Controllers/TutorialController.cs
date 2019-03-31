@@ -209,8 +209,18 @@ public class TutorialController : MonoBehaviour
     #region tutorial controller
     public void SkipTutorial()
     {
+        Debug.Log("Clicked: Skip");
         Debug.Log("skipped");
-        LeaveGame();
+        if (GameData.InAdventureMode)
+        {
+            GameData.AdventureProgress++;
+            GameData.AIDifficulty = "easy";
+            levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
+        }
+        else
+        {
+            LeaveGame();
+        }
     }
 
     private void ProgressController()
@@ -724,22 +734,15 @@ public class TutorialController : MonoBehaviour
             {
                 winPanel.SetActive(true);
             }
-            
         }
     }
     public void LeaveGame()
     {
-        if (!GameData.IsAIGame)
-        {
-            Debug.Log("NetworkGame");
-            GameData.NetworkController.gameOver();
-        }
         if(GameData.InAdventureMode)
         {
             GameData.InAdventureMode = false;
         }
-        //should probably change this not sure to what it's here for rn.
-        SceneManager.LoadScene("MainMenu");
+        levelLoader.GetComponent<LevelLoader>().LoadLevel("MainMenu");
     }
 
     public void ContinueStory()
