@@ -234,7 +234,7 @@ public class GUIController : MonoBehaviour
     }
     public bool IsCameraFinished()
     {
-        return FindObjectOfType<Camera>().GetComponent<CameraBehavior>().IsAnimated;
+        return FindObjectOfType<Camera>().GetComponent<CameraBehavior>().IsFinishedAnimating;
     }
     public void AnimationCompleted(bool isPlayer)
     {

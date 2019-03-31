@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour
 {
+    private Animator animator;
     private bool isAnimated = false;
-    public bool IsAnimated { get => isAnimated; }
+    public bool IsFinishedAnimating { get => isAnimated; }
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    public void AnimateCamera()
+    {
+        animator.SetTrigger("");
+    }
 
     public void AnimationFinished()
     {
