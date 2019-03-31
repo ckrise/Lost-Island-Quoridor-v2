@@ -16,12 +16,18 @@ public class LevelLoader : MonoBehaviour
     {
         loadingPanel.SetActive(true);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
-        while(!operation.isDone)
-        {
-            float progress = Mathf.Clamp01(operation.progress / .9f);
+        int i = 0;
+        float progress = 0;
+        while(!operation.isDone && progress != 1)
+        {            
+            progress = Mathf.Clamp01(operation.progress / .90f);
             progressBar.value = progress;
-            progressText.text = (progress * 100f) + "%";
-            yield return null;
+            progressText.text = Mathf.FloorToInt(progress * 100f) + "%";
+            Debug.Log($"{i++}: {progressText.text}");
+            if (i % 10 == 0)
+            {
+                yield return null;
+            }
         }
     }
 }
