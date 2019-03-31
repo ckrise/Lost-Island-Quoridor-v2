@@ -156,20 +156,25 @@ public class MenuController : MonoBehaviour
     public void StartNewStory()
     {
         GameData.InAdventureMode = true;
-        GameData.AdventureProgress = 0; 
+        GameData.AdventureProgress = 0;
+        GameData.IsTutorial = true;
     }
     public void ContinueStory()
     {
         GameData.InAdventureMode = true;
+        GameData.IsAIGame = true;
         switch(GameData.AdventureProgress)
         {
             case 1:
+                GameData.AIDifficulty = "easy";
                 levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
                 break;
             case 2:
+                GameData.AIDifficulty = "easy";
                 levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
                 break;
             case 3:
+                GameData.AIDifficulty = "hard";
                 levelLoader.GetComponent<LevelLoader>().LoadLevel("TempleScene");
                 break;
         }

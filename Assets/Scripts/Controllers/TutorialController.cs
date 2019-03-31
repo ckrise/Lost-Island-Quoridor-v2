@@ -213,6 +213,7 @@ public class TutorialController : MonoBehaviour
         Debug.Log("skipped");
         if (GameData.InAdventureMode)
         {
+            GameData.IsTutorial = false;
             GameData.AdventureProgress++;
             GameData.AIDifficulty = "easy";
             levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");

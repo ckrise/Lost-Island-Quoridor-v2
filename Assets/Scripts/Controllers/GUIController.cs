@@ -482,7 +482,7 @@ public class GUIController : MonoBehaviour
             Debug.Log("NetworkGame");
             GameData.NetworkController.gameOver();
         }
-        if(GameData.InAdventureMode == true)
+        else if(GameData.InAdventureMode == true)
         {
             GameData.InAdventureMode = false;
         }
