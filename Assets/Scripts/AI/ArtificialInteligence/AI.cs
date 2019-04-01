@@ -47,32 +47,33 @@ namespace ArtificialInteligence
 
             return moveSelected;
         }
-
-        //AI during first ai competition
+        
         public string GetIntermediateMove(string playerMove) {
+            TreeNode.weights = new List<float> { 1f, 1f, .25f, 0f };
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
 
-            int numLevelsSearched;
-            if (CurrentBoard.GetPlayerOneNumWalls() == 0 || CurrentBoard.GetPlayerTwoNumWalls() == 0)
-            {
-                numLevelsSearched = 1;
-            }
-            else
-            {
-                numLevelsSearched = 2;
-            }
-
-            Dictionary<string, float> moveValues = IterateStart(rootNode, numLevelsSearched);
+            Dictionary<string, float> depthOneValues = IterateStart(rootNode, 1);
+            Dictionary<string, float> depthTwoValues = IterateStart(rootNode, 2);
 
             string moveSelected = "error";
             float max = float.NegativeInfinity;
-            foreach (KeyValuePair<string, float> move in moveValues)
+            foreach (KeyValuePair<string, float> move in depthOneValues)
             {
-                if (max < move.Value)
+                float moveValue;
+                if (depthTwoValues[move.Key] > 1000 || depthTwoValues[move.Key] < -1000)
                 {
-                    max = move.Value;
+                    moveValue = depthTwoValues[move.Key];
+                }
+                else
+                {
+                    moveValue = move.Value;
+                }
+
+                if (max < moveValue)
+                {
+                    max = moveValue;
                     moveSelected = move.Key;
                 }
             }
@@ -90,7 +91,7 @@ namespace ArtificialInteligence
             TreeNode rootNode = new TreeNode(CurrentBoard);
 
             int numLevelsSearched;
-            if (CurrentBoard.GetPlayerOneNumWalls() == 0 || CurrentBoard.GetPlayerTwoNumWalls() == 0)
+            if (CurrentBoard.GetPlayerTwoNumWalls() == 0)
             {
                 numLevelsSearched = 1;
             }
