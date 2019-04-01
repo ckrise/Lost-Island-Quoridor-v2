@@ -866,11 +866,32 @@ PrefabInstance:
       value: "\t\u201CIncredible, you did it! Nothing will stop us on the way to the
         temple now, it is not far from here.\u201D\r"
       objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 695291495}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickDismessStoryAfter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ca8f796669a6c4ab33272b0646b1b4, type: 3}
 --- !u!224 &69886197 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 69886196}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &69886198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
     type: 3}
   m_PrefabInstance: {fileID: 69886196}
   m_PrefabAsset: {fileID: 0}
@@ -10949,6 +10970,8 @@ MonoBehaviour:
   adventureWinPanel: {fileID: 492691832}
   adventureLosePanel: {fileID: 1392003146}
   moveTimerPanel: {fileID: 371735396}
+  storyBefore: {fileID: 1952150478}
+  storyAfter: {fileID: 69886198}
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
   levelLoader: {fileID: 1871655488}
@@ -29585,11 +29608,32 @@ PrefabInstance:
         king\u2019s minions! The mage will be more of a challenge than the foot soldier
         you faced before. I believe in you!\u201D\r\n"
       objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 695291495}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickDismissStoryBefore
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ca8f796669a6c4ab33272b0646b1b4, type: 3}
 --- !u!224 &1952150477 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1952150476}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1952150478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
     type: 3}
   m_PrefabInstance: {fileID: 1952150476}
   m_PrefabAsset: {fileID: 0}

@@ -13,8 +13,10 @@ public class GUIController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
-        settingsPanel, helpPanel, opponentDisconnectedPanel, disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
-        adventureWinPanel, adventureLosePanel, moveTimerPanel;
+        settingsPanel, helpPanel, opponentDisconnectedPanel, 
+        disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
+        adventureWinPanel, adventureLosePanel, moveTimerPanel,
+        storyBefore, storyAfter, chatHelpPanel, helpHelpPanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
@@ -75,6 +77,16 @@ public class GUIController : MonoBehaviour
         if (GameData.IsAIGame)
         {
             chatButton.gameObject.SetActive(false);
+        }
+
+        if (GameData.InAdventureMode)
+        {
+            //display panels
+            storyBefore.SetActive(true);
+        }
+        else
+        {
+            CameraBehavior.reference.AnimateCamera();
         }
 
         //initialize wall pool stacks
@@ -448,7 +460,7 @@ public class GUIController : MonoBehaviour
         {
             MoveOpponentPawn(move);
         }
-        if(isWinner)
+        if (isWinner)
         {
             musicReference.playWin();
             if (GameData.InAdventureMode)
@@ -459,13 +471,11 @@ public class GUIController : MonoBehaviour
             {
                 winPanel.SetActive(true);
             }
-            
-            
         }
         else
         {
             musicReference.playLose();
-            if(GameData.InAdventureMode)
+            if (GameData.InAdventureMode)
             {
                 adventureLosePanel.SetActive(true);
             }
@@ -474,7 +484,7 @@ public class GUIController : MonoBehaviour
                 losePanel.SetActive(true);
             }
         }
-   }
+    }
     public void LeaveGame()
     {
         if (!GameData.IsAIGame)
@@ -532,9 +542,15 @@ public class GUIController : MonoBehaviour
     {
         if (!gameOver)
         {
+            
             helpPanel.SetActive(!helpPanel.activeSelf);
             settingsPanel.SetActive(false);
             chatPanel.SetActive(false);
+            if (GameData.IsAIGame)
+            {
+                //TODO:
+                //Get rid of the chat help panel and move up the Help help Panel
+            }
         }
     }
 
@@ -577,8 +593,8 @@ public class GUIController : MonoBehaviour
 #endregion
 
 
-#region chat
-public void ReceiveMessage(string message)
+    #region chat
+    public void ReceiveMessage(string message)
     {
         //update message window
         UpdateChat(message);
@@ -606,16 +622,17 @@ public void ReceiveMessage(string message)
     }
 #endregion
     #region helpPanel
-    public void showRulesPanel()
-    {
-        gameplayPanel.SetActive(false);
-        rulesPanel.SetActive(true);
-    }
-    public void showGameplayPanel()
-    {
-        rulesPanel.SetActive(false);
-        gameplayPanel.SetActive(true);
-    }
+    //we should be able to delete this but I'm leaving for now just in case we want it back -Brad
+    //public void showRulesPanel()
+    //{
+    //    gameplayPanel.SetActive(false);
+    //    rulesPanel.SetActive(true);
+    //}
+    //public void showGameplayPanel()
+    //{
+    //    rulesPanel.SetActive(false);
+    //    gameplayPanel.SetActive(true);
+    //}
     #endregion
     #region Move Timer panel
     public void displayMoveTimerPanel()
@@ -631,12 +648,16 @@ public void ReceiveMessage(string message)
     #region story
     public void ContinueStory()
     {
-        if(GameData.AdventureProgress == 1)
+        storyAfter.SetActive(true);
+    }
+    public void AdvanceLevel()
+    {
+        if (GameData.AdventureProgress == 1)
         {
             GameData.AdventureProgress++;
             levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
         }
-        else if(GameData.AdventureProgress == 2)
+        else if (GameData.AdventureProgress == 2)
         {
             GameData.AdventureProgress++;
             levelLoader.GetComponent<LevelLoader>().LoadLevel("TempleScene");
@@ -651,6 +672,17 @@ public void ReceiveMessage(string message)
     {
         GameData.InAdventureMode = false;
         levelLoader.GetComponent<LevelLoader>().LoadLevel("MainMenu");
+    }
+
+    public void ClickDismissStoryBefore()
+    {
+        storyBefore.SetActive(false);
+        CameraBehavior.reference.AnimateCamera();
+    }
+    public void ClickDismissStoryAfter()
+    {
+        storyAfter.SetActive(false);
+        ContinueStory();
     }
     #endregion
 }

@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour
 {
+    public static CameraBehavior reference;
     private Animator animator;
     private bool isAnimated = false;
     public bool IsFinishedAnimating { get => isAnimated; }
 
     void Start()
     {
+        reference = this;
         animator = GetComponent<Animator>();
     }
 
     public void AnimateCamera()
     {
-        animator.SetTrigger("");
+        animator.SetTrigger("Enter");
     }
 
     public void AnimationFinished()

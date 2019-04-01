@@ -16,12 +16,32 @@ namespace ArtificialInteligence
         //Does a game tree search 1 layer deep.
         public string GetEasyMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { .5f, 1f, 1f, 0f };
+            TreeNode.weights = new List<float> { 1f, 1f, .25f, 0f };
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
-            
-            string moveSelected = IterateStart(rootNode, 1);
+
+            Dictionary<string, float> depthOneValues = IterateStart(rootNode, 1);
+            Dictionary<string, float> depthTwoValues = IterateStart(rootNode, 2);
+
+            string moveSelected = "error";
+            float max = float.NegativeInfinity;
+            foreach (KeyValuePair<string, float> move in depthOneValues)
+            {
+                float moveValue;
+                if (depthTwoValues[move.Key] > 1000 || depthTwoValues[move.Key] < -1000) {
+                    moveValue = depthTwoValues[move.Key];
+                }
+                else {
+                    moveValue = move.Value;
+                }
+                
+                if (max < moveValue)
+                {
+                    max = moveValue;
+                    moveSelected = move.Key;
+                }
+            }
 
             CurrentBoard.MakeMove(moveSelected);
 
@@ -44,7 +64,18 @@ namespace ArtificialInteligence
                 numLevelsSearched = 2;
             }
 
-            string moveSelected = IterateStart(rootNode, numLevelsSearched);
+            Dictionary<string, float> moveValues = IterateStart(rootNode, numLevelsSearched);
+
+            string moveSelected = "error";
+            float max = float.NegativeInfinity;
+            foreach (KeyValuePair<string, float> move in moveValues)
+            {
+                if (max < move.Value)
+                {
+                    max = move.Value;
+                    moveSelected = move.Key;
+                }
+            }
 
             CurrentBoard.MakeMove(moveSelected);
 
@@ -68,7 +99,16 @@ namespace ArtificialInteligence
                 numLevelsSearched = 2;
             }
 
-            string moveSelected = IterateStart(rootNode, numLevelsSearched);
+            Dictionary<string, float> moveValues = IterateStart(rootNode, numLevelsSearched);
+
+            string moveSelected = "error";
+            float max = float.NegativeInfinity;
+            foreach (KeyValuePair<string, float> move in moveValues) {
+                if (max < move.Value) {
+                    max = move.Value;
+                    moveSelected = move.Key;
+                }
+            }
 
             CurrentBoard.MakeMove(moveSelected);
 
@@ -92,29 +132,24 @@ namespace ArtificialInteligence
         //Function able to return the actual move from the first level.
         //This function is what initiates the alpha beta minimax search.
         //Currently selects a random move from a list of moves evaluated to be equal to one another.
-        private string IterateStart(TreeNode node, int depth)
+        private Dictionary<string, float> IterateStart(TreeNode node, int depth)
         {
             List<TreeNode> rootChildren = node.GetChildren();
             float alpha = float.NegativeInfinity;
             float beta = float.PositiveInfinity;
 
-            List<string> movesSelected = new List<string>();
+            Dictionary<string, float> moveValues = new Dictionary<string, float>();
             foreach (TreeNode child in rootChildren)
             {
                 float result = ABIterate(child, depth - 1, alpha, beta, false);
                 if (result > alpha)
                 {
                     alpha = result;
-                    movesSelected.Clear();
-                    movesSelected.Add(child.GetMoveMade());
                 }
-                else if (result == alpha)
-                {
-                    movesSelected.Add(child.GetMoveMade());
-                }
+                moveValues.Add(child.GetMoveMade(), result);
             }
 
-            return movesSelected[new System.Random().Next(movesSelected.Count)];
+            return moveValues;
         }
 
 
