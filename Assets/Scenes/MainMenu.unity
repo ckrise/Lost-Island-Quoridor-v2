@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39303547, g: 0.4348344, b: 0.49600065, a: 1}
+  m_IndirectSpecularColor: {r: 0.39303762, g: 0.43488893, b: 0.49600667, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6410,7 +6410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &422411833
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9130,8 +9130,8 @@ RectTransform:
   m_Father: {fileID: 643952146}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.0000029008886}
-  m_AnchorMax: {x: 1, y: 0.9374674}
+  m_AnchorMin: {x: 0, y: 0.0000028991742}
+  m_AnchorMax: {x: 1, y: 0.93750435}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15900,7 +15900,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Host a Lobby
+  m_text: Host a Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7446df0d38a0b6d42a6cef17206ff9cf, type: 2}
   m_sharedMaterial: {fileID: 21663964666567026, guid: 7446df0d38a0b6d42a6cef17206ff9cf,
@@ -15970,7 +15970,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 997581252}
-    characterCount: 12
+    characterCount: 11
     spriteCount: 0
     spaceCount: 2
     wordCount: 3
@@ -16255,11 +16255,6 @@ PrefabInstance:
       propertyPath: m_firstOverflowCharacterIndex
       value: 51
       objectReference: {fileID: 0}
-    - target: {fileID: 2144757661865540442, guid: 4694266efe62d504d870c0ab83792219,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2144757661865540443, guid: 4694266efe62d504d870c0ab83792219,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -16303,6 +16298,11 @@ PrefabInstance:
     - target: {fileID: 2144757661865540443, guid: 4694266efe62d504d870c0ab83792219,
         type: 3}
       propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144757661865540442, guid: 4694266efe62d504d870c0ab83792219,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -25744,11 +25744,6 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2144757661865540442, guid: 4694266efe62d504d870c0ab83792219,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2144757661865540443, guid: 4694266efe62d504d870c0ab83792219,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -25792,6 +25787,11 @@ PrefabInstance:
     - target: {fileID: 2144757661865540443, guid: 4694266efe62d504d870c0ab83792219,
         type: 3}
       propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144757661865540442, guid: 4694266efe62d504d870c0ab83792219,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -26164,7 +26164,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 617726265}
   m_Direction: 2
   m_Value: 0.00004638785
-  m_Size: 0.9374645
+  m_Size: 0.93750143
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -26930,11 +26930,6 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2144757661865540442, guid: 4694266efe62d504d870c0ab83792219,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2144757661865540443, guid: 4694266efe62d504d870c0ab83792219,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -26978,6 +26973,11 @@ PrefabInstance:
     - target: {fileID: 2144757661865540443, guid: 4694266efe62d504d870c0ab83792219,
         type: 3}
       propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144757661865540442, guid: 4694266efe62d504d870c0ab83792219,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -29525,7 +29525,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Join a Lobby
+  m_text: Join a Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7446df0d38a0b6d42a6cef17206ff9cf, type: 2}
   m_sharedMaterial: {fileID: 21663964666567026, guid: 7446df0d38a0b6d42a6cef17206ff9cf,
@@ -29595,7 +29595,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1567565806}
-    characterCount: 12
+    characterCount: 11
     spriteCount: 0
     spaceCount: 2
     wordCount: 3
@@ -34383,7 +34383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1851455550
 RectTransform:
   m_ObjectHideFlags: 0

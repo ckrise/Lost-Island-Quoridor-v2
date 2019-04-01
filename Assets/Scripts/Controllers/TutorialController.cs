@@ -29,9 +29,10 @@ public class TutorialController : MonoBehaviour
                      wallPlacement2Panel, wallplacement3Panel, transitionPanel, turningTablesPanel,
                      jumping1Panel, jumping2Panel, invalidWallPlacementPanel, endGameplayPanel,
                      settingsTutorialPanel, helpTutorialPanel, chat1TutorialPanel, chat2TutorialPanel,
-                     endTurorialPanel;
+                     endTurorialPanel, chatHelpPanel, helpHelpPanel;
     
     #endregion
+
     #region private variables
     //tile objects that are invisible until pawn is clicked
     private List<GameObject> ghostPlayerMoves;
@@ -71,6 +72,7 @@ public class TutorialController : MonoBehaviour
     private List<GameObject> wallsPlaced = new List<GameObject>();
 
     #endregion
+
     #region unity
     void Awake()
     {
@@ -222,10 +224,7 @@ public class TutorialController : MonoBehaviour
         Debug.Log("skipped");
         if (GameData.InAdventureMode)
         {
-            GameData.IsTutorial = false;
-            GameData.AdventureProgress++;
-            GameData.AIDifficulty = "easy";
-            levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
+            ContinueStory();
         }
         else
         {
@@ -757,8 +756,9 @@ public class TutorialController : MonoBehaviour
 
     public void ContinueStory()
     {
+        GameData.IsTutorial = false;
         GameData.AdventureProgress++;
-        Debug.Log("Adventure Progress: " + GameData.AdventureProgress);
+        GameData.AIDifficulty = "easy";
         levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
     }
     public void LeaveStory()
@@ -792,7 +792,6 @@ public class TutorialController : MonoBehaviour
             helpPanel.SetActive(false);
             settingsPanel.SetActive(false);
         }
-
     }
 
     public void ShowHelpMenu()
@@ -802,6 +801,12 @@ public class TutorialController : MonoBehaviour
             helpPanel.SetActive(!helpPanel.activeSelf);
             settingsPanel.SetActive(false);
             chatPanel.SetActive(false);
+            if(GameData.InAdventureMode)
+            {
+                chatHelpPanel.SetActive(false);
+                //todo:
+                //Move the help button panel up
+            }
         }
     }
 

@@ -550,6 +550,7 @@ public class GUIController : MonoBehaviour
             {
                 //TODO:
                 //Get rid of the chat help panel and move up the Help help Panel
+                chatHelpPanel.SetActive(false);
             }
         }
     }
