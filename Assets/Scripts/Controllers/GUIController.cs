@@ -82,7 +82,7 @@ public class GUIController : MonoBehaviour
         if (GameData.InAdventureMode)
         {
             //display panels
-            //then play camera animation on click
+            storyBefore.SetActive(true);
         }
 
         //initialize wall pool stacks
@@ -456,7 +456,7 @@ public class GUIController : MonoBehaviour
         {
             MoveOpponentPawn(move);
         }
-        if(isWinner)
+        if (isWinner)
         {
             musicReference.playWin();
             if (GameData.InAdventureMode)
@@ -467,13 +467,11 @@ public class GUIController : MonoBehaviour
             {
                 winPanel.SetActive(true);
             }
-            
-            
         }
         else
         {
             musicReference.playLose();
-            if(GameData.InAdventureMode)
+            if (GameData.InAdventureMode)
             {
                 adventureLosePanel.SetActive(true);
             }
@@ -482,7 +480,7 @@ public class GUIController : MonoBehaviour
                 losePanel.SetActive(true);
             }
         }
-   }
+    }
     public void LeaveGame()
     {
         if (!GameData.IsAIGame)
@@ -585,8 +583,8 @@ public class GUIController : MonoBehaviour
 #endregion
 
 
-#region chat
-public void ReceiveMessage(string message)
+    #region chat
+    public void ReceiveMessage(string message)
     {
         //update message window
         UpdateChat(message);
@@ -639,12 +637,16 @@ public void ReceiveMessage(string message)
     #region story
     public void ContinueStory()
     {
-        if(GameData.AdventureProgress == 1)
+        storyAfter.SetActive(true);
+    }
+    public void AdvanceLevel()
+    {
+        if (GameData.AdventureProgress == 1)
         {
             GameData.AdventureProgress++;
             levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
         }
-        else if(GameData.AdventureProgress == 2)
+        else if (GameData.AdventureProgress == 2)
         {
             GameData.AdventureProgress++;
             levelLoader.GetComponent<LevelLoader>().LoadLevel("TempleScene");
@@ -659,6 +661,17 @@ public void ReceiveMessage(string message)
     {
         GameData.InAdventureMode = false;
         levelLoader.GetComponent<LevelLoader>().LoadLevel("MainMenu");
+    }
+
+    public void ClickDismissStoryBefore()
+    {
+        storyBefore.SetActive(false);
+        CameraBehavior.reference.AnimateCamera();
+    }
+    public void ClickDismissStoryAfter()
+    {
+        storyAfter.SetActive(false);
+        ContinueStory();
     }
     #endregion
 }

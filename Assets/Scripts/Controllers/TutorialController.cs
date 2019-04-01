@@ -12,7 +12,7 @@ public class TutorialController : MonoBehaviour
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, chatPanel,
         settingsPanel, helpPanel, playerTurnPanel, opponentTurnPanel,
-        clickReceiverPanel, adventureWinPanel, storyBefore, storyAfter;
+        clickReceiverPanel, adventureWinPanel, storyOpening, storyTutorial;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
@@ -85,6 +85,11 @@ public class TutorialController : MonoBehaviour
 
     private void Start()
     {
+        if (GameData.InAdventureMode)
+        {
+            //display panels
+            storyOpening.SetActive(true);
+        }
         //initialize wall pool stacks
         playerWallPool = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlayerWallPool"));
         opponentWallPool = new List<GameObject>(GameObject.FindGameObjectsWithTag("OpponentWallPool"));
@@ -757,6 +762,19 @@ public class TutorialController : MonoBehaviour
         GameData.InAdventureMode = false;
         levelLoader.GetComponent<LevelLoader>().LoadLevel("MainMenu");
     }
+    
+    public void ClickOpeningToTutorial()
+    {
+        storyOpening.SetActive(false);
+        storyTutorial.SetActive(true);
+    }
+    public void ClickDissmissTutorialStory()
+    {
+        //continue
+        storyTutorial.SetActive(false);
+        CameraBehavior.reference.AnimateCamera();
+    }
+
     #endregion
 
     #region menu
@@ -826,6 +844,8 @@ public class TutorialController : MonoBehaviour
             wall.GetComponent<AudioSource>().volume = vol;
         }
     }
+
+
 
     #endregion
 
