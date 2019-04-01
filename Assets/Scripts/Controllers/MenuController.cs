@@ -19,7 +19,7 @@ public class MenuController : MonoBehaviour
         settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel,
         failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel, 
         disconnectedFromMultiplayerPanel, levelPanel, helpArrow, multiplayerPanelHelpPanel, 
-        quickplayPanelHelpPanel, multiplayerLevelSelect; 
+        quickplayPanelHelpPanel, multiplayerLevelSelect, storyPanelHelpPanel; 
     public InputField createRoomField, joinRoomField, nameEntryField;
     public Text lobbyText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
@@ -276,6 +276,16 @@ public class MenuController : MonoBehaviour
     {
         quickplayPanelHelpPanel.SetActive(false);
         quickplayPanel.SetActive(true);
+    }
+    public void ShowStoryHelp()
+    {
+        storyPanel.SetActive(false);
+        storyPanelHelpPanel.SetActive(true);
+    }
+    public void HideStoryHelp()
+    {
+        storyPanelHelpPanel.SetActive(false);
+        storyPanel.SetActive(true);
     }
     
     #endregion
