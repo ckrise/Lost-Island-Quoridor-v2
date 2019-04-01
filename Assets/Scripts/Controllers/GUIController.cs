@@ -16,7 +16,7 @@ public class GUIController : MonoBehaviour
         settingsPanel, helpPanel, opponentDisconnectedPanel, 
         disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
         adventureWinPanel, adventureLosePanel, moveTimerPanel,
-        storyBefore, storyAfter;
+        storyBefore, storyAfter, chatHelpPanel, helpHelpPanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
@@ -542,9 +542,15 @@ public class GUIController : MonoBehaviour
     {
         if (!gameOver)
         {
+            
             helpPanel.SetActive(!helpPanel.activeSelf);
             settingsPanel.SetActive(false);
             chatPanel.SetActive(false);
+            if (GameData.IsAIGame)
+            {
+                //TODO:
+                //Get rid of the chat help panel and move up the Help help Panel
+            }
         }
     }
 
@@ -616,16 +622,17 @@ public class GUIController : MonoBehaviour
     }
 #endregion
     #region helpPanel
-    public void showRulesPanel()
-    {
-        gameplayPanel.SetActive(false);
-        rulesPanel.SetActive(true);
-    }
-    public void showGameplayPanel()
-    {
-        rulesPanel.SetActive(false);
-        gameplayPanel.SetActive(true);
-    }
+    //we should be able to delete this but I'm leaving for now just in case we want it back -Brad
+    //public void showRulesPanel()
+    //{
+    //    gameplayPanel.SetActive(false);
+    //    rulesPanel.SetActive(true);
+    //}
+    //public void showGameplayPanel()
+    //{
+    //    rulesPanel.SetActive(false);
+    //    gameplayPanel.SetActive(true);
+    //}
     #endregion
     #region Move Timer panel
     public void displayMoveTimerPanel()
