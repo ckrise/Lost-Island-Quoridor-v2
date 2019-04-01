@@ -90,6 +90,10 @@ public class TutorialController : MonoBehaviour
             //display panels
             storyOpening.SetActive(true);
         }
+        else
+        {
+            CameraBehavior.reference.AnimateCamera();
+        }
         //initialize wall pool stacks
         playerWallPool = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlayerWallPool"));
         opponentWallPool = new List<GameObject>(GameObject.FindGameObjectsWithTag("OpponentWallPool"));

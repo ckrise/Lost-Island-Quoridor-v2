@@ -84,6 +84,10 @@ public class GUIController : MonoBehaviour
             //display panels
             storyBefore.SetActive(true);
         }
+        else
+        {
+            CameraBehavior.reference.AnimateCamera();
+        }
 
         //initialize wall pool stacks
         playerWallPoolStack = new Stack<GameObject>(GameObject.FindGameObjectsWithTag("PlayerWallPool"));

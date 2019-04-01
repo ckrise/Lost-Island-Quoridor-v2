@@ -17,7 +17,7 @@ public class CameraBehavior : MonoBehaviour
 
     public void AnimateCamera()
     {
-        animator.Play("CameraSceneEnter");
+        animator.SetTrigger("Enter");
     }
 
     public void AnimationFinished()
