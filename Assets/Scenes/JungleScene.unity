@@ -874,6 +874,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 69886196}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &69886198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 69886196}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &70394260
 GameObject:
   m_ObjectHideFlags: 0
@@ -10949,6 +10955,8 @@ MonoBehaviour:
   adventureWinPanel: {fileID: 492691832}
   adventureLosePanel: {fileID: 1392003146}
   moveTimerPanel: {fileID: 371735396}
+  storyBefore: {fileID: 1952150478}
+  storyAfter: {fileID: 69886198}
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
   levelLoader: {fileID: 1871655488}
@@ -29590,6 +29598,12 @@ PrefabInstance:
 --- !u!224 &1952150477 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1952150476}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1952150478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
     type: 3}
   m_PrefabInstance: {fileID: 1952150476}
   m_PrefabAsset: {fileID: 0}

@@ -12,7 +12,7 @@ public class TutorialController : MonoBehaviour
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, chatPanel,
         settingsPanel, helpPanel, playerTurnPanel, opponentTurnPanel,
-        clickReceiverPanel, adventureWinPanel;
+        clickReceiverPanel, adventureWinPanel, storyBefore, storyAfter;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;

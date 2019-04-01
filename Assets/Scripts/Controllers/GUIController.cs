@@ -13,8 +13,10 @@ public class GUIController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
-        settingsPanel, helpPanel, opponentDisconnectedPanel, disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
-        adventureWinPanel, adventureLosePanel, moveTimerPanel;
+        settingsPanel, helpPanel, opponentDisconnectedPanel, 
+        disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
+        adventureWinPanel, adventureLosePanel, moveTimerPanel,
+        storyBefore, storyAfter;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
@@ -75,6 +77,12 @@ public class GUIController : MonoBehaviour
         if (GameData.IsAIGame)
         {
             chatButton.gameObject.SetActive(false);
+        }
+
+        if (GameData.InAdventureMode)
+        {
+            //display panels
+            //then play camera animation on click
         }
 
         //initialize wall pool stacks

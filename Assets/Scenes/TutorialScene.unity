@@ -13632,6 +13632,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 841950457}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &841950459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 841950457}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &846725941
 GameObject:
   m_ObjectHideFlags: 0
@@ -25717,6 +25723,8 @@ MonoBehaviour:
   opponentTurnPanel: {fileID: 985612183}
   clickReceiverPanel: {fileID: 2044386298}
   adventureWinPanel: {fileID: 42846561}
+  storyBefore: {fileID: 6303282289421106902}
+  storyAfter: {fileID: 841950459}
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
   levelLoader: {fileID: 1871655488}
@@ -34967,3 +34975,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ca8f796669a6c4ab33272b0646b1b4, type: 3}
+--- !u!1 &6303282289421106902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6303282289421106901}
+  m_PrefabAsset: {fileID: 0}
