@@ -2363,7 +2363,7 @@ RectTransform:
   m_Children:
   - {fileID: 1995559150}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 10
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -20263,9 +20263,11 @@ MonoBehaviour:
   adventureWinPanel: {fileID: 930849103}
   adventureLosePanel: {fileID: 1483019583}
   moveTimerPanel: {fileID: 1575808582}
+  storyBefore: {fileID: 1317160206}
+  storyAfter: {fileID: 1608471739}
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
-  levelLoader: {fileID: 0}
+  levelLoader: {fileID: 1871655488}
   messageText: {fileID: 7662200659086568564, guid: 841df359a3433d64493f126102d554cd,
     type: 3}
   chatInputField: {fileID: 322073772}
@@ -22152,7 +22154,7 @@ RectTransform:
   - {fileID: 1718640590}
   - {fileID: 1185145791}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -29072,7 +29074,7 @@ RectTransform:
   - {fileID: 1950727840}
   - {fileID: 1968763008}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -31155,7 +31157,7 @@ RectTransform:
   m_Children:
   - {fileID: 1758763375}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 11
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -34716,6 +34718,8 @@ RectTransform:
   m_Children:
   - {fileID: 1499383095}
   - {fileID: 629429634}
+  - {fileID: 985612184}
+  - {fileID: 71615857}
   - {fileID: 930849104}
   - {fileID: 1483019584}
   - {fileID: 1344385546}
@@ -34724,8 +34728,6 @@ RectTransform:
   - {fileID: 1124664840}
   - {fileID: 1948775849}
   - {fileID: 1827243290}
-  - {fileID: 71615857}
-  - {fileID: 985612184}
   - {fileID: 1575808583}
   - {fileID: 928714191}
   - {fileID: 1317160205}
@@ -34774,7 +34776,7 @@ RectTransform:
   - {fileID: 575124228}
   - {fileID: 398985323}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -41089,11 +41091,32 @@ PrefabInstance:
       propertyPath: m_FontData.m_Alignment
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 695291495}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickDismissStoryBefore
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ca8f796669a6c4ab33272b0646b1b4, type: 3}
 --- !u!224 &1317160205 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1317160204}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1317160206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
     type: 3}
   m_PrefabInstance: {fileID: 1317160204}
   m_PrefabAsset: {fileID: 0}
@@ -42283,7 +42306,7 @@ RectTransform:
   - {fileID: 1145099173}
   - {fileID: 1974390923}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -51645,7 +51668,7 @@ RectTransform:
   - {fileID: 1781070934}
   - {fileID: 77023194}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -56645,7 +56668,7 @@ PrefabInstance:
     - target: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -56794,11 +56817,32 @@ PrefabInstance:
       propertyPath: m_FontData.m_Alignment
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 695291495}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickDismessStoryAfter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ca8f796669a6c4ab33272b0646b1b4, type: 3}
 --- !u!224 &1608471738 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1608471737}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1608471739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
     type: 3}
   m_PrefabInstance: {fileID: 1608471737}
   m_PrefabAsset: {fileID: 0}
@@ -63291,7 +63335,7 @@ RectTransform:
   - {fileID: 1686525965}
   - {fileID: 1808268145}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -67629,7 +67673,7 @@ RectTransform:
   - {fileID: 962293001}
   - {fileID: 1821087124}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -69165,7 +69209,7 @@ RectTransform:
   - {fileID: 1866159788}
   - {fileID: 1422841044}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

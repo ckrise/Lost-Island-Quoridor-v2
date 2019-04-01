@@ -8998,6 +8998,8 @@ MonoBehaviour:
   adventureWinPanel: {fileID: 1966548541}
   adventureLosePanel: {fileID: 1604164139}
   moveTimerPanel: {fileID: 1679671674}
+  storyBefore: {fileID: 2029719441}
+  storyAfter: {fileID: 1968379210}
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
   levelLoader: {fileID: 1871655488}
@@ -10906,6 +10908,21 @@ PrefabInstance:
       propertyPath: m_Text
       value: "\t\u201COh no! Here comes one of the kings minions now! Maybe you will
         have better luck than us in facing him at quoridor!\u201D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 695291495}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickDismissStoryBefore
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ca8f796669a6c4ab33272b0646b1b4, type: 3}
@@ -25301,6 +25318,21 @@ PrefabInstance:
       value: "\t\u201CWow you are pretty good at this! We might have a chance to defeat
         the king and put a stop to the curse once and for all!\u201D"
       objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 695291495}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickDismessStoryAfter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ca8f796669a6c4ab33272b0646b1b4, type: 3}
 --- !u!224 &1812510780 stripped
@@ -27669,6 +27701,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1968379210 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1812510779}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1974390922
 GameObject:
   m_ObjectHideFlags: 0
@@ -28484,6 +28522,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &2029719441 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 827861095}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2041353329
 PrefabInstance:
   m_ObjectHideFlags: 0
