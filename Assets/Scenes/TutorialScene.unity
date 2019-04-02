@@ -15054,7 +15054,7 @@ PrefabInstance:
     - target: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -17432,7 +17432,7 @@ RectTransform:
   - {fileID: 109017353}
   - {fileID: 888352994}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -20619,6 +20619,7 @@ RectTransform:
   - {fileID: 1749785929}
   - {fileID: 1344385546}
   - {fileID: 2044386299}
+  - {fileID: 1829793617}
   - {fileID: 928714191}
   - {fileID: 585994650}
   - {fileID: 841950458}
@@ -29980,7 +29981,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 827237433}
-  - {fileID: 1829793617}
   m_Father: {fileID: 1124254119}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31794,16 +31794,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829793616}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000033862154}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00029732622}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1408685704}
-  m_Father: {fileID: 1749785929}
-  m_RootOrder: 1
+  m_Father: {fileID: 1124254119}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -100, y: 0}
+  m_AnchoredPosition: {x: -100, y: 33.999687}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1829793618
@@ -37198,7 +37198,7 @@ PrefabInstance:
     - target: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -37238,7 +37238,7 @@ PrefabInstance:
     - target: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}

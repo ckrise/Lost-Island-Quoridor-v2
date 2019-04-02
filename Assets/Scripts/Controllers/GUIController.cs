@@ -678,12 +678,19 @@ public class GUIController : MonoBehaviour
     public void ClickDismissStoryBefore()
     {
         storyBefore.SetActive(false);
-        CameraBehavior.reference.AnimateCamera();
+        if (GameData.AdventureProgress != 1)
+        {
+            CameraBehavior.reference.AnimateCamera();
+        }
+        else
+        {
+            CameraBehavior.reference.Idle();
+        }
     }
     public void ClickDismissStoryAfter()
     {
         storyAfter.SetActive(false);
-        ContinueStory();
+        AdvanceLevel();
     }
     #endregion
 }

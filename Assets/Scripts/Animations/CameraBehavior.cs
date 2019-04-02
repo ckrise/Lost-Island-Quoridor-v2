@@ -20,6 +20,12 @@ public class CameraBehavior : MonoBehaviour
         animator.SetTrigger("Enter");
     }
 
+    public void Idle()
+    {
+        animator.Play("Still");
+        AnimationFinished();
+    }
+
     public void AnimationFinished()
     {
         isAnimated = true;
