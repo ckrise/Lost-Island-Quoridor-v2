@@ -19880,6 +19880,18 @@ AudioSource:
     type: 3}
   m_PrefabInstance: {fileID: 1205420915}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1205420918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205420916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9da2b1bfd3f74348b62ce3a1e2b5b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1215220427
 GameObject:
   m_ObjectHideFlags: 0

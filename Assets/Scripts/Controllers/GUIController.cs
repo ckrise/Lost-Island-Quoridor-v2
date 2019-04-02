@@ -235,6 +235,7 @@ public class GUIController : MonoBehaviour
             playerTurn = false;
             DestroyGhostMoves();
             playerPawn.GetComponent<PawnBehavior>().SetOpaque();
+            opponentPawn.GetComponent<PawnBehavior>().SetOpaque();
             Vector3 position = ghost.transform.position;
             playerPawn.GetComponent<PawnAnimation>().Animate(position, true);
             playerMove = FindCoordinate(position.x, position.z);
@@ -433,7 +434,7 @@ public class GUIController : MonoBehaviour
     public void ShowGhostMoves()
     {
         if (playerTurn && animationFinished)
-        {            
+        {
             pawnClicked = !pawnClicked;
             foreach (var space in ghostPlayerMoves)
             {
@@ -442,10 +443,12 @@ public class GUIController : MonoBehaviour
             if (pawnClicked)
             {
                 playerPawn.GetComponent<PawnBehavior>().SetTransparent();
+                opponentPawn.GetComponent<PawnBehavior>().SetTransparent();
             }
             else
             {
                 playerPawn.GetComponent<PawnBehavior>().SetOpaque();
+                opponentPawn.GetComponent<PawnBehavior>().SetOpaque();
             }
         }
     }
@@ -508,6 +511,10 @@ public class GUIController : MonoBehaviour
         if (!gameOver)
         {
             gameOver = true;
+            if(moveTimerPanel.activeSelf)
+            {
+                moveTimerPanel.SetActive(false);
+            }
             opponentDisconnectedPanel.SetActive(true);
         }
         
@@ -638,7 +645,10 @@ public class GUIController : MonoBehaviour
     #region Move Timer panel
     public void displayMoveTimerPanel()
     {
-        moveTimerPanel.SetActive(true);
+        if (!disconnectedFromNetworkPanel.activeSelf && !opponentDisconnectedPanel.activeSelf)
+        {
+            moveTimerPanel.SetActive(true);
+        }
     }
 
     public void closeMoveTimerPanel()

@@ -27,6 +27,7 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region references
+    //set photon to master client loading scene for both players
     private void Start()
     {
         PhotonNetwork.automaticallySyncScene = true;
@@ -36,7 +37,7 @@ public class NetworkController : MonoBehaviour
        
     }
     #endregion
-
+    //this is only used for timer
     private void Update()
     {
         //Debug.Log("1");
@@ -44,6 +45,7 @@ public class NetworkController : MonoBehaviour
     }
 
     #region Multiplayer Connect
+    //When player hits multiplayer button
     public void connectToPhoton()
     {
         string connectString = "Connecting To Multiplayer...";
@@ -53,13 +55,14 @@ public class NetworkController : MonoBehaviour
         menuController.changeLoadingText(connectString);
     }
 
+    //Callback when player cannot conenct
     private void OnFailedToConnectToPhoton()
     {
         menuController.OpenFailMultiplayerPanel();
         Debug.Log("Failed To Connect");
-        //TODO notify user they have not connected
     }
 
+    //When we have sucessfully joined multiplayer and can look for rooms to join
     private void OnJoinedLobby()
     {
         menuController.MultiPlayer();
@@ -67,6 +70,7 @@ public class NetworkController : MonoBehaviour
         Debug.Log("joined"); 
     }
 
+    //Whenever the room list changes
     private void OnReceivedRoomListUpdate()
     {
         Debug.Log("This was called");
@@ -75,6 +79,7 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region Room Functions
+    //Get the list of rooms from photon, parse the name and build our list
     private void buildRoomList()
     {
         roomList.Clear();
@@ -91,6 +96,7 @@ public class NetworkController : MonoBehaviour
         }
     }
 
+    //Called whenever room list updated, tells GUI to fix the list on screen
     public void listRooms()
     {
         buildRoomList();
@@ -103,14 +109,18 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region Create Rooms
+    //This function does a couple things before it actually creates a room
     public void onClickCreateRoom()
     {
         string creatingRoom = "Creating Room...";
+        //Get the player name from PlayerData so we aren't using the actual name
         string playerName = PlayerData.PlayerName;  //PlayerPrefs.GetString("PlayerName");
         string newPlayerName = playerName;
+        //Tells us when we can use this name
         bool goodRoomName = false;
         int count = 1;
-        
+        //This while loop just puts a number on the end of the name
+        //EX player1, player2
         while(!goodRoomName)
         {
             if (!roomList.Contains(newPlayerName))
@@ -129,20 +139,24 @@ public class NetworkController : MonoBehaviour
             }
         }
         playerName = newPlayerName;
-        
+        //Create room, only want 2 in room
         Debug.Log(playerName);
         PhotonNetwork.CreateRoom(playerName, new RoomOptions() { MaxPlayers = 2 }, null);
         menuController.changeLoadingText(creatingRoom);
     }
 
+    //We only want to change GUI when Photon tells us we have done what we needed
+    //This is why all the On functions change menuController, don't want to jump the gun
     private void OnCreatedRoom()
     {
         Debug.Log("CreatedRoom");
         menuController.SetLobbyName(myRoom);
         menuController.CreateRoom();
+        //If you make room you are now master client, congrats
         PhotonNetwork.SetMasterClient(PhotonNetwork.player);
     }
 
+    //Dido
     private void OnPhotonCreateRoomFailed()
     {
         menuController.OpenFailCreateRoomPanel();
@@ -151,6 +165,7 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region Join Rooms
+    //Join room with the name of what we clicked on
     public void onClickJoinRoom(string name)
     {
         Debug.Log(name);
@@ -159,30 +174,31 @@ public class NetworkController : MonoBehaviour
         
     }
 
+    //Both players will call OnJoinedRoom if they create/join room
     private void OnJoinedRoom()
     {
         myRoom = PhotonNetwork.room.Name;
+        //Quick way to see who is going first
         if(PhotonNetwork.player.IsMasterClient)
         {
             GameData.PlayerGoesFirst = true;
             menuController.SetLobbyName(myRoom);
             Debug.Log("GOING FIRST");
         }
+        //You joined so you go second
         else
         {
             GameData.PlayerGoesFirst = false;
             Debug.Log("GOING SECOND");
         }
-        //networkGame();
-        //PhotonNetwork.LoadLevel("TempleScene");
-        Debug.Log("JOINED ROOM!");
-        Debug.Log(PhotonNetwork.room.Name);
+        //This is what the person who joined sends to the "host"
         if(PhotonNetwork.room.PlayerCount == 2 && !PhotonNetwork.player.IsMasterClient)
         {
             sendStartGameMessage();
         }
     }
 
+    //Dido
     private void OnPhotonJoinRoomFailed()
     {
         menuController.OpenFailJoinRoomPanel();
@@ -191,6 +207,8 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region Back Functions
+    //When we leave the room we want it turned invisible until it is destroyed
+    //Only those who create it can call this function
     public void onClickLeaveRoom()
     {
        PhotonNetwork.room.IsVisible = false;
@@ -200,18 +218,22 @@ public class NetworkController : MonoBehaviour
         
     }
 
+    //This is either called in the lobby or in an actually room
     public void onClickBack()
     {
+        //We are in a room so we must call leave room
         if (PhotonNetwork.room != null)
         {
             PhotonNetwork.LeaveRoom();
         }
+        //We are leaving multiplayer
         else if(PhotonNetwork.connected)
         {
             PhotonNetwork.Disconnect();
         }
     }
 
+    //We either lost connection in a game or at the menus
     private void OnConnectionFail()
     {
         string sceneName = SceneManager.GetActiveScene().name;
@@ -223,15 +245,16 @@ public class NetworkController : MonoBehaviour
         {
             guiController.openLostConnectionPanel();
         }
-        //isConnectedServer = false;
         Debug.Log("Disconnected from photon");
     }
 
+    //Dido
     private void OnDisconnectedFromPhoton()
     {
         Debug.Log("Call this when anything disconnection happens"); 
     }
 
+    //Pretty sure this isn't called
     public void onClickLeaveMultiplayer()
     {
         if (PhotonNetwork.connected)
@@ -240,6 +263,7 @@ public class NetworkController : MonoBehaviour
         }
     }
 
+    //Dido
     private void OnLeftRoom()
     {
         Debug.Log("LeftRoom");
@@ -247,14 +271,16 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region Network Game
+    //Dido
     private void OnPhotonPlayerConnected()
     {
         Debug.Log("player connected");
     }
 
+    //This does some very important things for the online games to work
     public void networkGame()
     {
-        Debug.Log("setting up game");
+        //this allows us to send things
         photonView = PhotonView.Get(this);
         guiController = GUIController.Instance;
         GameData.IsAIGame = false;
@@ -267,12 +293,14 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region Quitting/Finishing Game
+    //TODO change to just going to multiplayer panel not main menu
     public void gameOver()
     {
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.Disconnect();
     }
 
+    //Dido
     public void OnPhotonPlayerDisconnected()
     {
         Debug.Log("Player disconnected!");
@@ -285,14 +313,18 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region Send Stuff
-
+    //We are going to tell
+    //a) what function to call
+    //b) who to send it to
+    //c) what parameters the function needs
     public void onMoveToSend(string moveToSend)
     {
-        Debug.Log("Sent Move");
+        Debug.Log(PhotonNetwork.player.ID + "made a move");
         photonView.RPC("sendMove", PhotonTargets.Others, moveToSend);
        
     }
 
+    //send chat message to player
     public void onMessageToSend(string message)
     {
         Debug.Log(message);
@@ -300,6 +332,9 @@ public class NetworkController : MonoBehaviour
       
     }
 
+    //this function is for people joining the game
+    //It sets stuff up for sending messages and tells the 
+    //"host" to start the game
     public void sendStartGameMessage()
     {
         networkGame();
@@ -311,6 +346,8 @@ public class NetworkController : MonoBehaviour
     #endregion
 
     #region Receive Stuff
+    //this is the receiving side
+    //get chat message display it and reset move timer
     [PunRPC]
     public void chatMessage(string message)
     {
@@ -321,7 +358,8 @@ public class NetworkController : MonoBehaviour
         guiController.ReceiveMessage(message);
         Debug.Log(messageToDisplay);
     }
-
+    
+    //get move sent to us and send it to gameController
     [PunRPC]
     public void sendMove(string move)
     {
@@ -333,6 +371,7 @@ public class NetworkController : MonoBehaviour
         
     }
 
+    //"host" gets startgame message
     [PunRPC]
     public void startGame()
     {
@@ -341,6 +380,8 @@ public class NetworkController : MonoBehaviour
         PhotonNetwork.LoadLevel(GameData.Scene);
     }
 
+    //we get the move from the player as if they were player1 so we
+    //change as if they were player2
     public string changeOrientation(string move)
     {
         string orientation = "";
@@ -360,10 +401,10 @@ public class NetworkController : MonoBehaviour
     }
     #endregion
 
+    #region Timer Stuff
+    //update timer if we are in a game
     private void timerCheck()
     {
-        //Debug.Log("this is getting called");
-        // Debug.Log(gameStarted);
         if (SceneManager.GetActiveScene().name != "MainMenu" && guiController != null && isNetworkingGame)
         {
             if (!guiController.playerTurn)
@@ -372,27 +413,31 @@ public class NetworkController : MonoBehaviour
                 timer += Time.deltaTime;
                 if (timer >= moveTime)
                 {
-
                     DisplayMessage();
-                    timer = timer - moveTime;
+                    //TODO might need to get rid of this
+                    //timer = timer - moveTime;
                 }
             }
         }
     }
 
+    //easy to understand, right?
     public void continueWaiting()
     {
         timer -= timer;
     }
 
+    //yup
     public void resetTimer()
     {
         timer = 0.0f;
     }
 
+    //decisions, decisions
     private void DisplayMessage()
     {
         Debug.Log("move time up");
         guiController.displayMoveTimerPanel();
-    } 
+    }
+    #endregion
 }
