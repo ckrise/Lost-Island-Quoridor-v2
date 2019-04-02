@@ -26,6 +26,9 @@
             {
                 AImove = computer.GetEasyMove(playerMove);
             }
+            else if (difficulty == "intermediate") {
+                AImove = computer.GetIntermediateMove(playerMove);
+            }
             else
             {
                 AImove = computer.GetHardMove(playerMove);
@@ -36,6 +39,11 @@
         public void SetAIHard()
         {
             difficulty = "hard";
+        }
+
+        public void SetAIIntermediate()
+        {
+            difficulty = "intermediate";
         }
 
         public void SetAIEasy()

@@ -864,7 +864,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Text
       value: "\t\u201CIncredible, you did it! Nothing will stop us on the way to the
-        temple now, it is not far from here.\u201D\r"
+        temple now. It is not far from here.\u201D\r"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -31428,9 +31428,9 @@ PrefabInstance:
       propertyPath: m_Text
       value: "\tYou follow Corey into the dense forest towards the temple. The moisture
         in the air sticks to your skin. The leaves of the forest grab at your body
-        and try to pull into the vast jungle. Staying focused on Corey, you trudge
+        and try to pull you into the vast jungle. Staying focused on Corey, you trudge
         through the forest with determination to assist the animals. After what feels
-        like an eternity you come into a clearing surrounded by trees. Before you
+        like an eternity, you come into a clearing surrounded by trees. Before you
         rises another skeleton to block your path.\r\n\t\u201COh no! Another of the
         king\u2019s minions! The mage will be more of a challenge than the foot soldier
         you faced before. I believe in you!\u201D\r\n"

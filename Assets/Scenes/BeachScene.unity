@@ -12117,7 +12117,7 @@ PrefabInstance:
     - target: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -12262,7 +12262,7 @@ PrefabInstance:
     - target: {fileID: 6303282290708214809, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_Text
-      value: "\t\u201COh no! Here comes one of the kings minions now! Maybe you will
+      value: "\t\u201COh no! Here comes one of the king's minions now! Maybe you will
         have better luck than us in facing him at quoridor!\u201D"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,

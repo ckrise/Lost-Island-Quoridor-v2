@@ -37198,7 +37198,7 @@ PrefabInstance:
     - target: {fileID: 6303282289910034252, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6303282289910034255, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -37322,21 +37322,21 @@ PrefabInstance:
         your mouth and blink rapidly to try and clear the salt water from your eyes.
         Looking around, the island appears completely uninhabited, with no sign of
         passage on the shore. The beach seems to stretch endlessly in either direction
-        with a large forest looming before you. You began to stumble towards the forest,
+        with a large forest looming before you. You begin to stumble towards the forest,
         seeing no other alternative. After only taking a few steps a figure bursts
         from the forest running towards you. A crocodile! You began to back up in
-        fear but realize something is off. The crocodile is running towards you\u2026
-        like a person. Just before reaching you he falls face first into the sand.
+        fear, but realize something is off. The crocodile is running towards you\u2026
+        like a person. Just before reaching you, he falls face first into the sand.
         What an oddly comedic creature.\r\n\tHe stands up and shakes of the sand.
         He then starts speaking. \u201CYou must help us! Our island is plagued by
-        a curse, you must come with me!\u201D You\u2019re taken aback by the fact
-        a crocodile is speaking and walking like a human but he seems friendly enough.
+        a curse! You must come with me!\u201D You\u2019re taken aback by the fact
+        a crocodile is speaking and walking like a human, but he seems friendly enough.
         You look around and see no other reasonable options, so you choose to follow
         the crocodile.\r\n\t\u201CMy name is Corey. My forest friends and I lived
         here peacefully on this island until discovering an abandoned temple at the
         center of the island. I went in on a dare and accidentally awoke the cursed
-        skeleton king and his minions. The king paid the price for eternal life many
-        years ago but in return he has to play quoridor neverending. He and his minions
+        Skeleton King and his minions. The king paid the price for eternal life many
+        years ago, but in return, he has to play quoridor forever. He and his minions
         are terrorizing us forest animals into playing quoridor against them.\u201D\r\n"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
@@ -37353,6 +37353,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303282290708214815, guid: d7ca8f796669a6c4ab33272b0646b1b4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ca8f796669a6c4ab33272b0646b1b4, type: 3}
