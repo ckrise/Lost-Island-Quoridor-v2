@@ -91,6 +91,12 @@ public class TutorialController : MonoBehaviour
         {
             //display panels
             storyOpening.SetActive(true);
+            chatButton.gameObject.SetActive(false);
+            //Get rid of the chat help panel and move up the Help help Panel
+            //Vector3 v = helpHelpPanel.transform.position;
+            //v.y += 50;
+            //helpHelpPanel.transform.position = v;
+            chatHelpPanel.SetActive(false);  
         }
         else
         {
@@ -328,9 +334,21 @@ public class TutorialController : MonoBehaviour
                 activateClickToContinue();
                 break;
             case 14:
-                advancePanels();
                 helpPanel.SetActive(false);
-                Debug.Log(tutorialProgress);
+                if (GameData.InAdventureMode)
+                {
+                    Debug.Log("InAdventureMode triggered");
+                    tutorialPanelQueue[13].SetActive(false);
+                    //tutorialPanelQueue[16].SetActive(true);
+                    tutorialProgress = 15;
+                    ProgressController();
+                }
+                else
+                {
+                    advancePanels();
+                    Debug.Log(tutorialProgress);
+                }
+                
                 break;
             case 15:
                 advancePanels();

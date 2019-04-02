@@ -77,6 +77,14 @@ public class GUIController : MonoBehaviour
         if (GameData.IsAIGame)
         {
             chatButton.gameObject.SetActive(false);
+            
+            //TODO:
+            //Get rid of the chat help panel and move up the Help help Panel
+            //Vector3 v = helpHelpPanel.transform.position;
+            //v.y += 50;
+            //helpHelpPanel.transform.position = v;
+            chatHelpPanel.SetActive(false);
+            
         }
 
         if (GameData.InAdventureMode)
@@ -553,12 +561,7 @@ public class GUIController : MonoBehaviour
             helpPanel.SetActive(!helpPanel.activeSelf);
             settingsPanel.SetActive(false);
             chatPanel.SetActive(false);
-            if (GameData.IsAIGame)
-            {
-                //TODO:
-                //Get rid of the chat help panel and move up the Help help Panel
-                chatHelpPanel.SetActive(false);
-            }
+           
         }
     }
 
@@ -666,11 +669,13 @@ public class GUIController : MonoBehaviour
         if (GameData.AdventureProgress == 1)
         {
             GameData.AdventureProgress++;
+            GameData.AIDifficulty = "intermediate";
             levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
         }
         else if (GameData.AdventureProgress == 2)
         {
             GameData.AdventureProgress++;
+            GameData.AIDifficulty = "hard";
             levelLoader.GetComponent<LevelLoader>().LoadLevel("TempleScene");
         }
     }

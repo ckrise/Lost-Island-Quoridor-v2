@@ -34,6 +34,10 @@ public class GameController : MonoBehaviour
             {
                 AIController.SetAIEasy();
             }
+            else if(GameData.AIDifficulty == "intermediate")
+            {
+                AIController.SetAIIntermediate();
+            }
             else if (GameData.AIDifficulty == "hard")
             {
                 AIController.SetAIHard();
