@@ -170,7 +170,7 @@ public class MenuController : MonoBehaviour
                 levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
                 break;
             case 2:
-                GameData.AIDifficulty = "easy";
+                GameData.AIDifficulty = "intermediate";
                 levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
                 break;
             case 3:
