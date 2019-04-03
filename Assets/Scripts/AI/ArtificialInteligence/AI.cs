@@ -7,16 +7,20 @@ namespace ArtificialInteligence
     public class AI
     {
         private AIBoard CurrentBoard { get; set; }
+        private float numTurnsTaken;
 
         public AI()
         {
             CurrentBoard = new AIBoard();
+            numTurnsTaken = 0;
         }
 
         //Does a game tree search 1 layer deep.
         public string GetEasyMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { .1f, 1f, .05f, 0f };
+            numTurnsTaken = numTurnsTaken % 3;
+            TreeNode.weights = new List<float> { numTurnsTaken, 1f, .05f, 0f };
+
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
@@ -45,11 +49,49 @@ namespace ArtificialInteligence
 
             CurrentBoard.MakeMove(moveSelected);
 
+            numTurnsTaken++;
             return moveSelected;
         }
-        
+
+        //Does a game tree search 1 layer deep.
+        public string GetEasyMove2(string playerMove)
+        {
+            TreeNode.weights = new List<float> { .1f, 1f, .05f, 0f };
+            HandlePlayerMove(playerMove);
+
+            TreeNode rootNode = new TreeNode(CurrentBoard);
+
+            Dictionary<string, float> depthOneValues = IterateStart(rootNode, 1);
+            Dictionary<string, float> depthTwoValues = IterateStart(rootNode, 2);
+
+            string moveSelected = "error";
+            float max = float.NegativeInfinity;
+            foreach (KeyValuePair<string, float> move in depthOneValues)
+            {
+                float moveValue;
+                if (depthTwoValues[move.Key] > 1000 || depthTwoValues[move.Key] < -1000)
+                {
+                    moveValue = depthTwoValues[move.Key];
+                }
+                else
+                {
+                    moveValue = move.Value;
+                }
+
+                if (max < moveValue)
+                {
+                    max = moveValue;
+                    moveSelected = move.Key;
+                }
+            }
+
+            CurrentBoard.MakeMove(moveSelected);
+
+            return moveSelected;
+        }
+
         public string GetIntermediateMove(string playerMove) {
-            TreeNode.weights = new List<float> { 1f, 1f, .25f, 0f };
+            TreeNode.weights = new List<float> { 1f, 1f, 0f, 0f };
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
