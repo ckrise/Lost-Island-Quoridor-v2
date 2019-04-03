@@ -83,14 +83,18 @@ public class GUIController : MonoBehaviour
             //Vector3 v = helpHelpPanel.transform.position;
             //v.y += 50;
             //helpHelpPanel.transform.position = v;
-            chatHelpPanel.SetActive(false);
-            
+            chatHelpPanel.SetActive(false);            
         }
 
         if (GameData.InAdventureMode)
         {
             //display panels
             storyBefore.SetActive(true);
+            //Start Beach scene camera on the board
+            if (GameData.AdventureProgress == 1)
+            {
+                CameraBehavior.reference.Idle();
+            }
         }
         else
         {
@@ -476,6 +480,7 @@ public class GUIController : MonoBehaviour
             musicReference.playWin();
             if (GameData.InAdventureMode)
             {
+                GameData.AdventureProgress++;
                 adventureWinPanel.SetActive(true);
             }
             else
@@ -668,13 +673,13 @@ public class GUIController : MonoBehaviour
     {
         if (GameData.AdventureProgress == 1)
         {
-            GameData.AdventureProgress++;
+            
             GameData.AIDifficulty = "intermediate";
             levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
         }
         else if (GameData.AdventureProgress == 2)
         {
-            GameData.AdventureProgress++;
+            
             GameData.AIDifficulty = "hard";
             levelLoader.GetComponent<LevelLoader>().LoadLevel("TempleScene");
         }
@@ -696,10 +701,6 @@ public class GUIController : MonoBehaviour
         if (GameData.AdventureProgress != 1)
         {
             CameraBehavior.reference.AnimateCamera();
-        }
-        else
-        {
-            CameraBehavior.reference.Idle();
         }
     }
     public void ClickDismissStoryAfter()

@@ -12,7 +12,7 @@ public class TutorialController : MonoBehaviour
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, chatPanel,
         settingsPanel, helpPanel, playerTurnPanel, opponentTurnPanel,
-        clickReceiverPanel, adventureWinPanel, storyOpening, storyTutorial;
+        clickReceiverPanel, adventureWinPanel, storyOpening, storyTutorial, helpHelpPanel2;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
@@ -92,10 +92,8 @@ public class TutorialController : MonoBehaviour
             //display panels
             storyOpening.SetActive(true);
             chatButton.gameObject.SetActive(false);
-            //Get rid of the chat help panel and move up the Help help Panel
-            //Vector3 v = helpHelpPanel.transform.position;
-            //v.y += 50;
-            //helpHelpPanel.transform.position = v;
+            helpHelpPanel.SetActive(false);
+            helpHelpPanel2.SetActive(true);
             chatHelpPanel.SetActive(false);  
         }
         else
@@ -755,6 +753,7 @@ public class TutorialController : MonoBehaviour
         {
             if(GameData.InAdventureMode)
             {
+                GameData.AdventureProgress++;
                 adventureWinPanel.SetActive(true);
             }
             else
@@ -775,7 +774,6 @@ public class TutorialController : MonoBehaviour
     public void ContinueStory()
     {
         GameData.IsTutorial = false;
-        GameData.AdventureProgress++;
         GameData.AIDifficulty = "easy";
         levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
     }
