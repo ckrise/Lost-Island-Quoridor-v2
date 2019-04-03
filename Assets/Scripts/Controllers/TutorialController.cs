@@ -774,7 +774,9 @@ public class TutorialController : MonoBehaviour
     public void ContinueStory()
     {
         GameData.IsTutorial = false;
+        GameData.AdventureProgress++;
         GameData.AIDifficulty = "easy";
+        Debug.Log("Adventure Progress: " + GameData.AdventureProgress);
         levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
     }
     public void LeaveStory()
