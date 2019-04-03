@@ -12262,8 +12262,13 @@ PrefabInstance:
     - target: {fileID: 6303282290708214809, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_Text
-      value: "\t\u201COh no! Here comes one of the king's minions now! Maybe you will
-        have better luck than us in facing him at quoridor!\u201D"
+      value: "\t\"Oh no! Here comes one of the king's minions now! It's Berry the
+        flail user!\"\n\t\"Who's this Corey!? A human you enlisted to be defeated
+        at my hands? You know you and your forest friends will never escape the tyranny
+        of the king!\" Berry swings his flail in circles, anticipating the game to
+        come.\n\t\"You will see Berry, my friend here is an expert.\" Corey turns
+        toward you, \"Good luck, you will fare better than us at quoridor, I'm sure
+        of it.\"\n\t"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -27461,8 +27466,12 @@ PrefabInstance:
     - target: {fileID: 6303282290708214809, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_Text
-      value: "\t\u201CWow you are pretty good at this! We might have a chance to defeat
-        the king and put a stop to the curse once and for all!\u201D"
+      value: "\tBerry falls down in defeat after losing, he is bound by the curse
+        which confines him for losing a game. \"You may have beaten me but you won't
+        survive against what awaits you.\" Berry glares at you from his confines.
+        Corey pays him no heed and begins speaking to you.\n\t\u201CWow you are pretty
+        good at this! We might have a chance to defeat the king and put a stop to
+        the curse once and for all!\u201D"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}

@@ -863,8 +863,11 @@ PrefabInstance:
     - target: {fileID: 6303282290708214809, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_Text
-      value: "\t\u201CIncredible, you did it! Nothing will stop us on the way to the
-        temple now. It is not far from here.\u201D\r"
+      value: "\tVlad falls down in defeat, the fire in his eyes fading. \"I may have
+        failed but the king has never lost a game before. Your defeat will be swift.\"\n\t\"Incredible,
+        you did it! Nothing will stop us on the way to the temple now. It is not far
+        from here.\" Corey puts his stubby feet in motion, charging foward to the
+        temple without hesitation."
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -31443,9 +31446,10 @@ PrefabInstance:
         and try to pull you into the vast jungle. Staying focused on Corey, you trudge
         through the forest with determination to assist the animals. After what feels
         like an eternity, you come into a clearing surrounded by trees. Before you
-        rises another skeleton to block your path.\r\n\t\u201COh no! Another of the
-        king\u2019s minions! The mage will be more of a challenge than the foot soldier
-        you faced before. I believe in you!\u201D\r\n"
+        rises another skeleton to block your path.\r\n\t\"Oh no! Another of the king\u2019s
+        minions! Vlad the mage will be harder to beat than Berry the flail user! I
+        believe in you!\"\n\tVlad's blue eyes fire up as he stares you down. \"I heard
+        what happened to Berry but I won't be such a pushover. Prepare yourself.\"\n"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
