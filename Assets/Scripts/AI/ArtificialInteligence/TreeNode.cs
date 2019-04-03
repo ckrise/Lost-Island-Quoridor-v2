@@ -148,45 +148,6 @@ namespace ArtificialInteligence
                 int P1NumWalls = Board.GetPlayerOneNumWalls();
                 int P2NumWalls = Board.GetPlayerTwoNumWalls();
 
-                if (P2NumWalls == 10) {
-                    P2NumWalls *= 1;
-                }
-                else if (P2NumWalls == 9) {
-                    P2NumWalls *= 1;
-                }
-                else if (P2NumWalls == 8)
-                {
-                    P2NumWalls *= 1;
-                }
-                else if (P2NumWalls == 7)
-                {
-                    P2NumWalls *= 1;
-                }
-                else if (P2NumWalls == 6)
-                {
-                    P2NumWalls *= 1;
-                }
-                else if (P2NumWalls == 5)
-                {
-                    P2NumWalls *= 2;
-                }
-                else if (P2NumWalls == 4)
-                {
-                    P2NumWalls *= 2;
-                }
-                else if (P2NumWalls == 3)
-                {
-                    P2NumWalls *= 4;
-                }
-                else if (P2NumWalls == 2)
-                {
-                    P2NumWalls *= 4;
-                }
-                else if (P2NumWalls == 1)
-                {
-                    P2NumWalls *= 8;
-                }
-
                 value = weights[0] * P1SP - weights[1] * P2SP + weights[2] * P2NumWalls - weights[3] * P1NumWalls;
             }
         }
