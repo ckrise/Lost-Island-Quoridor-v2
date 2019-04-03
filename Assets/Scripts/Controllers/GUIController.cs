@@ -671,13 +671,13 @@ public class GUIController : MonoBehaviour
     }
     public void AdvanceLevel()
     {
-        if (GameData.AdventureProgress == 1)
+        if (GameData.AdventureProgress == 2)
         {
             
             GameData.AIDifficulty = "intermediate";
             levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
         }
-        else if (GameData.AdventureProgress == 2)
+        else if (GameData.AdventureProgress == 3)
         {
             
             GameData.AIDifficulty = "hard";
