@@ -16,7 +16,7 @@ namespace ArtificialInteligence
         //Does a game tree search 1 layer deep.
         public string GetEasyMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { 1f, 1f, .25f, 0f };
+            TreeNode.weights = new List<float> { .1f, 1f, .05f, 0f };
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
