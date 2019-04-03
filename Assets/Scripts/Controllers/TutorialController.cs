@@ -228,6 +228,7 @@ public class TutorialController : MonoBehaviour
         Debug.Log("skipped");
         if (GameData.InAdventureMode)
         {
+            GameData.AdventureProgress++;
             ContinueStory();
         }
         else
@@ -774,7 +775,6 @@ public class TutorialController : MonoBehaviour
     public void ContinueStory()
     {
         GameData.IsTutorial = false;
-        GameData.AdventureProgress++;
         GameData.AIDifficulty = "easy";
         Debug.Log("Adventure Progress: " + GameData.AdventureProgress);
         levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
