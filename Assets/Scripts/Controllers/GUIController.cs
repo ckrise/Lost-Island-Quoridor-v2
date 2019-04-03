@@ -480,6 +480,7 @@ public class GUIController : MonoBehaviour
             musicReference.playWin();
             if (GameData.InAdventureMode)
             {
+                GameData.AdventureProgress++;
                 adventureWinPanel.SetActive(true);
             }
             else
@@ -672,13 +673,13 @@ public class GUIController : MonoBehaviour
     {
         if (GameData.AdventureProgress == 1)
         {
-            GameData.AdventureProgress++;
+            
             GameData.AIDifficulty = "intermediate";
             levelLoader.GetComponent<LevelLoader>().LoadLevel("JungleScene");
         }
         else if (GameData.AdventureProgress == 2)
         {
-            GameData.AdventureProgress++;
+            
             GameData.AIDifficulty = "hard";
             levelLoader.GetComponent<LevelLoader>().LoadLevel("TempleScene");
         }
