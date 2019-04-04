@@ -269,7 +269,7 @@ public class GUIController : MonoBehaviour
             EndTurn(playerMove);
             if (!GameData.IsAIGame)
             {
-                GameData.NetworkController.resetTimer();
+               GameData.NetworkController.resetTimer();
             }
         }
         else

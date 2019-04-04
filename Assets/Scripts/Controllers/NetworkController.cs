@@ -21,7 +21,7 @@ public class NetworkController : MonoBehaviour
     private List<string> roomList = new List<string>();
     public PhotonView photonView;
     private float moveTime = 30.0f;
-    private float timer = 0.0f;
+    private static float timer = 0.0f;
     private static bool isNetworkingGame = false;
 
     #endregion
@@ -332,6 +332,11 @@ public class NetworkController : MonoBehaviour
       
     }
 
+    public void onSendForfeitMessage()
+    {
+        photonView.RPC("forfeitMessage", PhotonTargets.Others);
+    }
+
     //this function is for people joining the game
     //It sets stuff up for sending messages and tells the 
     //"host" to start the game
@@ -369,6 +374,14 @@ public class NetworkController : MonoBehaviour
         gameController.RecieveMoveFromNetwork(moveToSend);
         Debug.Log(move);
         
+    }
+
+ 
+    [PunRPC]
+    public void forfeitMessage()
+    {
+        //TODO gui part
+        gameOver();
     }
 
     //"host" gets startgame message
@@ -409,8 +422,8 @@ public class NetworkController : MonoBehaviour
         {
             if (!guiController.playerTurn)
             {
-                Debug.Log("game started update timer: ");
                 timer += Time.deltaTime;
+                Debug.Log(timer);
                 if (timer >= moveTime)
                 {
                     DisplayMessage();
@@ -430,13 +443,12 @@ public class NetworkController : MonoBehaviour
     //yup
     public void resetTimer()
     {
-        timer = 0.0f;
+        timer -= timer;
     }
 
     //decisions, decisions
     private void DisplayMessage()
     {
-        Debug.Log("move time up");
         guiController.displayMoveTimerPanel();
     }
     #endregion
