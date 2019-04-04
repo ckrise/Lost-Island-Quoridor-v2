@@ -10109,6 +10109,7 @@ MonoBehaviour:
   settingsPanel: {fileID: 1124664839}
   helpPanel: {fileID: 1511047626}
   opponentDisconnectedPanel: {fileID: 1948775848}
+  opponentFofeitedPanel: {fileID: 0}
   disconnectedFromNetworkPanel: {fileID: 1827243289}
   playerTurnPanel: {fileID: 71615856}
   opponentTurnPanel: {fileID: 985612183}
@@ -28181,6 +28182,10 @@ PrefabInstance:
       propertyPath: pawnMovementSound
       value: 
       objectReference: {fileID: 698811280}
+    - target: {fileID: 831551145, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
 --- !u!1 &1849270195 stripped

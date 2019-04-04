@@ -285,6 +285,7 @@ public class GUIController : MonoBehaviour
         opponentTurnPanel.SetActive(true);
         DestroyGhostMoves();
         DeactivateHoverPads();
+        playerPawn.GetComponent<MeshCollider>().enabled = true;
         playerTurn = false;
         pawnClicked = false;
         Debug.Log("Player Move: " + move);
@@ -447,6 +448,7 @@ public class GUIController : MonoBehaviour
     {
         if (playerTurn && animationFinished)
         {
+            playerPawn.GetComponent<MeshCollider>().enabled = pawnClicked;
             pawnClicked = !pawnClicked;
             foreach (var space in ghostPlayerMoves)
             {

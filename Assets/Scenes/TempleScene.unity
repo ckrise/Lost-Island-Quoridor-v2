@@ -2708,8 +2708,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
-  m_Intensity: 1.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 2.133
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -18913,6 +18913,10 @@ PrefabInstance:
       propertyPath: pawnMovementSound
       value: 
       objectReference: {fileID: 1916516254}
+    - target: {fileID: 831551145, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
 --- !u!82 &624083632 stripped

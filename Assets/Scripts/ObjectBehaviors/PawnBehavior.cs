@@ -16,4 +16,15 @@ public class PawnBehavior : MonoBehaviour
         c.a = 1.0f;
         GetComponent<Renderer>().material.color = c;
     }
+    private void OnMouseDown()
+    {
+        if (GameData.IsTutorial)
+        {
+            TutorialController.Instance.ShowGhostMoves();
+        }
+        else
+        {
+            GUIController.Instance.ShowGhostMoves();
+        }
+    }
 }
