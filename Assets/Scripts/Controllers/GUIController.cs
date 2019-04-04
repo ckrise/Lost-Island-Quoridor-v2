@@ -700,6 +700,7 @@ public class GUIController : MonoBehaviour
     public void EndStory()
     {
         GameData.AdventureProgress = 0;
+        GameData.InAdventureMode = false;
         levelLoader.GetComponent<LevelLoader>().LoadLevel("MainMenu");
     }
     public void LeaveStory()
