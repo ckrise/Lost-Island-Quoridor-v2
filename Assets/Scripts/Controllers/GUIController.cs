@@ -686,8 +686,8 @@ public class GUIController : MonoBehaviour
     }
     public void EndStory()
     {
-        //TODO play the last cutscene
-        //Set everything back to it's original state.
+        GameData.AdventureProgress = 0;
+        levelLoader.GetComponent<LevelLoader>().LoadLevel("MainMenu");
     }
     public void LeaveStory()
     {

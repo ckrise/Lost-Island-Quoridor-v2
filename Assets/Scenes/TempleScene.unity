@@ -36054,7 +36054,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 690794490}
-  m_PlaneDistance: 10
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -58361,7 +58361,7 @@ PrefabInstance:
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ClickDismissStoryAfter
+      value: EndStory
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -69821,13 +69821,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayOneShot
-        m_Mode: 2
+      - m_Target: {fileID: 695291495}
+        m_MethodName: ContinueStory
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: b36805cc88c1d1e4fbad3b7c62d886da,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
