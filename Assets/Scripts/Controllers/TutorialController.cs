@@ -872,7 +872,17 @@ public class TutorialController : MonoBehaviour
         }
     }
 
-
+    public void ToggleFullscreen(Toggle isFullscreen)
+    {
+        var rezs = Screen.resolutions;
+        foreach (var rez in rezs)
+        {
+            Debug.Log(rez);
+        }
+        int width = rezs[rezs.Length - 1].width;
+        int height = rezs[rezs.Length - 1].height;
+        Screen.SetResolution(width, height, isFullscreen.isOn);
+    }
 
     #endregion
 

@@ -596,8 +596,7 @@ public class GUIController : MonoBehaviour
     }
     #endregion
     #region settings
-
-
+    
     public void UpdatePlayerMusicVolume(float vol)
     {
         PlayerData.MusicVolume = vol;
@@ -620,8 +619,18 @@ public class GUIController : MonoBehaviour
             wall.GetComponent<AudioSource>().volume = vol;
         }
     }
-
-#endregion
+    public void ToggleFullscreen(Toggle isFullscreen)
+    {
+        var rezs = Screen.resolutions;
+        foreach (var rez in rezs)
+        {
+            Debug.Log(rez);
+        }
+        int width = rezs[rezs.Length - 1].width;
+        int height = rezs[rezs.Length - 1].height;
+        Screen.SetResolution(width, height, isFullscreen.isOn);
+    }
+    #endregion
 
 
     #region chat
