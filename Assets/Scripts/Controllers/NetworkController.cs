@@ -214,7 +214,7 @@ public class NetworkController : MonoBehaviour
        PhotonNetwork.room.IsVisible = false;
        PhotonNetwork.room.IsOpen = false;
        PhotonNetwork.LeaveRoom();
-       Debug.Log("Left Room");
+       //Debug.Log("Left Room");
         
     }
 
@@ -245,7 +245,7 @@ public class NetworkController : MonoBehaviour
         {
             guiController.openLostConnectionPanel();
         }
-        Debug.Log("Disconnected from photon");
+       // Debug.Log("Disconnected from photon");
     }
 
     //Dido
@@ -274,7 +274,7 @@ public class NetworkController : MonoBehaviour
     //Dido
     private void OnPhotonPlayerConnected()
     {
-        Debug.Log("player connected");
+       // Debug.Log("player connected");
     }
 
     //This does some very important things for the online games to work
@@ -303,7 +303,7 @@ public class NetworkController : MonoBehaviour
     //Dido
     public void OnPhotonPlayerDisconnected()
     {
-        Debug.Log("Player disconnected!");
+        //Debug.Log("Player disconnected!");
         if(PhotonNetwork.room.PlayerCount == 1)
         {
             guiController.OpponentLeft();           
@@ -327,7 +327,7 @@ public class NetworkController : MonoBehaviour
     //send chat message to player
     public void onMessageToSend(string message)
     {
-        Debug.Log(message);
+        //Debug.Log(message);
         photonView.RPC("chatMessage", PhotonTargets.Others, message);
       
     }
@@ -372,7 +372,7 @@ public class NetworkController : MonoBehaviour
         string moveToSend;
         moveToSend = changeOrientation(newMove);
         gameController.RecieveMoveFromNetwork(moveToSend);
-        Debug.Log(move);
+        //Debug.Log(move);
         
     }
 
@@ -389,7 +389,7 @@ public class NetworkController : MonoBehaviour
     public void startGame()
     {
         networkGame();
-        Debug.Log("Received start game message");
+        //Debug.Log("Received start game message");
         PhotonNetwork.LoadLevel(GameData.Scene);
     }
 
@@ -423,7 +423,7 @@ public class NetworkController : MonoBehaviour
             if (!guiController.playerTurn)
             {
                 timer += Time.deltaTime;
-                Debug.Log(timer);
+                //Debug.Log(timer);
                 if (timer >= moveTime)
                 {
                     DisplayMessage();
