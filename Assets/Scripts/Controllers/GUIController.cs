@@ -13,7 +13,7 @@ public class GUIController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
-        settingsPanel, helpPanel, opponentDisconnectedPanel, 
+        settingsPanel, helpPanel, opponentDisconnectedPanel, opponentFofeitedPanel,
         disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
         adventureWinPanel, adventureLosePanel, moveTimerPanel,
         storyBefore, storyAfter, chatHelpPanel, helpHelpPanel;
@@ -506,6 +506,7 @@ public class GUIController : MonoBehaviour
         if (!GameData.IsAIGame)
         {
             Debug.Log("NetworkGame");
+            GameData.NetworkController.onSendForfeitMessage();
             GameData.NetworkController.gameOver();
         }
         else if(GameData.InAdventureMode == true)
@@ -514,7 +515,7 @@ public class GUIController : MonoBehaviour
         }
         //SceneManager.LoadScene("MainMenu");
     }
-    public void OpponentLeft()
+    public void OpponentLeft(bool opponentForfeit)
     {
         //TODO:
         //Lock the MenuButtons as well
@@ -528,14 +529,26 @@ public class GUIController : MonoBehaviour
             {
                 moveTimerPanel.SetActive(false);
             }
-            opponentDisconnectedPanel.SetActive(true);
+            if (!opponentForfeit)
+            {
+                opponentDisconnectedPanel.SetActive(true);
+            }
+            else
+            {
+                opponentFofeitedPanel.SetActive(true);
+            }
         }
         
     }
 
     public void openLostConnectionPanel()
     {
+        if (moveTimerPanel.activeSelf)
+        {
+            moveTimerPanel.SetActive(false);
+        }
         disconnectedFromNetworkPanel.SetActive(true);
+        
     }
 
     public void closeLostConnectionPanel()
