@@ -13,7 +13,7 @@ public class GUIController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
-        settingsPanel, helpPanel, opponentDisconnectedPanel, 
+        settingsPanel, helpPanel, opponentDisconnectedPanel, opponentFofeitedPanel,
         disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
         adventureWinPanel, adventureLosePanel, moveTimerPanel,
         storyBefore, storyAfter, chatHelpPanel, helpHelpPanel;
@@ -285,6 +285,7 @@ public class GUIController : MonoBehaviour
         opponentTurnPanel.SetActive(true);
         DestroyGhostMoves();
         DeactivateHoverPads();
+        playerPawn.GetComponent<MeshCollider>().enabled = true;
         playerTurn = false;
         pawnClicked = false;
         Debug.Log("Player Move: " + move);
@@ -447,6 +448,7 @@ public class GUIController : MonoBehaviour
     {
         if (playerTurn && animationFinished)
         {
+            playerPawn.GetComponent<MeshCollider>().enabled = pawnClicked;
             pawnClicked = !pawnClicked;
             foreach (var space in ghostPlayerMoves)
             {
@@ -506,6 +508,7 @@ public class GUIController : MonoBehaviour
         if (!GameData.IsAIGame)
         {
             Debug.Log("NetworkGame");
+            GameData.NetworkController.onSendForfeitMessage();
             GameData.NetworkController.gameOver();
         }
         else if(GameData.InAdventureMode == true)
@@ -514,7 +517,7 @@ public class GUIController : MonoBehaviour
         }
         //SceneManager.LoadScene("MainMenu");
     }
-    public void OpponentLeft()
+    public void OpponentLeft(bool opponentForfeit)
     {
         //TODO:
         //Lock the MenuButtons as well
@@ -528,14 +531,26 @@ public class GUIController : MonoBehaviour
             {
                 moveTimerPanel.SetActive(false);
             }
-            opponentDisconnectedPanel.SetActive(true);
+            if (!opponentForfeit)
+            {
+                opponentDisconnectedPanel.SetActive(true);
+            }
+            else
+            {
+                opponentFofeitedPanel.SetActive(true);
+            }
         }
         
     }
 
     public void openLostConnectionPanel()
     {
+        if (moveTimerPanel.activeSelf)
+        {
+            moveTimerPanel.SetActive(false);
+        }
         disconnectedFromNetworkPanel.SetActive(true);
+        
     }
 
     public void closeLostConnectionPanel()
@@ -581,8 +596,7 @@ public class GUIController : MonoBehaviour
     }
     #endregion
     #region settings
-
-
+    
     public void UpdatePlayerMusicVolume(float vol)
     {
         PlayerData.MusicVolume = vol;
@@ -605,8 +619,18 @@ public class GUIController : MonoBehaviour
             wall.GetComponent<AudioSource>().volume = vol;
         }
     }
-
-#endregion
+    public void ToggleFullscreen(Toggle isFullscreen)
+    {
+        var rezs = Screen.resolutions;
+        foreach (var rez in rezs)
+        {
+            Debug.Log(rez);
+        }
+        int width = rezs[rezs.Length - 1].width;
+        int height = rezs[rezs.Length - 1].height;
+        Screen.SetResolution(width, height, isFullscreen.isOn);
+    }
+    #endregion
 
 
     #region chat
@@ -687,6 +711,7 @@ public class GUIController : MonoBehaviour
     public void EndStory()
     {
         GameData.AdventureProgress = 0;
+        GameData.InAdventureMode = false;
         levelLoader.GetComponent<LevelLoader>().LoadLevel("MainMenu");
     }
     public void LeaveStory()

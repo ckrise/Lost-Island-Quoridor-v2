@@ -10,9 +10,9 @@ public class TutorialController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public static TutorialController Instance;
     public GameObject playerPawn, opponentPawn, ghostSpace,
-        ghostWall, wall, hoverpadMaster, winPanel, chatPanel,
+        ghostWall, wall, hoverpadMaster, winPanel,
         settingsPanel, helpPanel, playerTurnPanel, opponentTurnPanel,
-        clickReceiverPanel, adventureWinPanel, storyOpening, storyTutorial, helpHelpPanel2;
+        clickReceiverPanel, adventureWinPanel, storyOpening, storyTutorial;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
@@ -25,11 +25,8 @@ public class TutorialController : MonoBehaviour
     public bool gameOver = false;
     //tutorial panels
     public GameObject tutorialPanel;
-    public GameObject introPanel, movingPawn1Panel, movingPawn2panel, wallPlacement1Panel,
-                     wallPlacement2Panel, wallplacement3Panel, transitionPanel, turningTablesPanel,
-                     jumping1Panel, jumping2Panel, invalidWallPlacementPanel, endGameplayPanel,
-                     settingsTutorialPanel, helpTutorialPanel, chat1TutorialPanel, chat2TutorialPanel,
-                     endTurorialPanel, chatHelpPanel, helpHelpPanel;
+    public GameObject gameObjectivePanel, movingPawnPanel,  wallPlacementPanel, miscRulesPanel,
+        chatHelpPanel, helpHelpPanel, skipButton;
     
     #endregion
 
@@ -90,11 +87,7 @@ public class TutorialController : MonoBehaviour
         if (GameData.InAdventureMode)
         {
             //display panels
-            storyOpening.SetActive(true);
-            chatButton.gameObject.SetActive(false);
-            helpHelpPanel.SetActive(false);
-            helpHelpPanel2.SetActive(true);
-            chatHelpPanel.SetActive(false);  
+            storyOpening.SetActive(true);  
         }
         else
         {
@@ -109,23 +102,11 @@ public class TutorialController : MonoBehaviour
         sfxVolumeSlider.value = PlayerData.SfxVolume;
 
         //create tutorial panel queue
-        tutorialPanelQueue.Add(introPanel);                 //0
-        tutorialPanelQueue.Add(movingPawn1Panel);           //1
-        tutorialPanelQueue.Add(movingPawn2panel);           //2
-        tutorialPanelQueue.Add(wallPlacement1Panel);        //3
-        tutorialPanelQueue.Add(wallPlacement2Panel);        //4
-        tutorialPanelQueue.Add(wallplacement3Panel);        //5
-        tutorialPanelQueue.Add(transitionPanel);            //6
-        tutorialPanelQueue.Add(turningTablesPanel);         //7
-        tutorialPanelQueue.Add(jumping1Panel);              //8
-        tutorialPanelQueue.Add(jumping2Panel);              //9
-        tutorialPanelQueue.Add(invalidWallPlacementPanel);  //10
-        tutorialPanelQueue.Add(endGameplayPanel);           //11
-        tutorialPanelQueue.Add(settingsTutorialPanel);      //12
-        tutorialPanelQueue.Add(helpTutorialPanel);          //13
-        tutorialPanelQueue.Add(chat1TutorialPanel);         //14
-        tutorialPanelQueue.Add(chat2TutorialPanel);         //15
-        tutorialPanelQueue.Add(endTurorialPanel);           //16
+        tutorialPanelQueue.Add(gameObjectivePanel);
+        tutorialPanelQueue.Add(movingPawnPanel);
+        tutorialPanelQueue.Add(wallPlacementPanel);
+        tutorialPanelQueue.Add(miscRulesPanel);  
+
 
     }
     #endregion
@@ -256,119 +237,27 @@ public class TutorialController : MonoBehaviour
                 StartPlayerTurn("", new List<string>(), allowedPawnMoves);
                 break;
             case 2:
-                allowPawnClick = false;
-                advancePanels();
                 Debug.Log(tutorialProgress);
-                //happens when player clicks thier pawn
+                advancePanels();
+                StartPlayerTurn("", returnAllWallMoves(), new List<string>());
                 break;
             case 3:
-                advancePanels();
-                //happens when player moves their pawn
                 Debug.Log(tutorialProgress);
-                //the enemey makes a move during this index
+                advancePanels();
                 activateClickToContinue();
                 break;
             case 4:
-                advancePanels();
-                //happens aftert the enemy has finished making a move and 
-                //the player clicked to continue
-                Debug.Log(tutorialProgress);
-                //start the player's turn with only walls as a placement possibility
-                StartPlayerTurn("", returnAllWallMoves(), new List<string>());                
-                break;
-            case 5:
-                advancePanels();
-                Debug.Log(tutorialProgress);
-                activateClickToContinue();
-                break;
-            case 6:
-                advancePanels();
-                Debug.Log(tutorialProgress);
-                activateClickToContinue();
-                break;
-            case 7:
-                advancePanels();
-                CleanBoard();
-                //this should be where the board resets
-                List<string> playerWallsToPlace = new List<string>();
-                playerWallsToPlace.Add("c7v");
-                playerWallsToPlace.Add("d8h");
-                List<string> opponentWallsToPlace = new List<string>();
-                opponentWallsToPlace.Add("e6h");
-                opponentWallsToPlace.Add("f7v");
-                SetBoard("e7", "d7", playerWallsToPlace, opponentWallsToPlace);
-                //activate the player's turn but only allow one wall to be placed
-                List<string> placeableWalls = new List<string>();
-                placeableWalls.Add("c6h");                
-                StartPlayerTurn("", placeableWalls, new List<string>());
-                Debug.Log(tutorialProgress);              
-                break;
-            case 8:
-                allowPawnClick = true;
-                advancePanels();
-                //opponent jumps the player
-                Debug.Log(tutorialProgress);
-                break;
-            case 9:
-                allowPawnClick = false;
-                advancePanels();
-                Debug.Log(tutorialProgress);
-                break;
-            case 10:
-                advancePanels();
-                Debug.Log(tutorialProgress);
-                activateClickToContinue();
-                break;
-            case 11:
-                advancePanels();
-                Debug.Log(tutorialProgress);
-                break;
-            case 12:
-                advancePanels();
-                Debug.Log(tutorialProgress);
-                break;
-            case 13:
-                advancePanels();
-                Debug.Log(tutorialProgress);
-                activateClickToContinue();
-                break;
-            case 14:
-                helpPanel.SetActive(false);
-                if (GameData.InAdventureMode)
+                tutorialPanel.SetActive(false);
+                skipButton.SetActive(false);
+                if(GameData.InAdventureMode)
                 {
-                    Debug.Log("InAdventureMode triggered");
-                    tutorialPanelQueue[13].SetActive(false);
-                    //tutorialPanelQueue[16].SetActive(true);
-                    tutorialProgress = 15;
-                    ProgressController();
+                    adventureWinPanel.SetActive(true);
                 }
                 else
                 {
-                    advancePanels();
-                    Debug.Log(tutorialProgress);
+                    winPanel.SetActive(true);
                 }
-                
-                break;
-            case 15:
-                advancePanels();
-                Debug.Log(tutorialProgress);
-                activateClickToContinue();
-                break;
-            case 16:
-                advancePanels();
-                chatPanel.SetActive(false);
-                Debug.Log(tutorialProgress);
-                List<string> winningMove = new List<string>();
-                winningMove.Add("f9");
-                allowPawnClick = true;
-                StartPlayerTurn("", new List<string>(), winningMove );
-                break;
-            case 17:
-                allowPawnClick = false;
-                Debug.Log(tutorialProgress);
-                tutorialPanel.SetActive(false);
-                //end the game
-                GameOver(true);
+                //end turorial panel pops up
                 break;
             default:
                 break;
@@ -474,12 +363,12 @@ public class TutorialController : MonoBehaviour
             wallsPlaced.Add(newWall);
             playerMove = move;
             
-            ProgressController();
+            
         }
     }
     public void MovePlayerPawn(GameObject ghost)
     {
-        ProgressController();
+        
         if (playerTurn)
         {
             playerTurn = false;
@@ -512,24 +401,25 @@ public class TutorialController : MonoBehaviour
         playerTurn = false;
         pawnClicked = false;
         //make the opponent move
-        if(tutorialProgress == 3)
+        if(tutorialProgress == 1)
         {
             MoveOpponentPawn("e8");
         }
-        else if(tutorialProgress == 8)
-        {
-            Debug.Log("Opponent Moves");
-            MoveOpponentPawn("f7");
-            List<string>allowedPawnMoves = new List<string>();
-            allowedPawnMoves.Add("f8");
-            Debug.Log("Starting player turn");
-            StartPlayerTurn("", new List<string>(), allowedPawnMoves);
-        }
-        else if(tutorialProgress == 10)
-        {
-            Debug.Log("Opponent Moves");
-            MoveOpponentPawn("e7");
-        }
+        ProgressController();
+        //else if(tutorialProgress == 8)
+        //{
+        //    Debug.Log("Opponent Moves");
+        //    MoveOpponentPawn("f7");
+        //    List<string>allowedPawnMoves = new List<string>();
+        //    allowedPawnMoves.Add("f8");
+        //    Debug.Log("Starting player turn");
+        //    StartPlayerTurn("", new List<string>(), allowedPawnMoves);
+        //}
+        //else if(tutorialProgress == 10)
+        //{
+        //    Debug.Log("Opponent Moves");
+        //    MoveOpponentPawn("e7");
+        //}
     }
     #endregion
 
@@ -734,10 +624,7 @@ public class TutorialController : MonoBehaviour
             {
                 playerPawn.GetComponent<PawnBehavior>().SetOpaque();
             }
-            if (tutorialProgress == 1 || tutorialProgress == 8)
-            {
-                ProgressController();
-            }
+            
         }
     }
     #endregion
@@ -776,6 +663,7 @@ public class TutorialController : MonoBehaviour
     {
         GameData.IsTutorial = false;
         GameData.AIDifficulty = "easy";
+        GameData.AdventureProgress++;
         Debug.Log("Adventure Progress: " + GameData.AdventureProgress);
         levelLoader.GetComponent<LevelLoader>().LoadLevel("BeachScene");
     }
@@ -800,17 +688,7 @@ public class TutorialController : MonoBehaviour
     #endregion
 
     #region menu
-    public void ShowChatMenu()
-    {
-        if (!gameOver)
-        {
-            chatInputField.Select();
-            chatInputField.ActivateInputField();
-            chatPanel.SetActive(!chatPanel.activeSelf);
-            helpPanel.SetActive(false);
-            settingsPanel.SetActive(false);
-        }
-    }
+ 
 
     public void ShowHelpMenu()
     {
@@ -818,7 +696,7 @@ public class TutorialController : MonoBehaviour
         {
             helpPanel.SetActive(!helpPanel.activeSelf);
             settingsPanel.SetActive(false);
-            chatPanel.SetActive(false);
+
             if(GameData.InAdventureMode)
             {
                 chatHelpPanel.SetActive(false);
@@ -834,20 +712,11 @@ public class TutorialController : MonoBehaviour
         {
             settingsPanel.SetActive(!settingsPanel.activeSelf);
             helpPanel.SetActive(false);
-            chatPanel.SetActive(false);
         }
     }
     #endregion
 
     #region settings
-    public void ShowSettings()
-    {
-        if(tutorialProgress == 11)
-        {
-            ProgressController();
-            settingsPanel.SetActive(true);
-        }
-    }
 
     public void UpdatePlayerMusicVolume(float vol)
     {
@@ -872,69 +741,19 @@ public class TutorialController : MonoBehaviour
         }
     }
 
-
+    public void ToggleFullscreen(Toggle isFullscreen)
+    {
+        var rezs = Screen.resolutions;
+        foreach (var rez in rezs)
+        {
+            Debug.Log(rez);
+        }
+        int width = rezs[rezs.Length - 1].width;
+        int height = rezs[rezs.Length - 1].height;
+        Screen.SetResolution(width, height, isFullscreen.isOn);
+    }
 
     #endregion
 
-
-    #region chat
-    public void ShowChat()
-    {
-        if(tutorialProgress == 14)
-        {
-            ProgressController();
-            chatPanel.SetActive(true);
-            
-        }
-    }
-
-    public void ReceiveMessage(string message)
-    {
-        //update message window
-        UpdateChat(message);
-        ShowChatMenu();
-    }
-
-    public void SendChat()
-    {
-        if (chatInputField.text != "")
-        {
-            string messageToSend = PlayerPrefs.GetString("PlayerName") + ": " + chatInputField.text;
-            string messageToDisplay = "You: " + chatInputField.text;
-            chatInputField.text = "";
-            UpdateChat(messageToDisplay);
-            GameData.NetworkController.onMessageToSend(messageToSend);
-        }
-    }
-
-    private void UpdateChat(string message)
-    {
-        Text newChat = Instantiate(messageText, chatScrollRect.content);
-        newChat.text = message;
-    }
-    #endregion
-
-    #region helpPanel
-    public void ShowHelp()
-    {
-        if(tutorialProgress == 12)
-        {
-
-            settingsPanel.SetActive(false);
-            ProgressController();
-            helpPanel.SetActive(true);
-
-        }
-    }
-    public void showRulesPanel()
-    {
-        gameplayPanel.SetActive(false);
-        rulesPanel.SetActive(true);
-    }
-    public void showGameplayPanel()
-    {
-        rulesPanel.SetActive(false);
-        gameplayPanel.SetActive(true);
-    }
-        #endregion
+ 
 }

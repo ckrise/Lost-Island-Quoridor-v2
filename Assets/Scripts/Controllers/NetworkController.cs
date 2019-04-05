@@ -18,11 +18,12 @@ public class NetworkController : MonoBehaviour
     public static MenuController menuController;
     public GameController gameController = null;
     public GUIController guiController = null;
-    private List<string> roomList = new List<string>();
     public PhotonView photonView;
+    private List<string> roomList = new List<string>();
     private float moveTime = 30.0f;
     private static float timer = 0.0f;
     private static bool isNetworkingGame = false;
+    private static bool opponentForfeit = false;
 
     #endregion
 
@@ -40,7 +41,6 @@ public class NetworkController : MonoBehaviour
     //this is only used for timer
     private void Update()
     {
-        //Debug.Log("1");
         timerCheck();
     }
 
@@ -169,9 +169,7 @@ public class NetworkController : MonoBehaviour
     public void onClickJoinRoom(string name)
     {
         Debug.Log(name);
-        PhotonNetwork.JoinRoom(name);
-        //PhotonNetwork.JoinRoom(roomName);
-        
+        PhotonNetwork.JoinRoom(name);    
     }
 
     //Both players will call OnJoinedRoom if they create/join room
@@ -213,9 +211,7 @@ public class NetworkController : MonoBehaviour
     {
        PhotonNetwork.room.IsVisible = false;
        PhotonNetwork.room.IsOpen = false;
-       PhotonNetwork.LeaveRoom();
-       Debug.Log("Left Room");
-        
+       PhotonNetwork.LeaveRoom();  
     }
 
     //This is either called in the lobby or in an actually room
@@ -245,7 +241,6 @@ public class NetworkController : MonoBehaviour
         {
             guiController.openLostConnectionPanel();
         }
-        Debug.Log("Disconnected from photon");
     }
 
     //Dido
@@ -274,7 +269,7 @@ public class NetworkController : MonoBehaviour
     //Dido
     private void OnPhotonPlayerConnected()
     {
-        Debug.Log("player connected");
+       // Debug.Log("player connected");
     }
 
     //This does some very important things for the online games to work
@@ -303,10 +298,9 @@ public class NetworkController : MonoBehaviour
     //Dido
     public void OnPhotonPlayerDisconnected()
     {
-        Debug.Log("Player disconnected!");
-        if(PhotonNetwork.room.PlayerCount == 1)
+        if(PhotonNetwork.room.PlayerCount == 1 && !opponentForfeit)
         {
-            guiController.OpponentLeft();           
+            guiController.OpponentLeft(opponentForfeit);           
         }
     }
 
@@ -327,7 +321,7 @@ public class NetworkController : MonoBehaviour
     //send chat message to player
     public void onMessageToSend(string message)
     {
-        Debug.Log(message);
+        //Debug.Log(message);
         photonView.RPC("chatMessage", PhotonTargets.Others, message);
       
     }
@@ -372,8 +366,7 @@ public class NetworkController : MonoBehaviour
         string moveToSend;
         moveToSend = changeOrientation(newMove);
         gameController.RecieveMoveFromNetwork(moveToSend);
-        Debug.Log(move);
-        
+        //Debug.Log(move);
     }
 
  
@@ -381,6 +374,7 @@ public class NetworkController : MonoBehaviour
     public void forfeitMessage()
     {
         //TODO gui part
+        opponentForfeit = true;
         gameOver();
     }
 
@@ -389,7 +383,7 @@ public class NetworkController : MonoBehaviour
     public void startGame()
     {
         networkGame();
-        Debug.Log("Received start game message");
+        //Debug.Log("Received start game message");
         PhotonNetwork.LoadLevel(GameData.Scene);
     }
 
@@ -423,7 +417,7 @@ public class NetworkController : MonoBehaviour
             if (!guiController.playerTurn)
             {
                 timer += Time.deltaTime;
-                Debug.Log(timer);
+                //Debug.Log(timer);
                 if (timer >= moveTime)
                 {
                     DisplayMessage();
@@ -450,6 +444,29 @@ public class NetworkController : MonoBehaviour
     private void DisplayMessage()
     {
         guiController.displayMoveTimerPanel();
+    }
+    #endregion
+
+    #region Reconnect
+    public void tryReconnect()
+    {
+        if(PhotonNetwork.ReconnectAndRejoin())
+        {
+            //Just close panel and continue
+            //maybe send rpc to opponent saying they are here
+        }
+        else
+        {
+            //Tell them not able to and leave
+            if(PhotonNetwork.connected)
+            {
+                PhotonNetwork.Disconnect();
+            }
+            else
+            {
+
+            }
+        }
     }
     #endregion
 }
