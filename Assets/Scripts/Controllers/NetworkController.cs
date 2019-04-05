@@ -342,7 +342,7 @@ public class NetworkController : MonoBehaviour
     {
         if(PhotonNetwork.room.PlayerCount == 1 && !opponentForfeit)
         {
-            guiController.OpponentLeft(opponentForfeit);           
+            guiController.OpponentLeft(opponentForfeit);
         }
     }
 
