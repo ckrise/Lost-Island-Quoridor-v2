@@ -237,6 +237,7 @@ public class TutorialController : MonoBehaviour
                 StartPlayerTurn("", new List<string>(), allowedPawnMoves);
                 break;
             case 2:
+                allowPawnClick = false;
                 Debug.Log(tutorialProgress);
                 advancePanels();
                 StartPlayerTurn("", returnAllWallMoves(), new List<string>());

@@ -355,7 +355,7 @@ public class MenuController : MonoBehaviour
         {
             GameObject newRoomListing = Instantiate(roomListingPrefab, roomScrollView.content);
             newRoomListing.name = room;
-            newRoomListing.GetComponentInChildren<Text>().text = room;
+            newRoomListing.GetComponentInChildren<Text>().text = room.Substring(0, room.Length - 4);
             newRoomListing.GetComponentInChildren<Button>().onClick.AddListener(delegate
             {
                 Debug.Log("In Delegate");

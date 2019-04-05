@@ -12437,7 +12437,7 @@ PrefabInstance:
         at my hands? You know you and your forest friends will never escape the tyranny
         of the king!\" Berry swings his flail in circles, anticipating the game to
         come.\n\t\"You will see Berry, my friend here is an expert.\" Corey turns
-        toward you, \"Good luck, you will fare better than us at quoridor, I'm sure
+        toward you, \"Good luck, you will fare better than us at Quoridor, I'm sure
         of it.\"\n\t"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
@@ -28901,18 +28901,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9da2b1bfd3f74348b62ce3a1e2b5b4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1854465216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1854465209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b380cd596887774eb7c23c0753d01aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1861262927
