@@ -16,7 +16,10 @@ public class PawnHighlight : MonoBehaviour
     {
         if (GameData.IsTutorial)
         {
-            TutorialController.Instance.ShowGhostMoves();
+            if (TutorialController.Instance.IsPlayerTurn())
+            {
+                TutorialController.Instance.ShowGhostMoves();
+            }
         }
         else
         {
