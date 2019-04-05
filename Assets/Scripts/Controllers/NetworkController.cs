@@ -24,6 +24,7 @@ public class NetworkController : MonoBehaviour
     private static float timer = 0.0f;
     private static bool isNetworkingGame = false;
     private static bool opponentForfeit = false;
+    private static string sceneToLoad;
 
     #endregion
 
@@ -31,7 +32,6 @@ public class NetworkController : MonoBehaviour
     //set photon to master client loading scene for both players
     private void Start()
     {
-        PhotonNetwork.automaticallySyncScene = true;
         networkController = this;
         gameController = GameController.GCInstance;
         guiController = GUIController.Instance;
@@ -139,9 +139,22 @@ public class NetworkController : MonoBehaviour
             }
         }
         playerName = newPlayerName;
+        string roomName;
+        if(GameData.Scene == "BeachScene")
+        {
+            roomName = playerName + "-BEA";
+        }
+        else if(GameData.Scene == "JungleScene")
+        {
+            roomName = playerName + "-JUN";
+        }
+        else
+        {
+            roomName = playerName + "-TEM";
+        }
         //Create room, only want 2 in room
         Debug.Log(playerName);
-        PhotonNetwork.CreateRoom(playerName, new RoomOptions() { MaxPlayers = 2 }, null);
+        PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 2 }, null);
         menuController.changeLoadingText(creatingRoom);
     }
 
@@ -169,6 +182,7 @@ public class NetworkController : MonoBehaviour
     public void onClickJoinRoom(string name)
     {
         Debug.Log(name);
+        sceneToLoad = getScene(name);
         PhotonNetwork.JoinRoom(name);    
     }
 
@@ -176,6 +190,7 @@ public class NetworkController : MonoBehaviour
     private void OnJoinedRoom()
     {
         myRoom = PhotonNetwork.room.Name;
+
         //Quick way to see who is going first
         if(PhotonNetwork.player.IsMasterClient)
         {
@@ -188,12 +203,12 @@ public class NetworkController : MonoBehaviour
         {
             GameData.PlayerGoesFirst = false;
             Debug.Log("GOING SECOND");
+            networkGame();
+            menuController.levelLoader.GetComponent<LevelLoader>().LoadLevel(sceneToLoad);
+            //load level
         }
         //This is what the person who joined sends to the "host"
-        if(PhotonNetwork.room.PlayerCount == 2 && !PhotonNetwork.player.IsMasterClient)
-        {
-            sendStartGameMessage();
-        }
+
     }
 
     //Dido
@@ -201,6 +216,27 @@ public class NetworkController : MonoBehaviour
     {
         menuController.OpenFailJoinRoomPanel();
         Debug.Log("Failed To Join Room");
+    }
+
+    private string getScene(string name)
+    {
+        string sceneToGet;
+        string scene = name.Substring(name.Length - 3);
+        if(scene == "BEA")
+        {
+            sceneToGet = "BeachScene";
+        }
+        else if (scene == "JUN")
+        {
+            sceneToGet = "JungleScene";
+        }
+        else
+        {
+            sceneToGet = "TempleScene";
+        }
+        
+
+        return sceneToGet;
     }
     #endregion
 
@@ -270,6 +306,12 @@ public class NetworkController : MonoBehaviour
     private void OnPhotonPlayerConnected()
     {
        // Debug.Log("player connected");
+       if(PhotonNetwork.room.PlayerCount == 2)
+        {
+            networkGame();
+            menuController.levelLoader.GetComponent<LevelLoader>().LoadLevel(GameData.Scene);
+            //load level
+        }
     }
 
     //This does some very important things for the online games to work
@@ -334,12 +376,6 @@ public class NetworkController : MonoBehaviour
     //this function is for people joining the game
     //It sets stuff up for sending messages and tells the 
     //"host" to start the game
-    public void sendStartGameMessage()
-    {
-        networkGame();
-        photonView.RPC("startGame", PhotonTargets.Others);
-        Debug.Log("sending start game");
-    }
 
    
     #endregion
@@ -379,13 +415,6 @@ public class NetworkController : MonoBehaviour
     }
 
     //"host" gets startgame message
-    [PunRPC]
-    public void startGame()
-    {
-        networkGame();
-        //Debug.Log("Received start game message");
-        PhotonNetwork.LoadLevel(GameData.Scene);
-    }
 
     //we get the move from the player as if they were player1 so we
     //change as if they were player2
