@@ -866,7 +866,7 @@ PrefabInstance:
       value: "\tVlad falls down in defeat, the fire in his eyes fading. \"I may have
         failed but the king has never lost a game before. Your defeat will be swift.\"\n\t\"Incredible,
         you did it! Nothing will stop us on the way to the temple now. It is not far
-        from here.\" Corey puts his stubby feet in motion, charging foward to the
+        from here.\" Corey puts his stubby feet in motion, charging forward to the
         temple without hesitation."
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,

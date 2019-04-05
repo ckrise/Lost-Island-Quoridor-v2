@@ -345,7 +345,6 @@ public class NetworkController : MonoBehaviour
             guiController.OpponentLeft(opponentForfeit);
         }
     }
-
     #endregion
 
     #region Send Stuff
