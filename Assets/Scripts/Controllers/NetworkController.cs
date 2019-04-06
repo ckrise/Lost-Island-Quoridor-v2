@@ -41,7 +41,7 @@ public class NetworkController : MonoBehaviour
     //this is only used for timer
     private void Update()
     {
-        timerCheck();
+        //timerCheck();
     }
 
     #region Multiplayer Connect
@@ -115,22 +115,37 @@ public class NetworkController : MonoBehaviour
         string creatingRoom = "Creating Room...";
         //Get the player name from PlayerData so we aren't using the actual name
         string playerName = PlayerData.PlayerName;  //PlayerPrefs.GetString("PlayerName");
-        string newPlayerName = playerName;
         //Tells us when we can use this name
         bool goodRoomName = false;
         int count = 1;
+        string sceneToAdd = "";
+        string roomName;
+        if (GameData.Scene == "BeachScene")
+        {
+            sceneToAdd = "-BEA";
+        }
+        else if (GameData.Scene == "JungleScene")
+        {
+            sceneToAdd = "-JUN";
+        }
+        else
+        {
+            sceneToAdd = "-TEM";
+        }
+        string newPlayerName = playerName + sceneToAdd;
         //This while loop just puts a number on the end of the name
         //EX player1, player2
-        while(!goodRoomName)
+        while (!goodRoomName)
         {
             if (!roomList.Contains(newPlayerName))
             {
                 goodRoomName = true;
                 count = 1;
             }
-            else if(roomList.Contains(playerName))
+            else if(roomList.Contains(newPlayerName))
             {
-                newPlayerName = playerName + '(' + count + ')';
+                playerName = playerName + '(' + count + ')';
+                newPlayerName = playerName + sceneToAdd;
                 count++;
             }
             else
@@ -138,20 +153,8 @@ public class NetworkController : MonoBehaviour
                 //Not even sure how it would get to this
             }
         }
-        playerName = newPlayerName;
-        string roomName;
-        if(GameData.Scene == "BeachScene")
-        {
-            roomName = playerName + "-BEA";
-        }
-        else if(GameData.Scene == "JungleScene")
-        {
-            roomName = playerName + "-JUN";
-        }
-        else
-        {
-            roomName = playerName + "-TEM";
-        }
+        roomName = newPlayerName;
+        
         //Create room, only want 2 in room
         Debug.Log(playerName);
         PhotonNetwork.CreateRoom(roomName, new RoomOptions() { MaxPlayers = 2 }, null);
@@ -340,7 +343,7 @@ public class NetworkController : MonoBehaviour
     //Dido
     public void OnPhotonPlayerDisconnected()
     {
-        if(PhotonNetwork.room.PlayerCount == 1 && !opponentForfeit)
+        if(PhotonNetwork.room.PlayerCount == 1)
         {
             guiController.OpponentLeft(opponentForfeit);
         }
@@ -369,17 +372,19 @@ public class NetworkController : MonoBehaviour
 
     public void onSendForfeitMessage()
     {
+        string forfeitMessage = "forfeit";
         if (isNetworkingGame)
         {
-            photonView.RPC("forfeitMessage", PhotonTargets.Others);
+            photonView.RPC("forfeitMessage", PhotonTargets.Others, forfeitMessage);
         }
     }
 
     public void onSendNoQuitMessage()
     {
+        string message = "no forfeit";
         if (isNetworkingGame)
         {
-            photonView.RPC("noQuitMessage", PhotonTargets.Others);
+            photonView.RPC("noQuitMessage", PhotonTargets.Others, message);
         }
     }
 
@@ -417,15 +422,15 @@ public class NetworkController : MonoBehaviour
 
  
     [PunRPC]
-    public void forfeitMessage()
+    public void forfeitMessage(string forfeitMessage)
     {
         //TODO gui part
         opponentForfeit = true;
-        gameOver();
+        //gameOver();
     }
 
     [PunRPC]
-    public void noQuitMessage()
+    public void noQuitMessage(string message)
     {
         opponentForfeit = false;
     }
@@ -455,41 +460,41 @@ public class NetworkController : MonoBehaviour
 
     #region Timer Stuff
     //update timer if we are in a game
-    private void timerCheck()
-    {
-        if (SceneManager.GetActiveScene().name != "MainMenu" && guiController != null && isNetworkingGame)
-        {
-            if (!guiController.playerTurn)
-            {
-                timer += Time.deltaTime;
-                //Debug.Log(timer);
-                if (timer >= moveTime)
-                {
-                    DisplayMessage();
-                    //TODO might need to get rid of this
-                    //timer = timer - moveTime;
-                }
-            }
-        }
-    }
+    //private void timerCheck()
+    //{
+    //    if (SceneManager.GetActiveScene().name != "MainMenu" && guiController != null && isNetworkingGame)
+    //    {
+    //        if (!guiController.playerTurn)
+    //        {
+    //            timer += Time.deltaTime;
+    //            //Debug.Log(timer);
+    //            if (timer >= moveTime)
+    //            {
+    //                DisplayMessage();
+    //                //TODO might need to get rid of this
+    //                //timer = timer - moveTime;
+    //            }
+    //        }
+    //    }
+    //}
 
     //easy to understand, right?
-    public void continueWaiting()
-    {
-        timer -= timer;
-    }
+    //public void continueWaiting()
+    //{
+    //    timer -= timer;
+    //}
 
-    //yup
-    public void resetTimer()
-    {
-        timer -= timer;
-    }
+    ////yup
+    //public void resetTimer()
+    //{
+    //    timer -= timer;
+    //}
 
-    //decisions, decisions
-    private void DisplayMessage()
-    {
-        guiController.displayMoveTimerPanel();
-    }
+    ////decisions, decisions
+    //private void DisplayMessage()
+    //{
+    //    guiController.displayMoveTimerPanel();
+    //}
     #endregion
 
     #region Reconnect
