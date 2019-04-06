@@ -209,7 +209,7 @@ public class TutorialController : MonoBehaviour
         Debug.Log("skipped");
         if (GameData.InAdventureMode)
         {
-            GameData.AdventureProgress++;
+            //GameData.AdventureProgress++;
             ContinueStory();
         }
         else

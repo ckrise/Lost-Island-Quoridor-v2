@@ -165,12 +165,14 @@ public class MenuController : MonoBehaviour
         GameData.InAdventureMode = true;
         GameData.AdventureProgress = 0;
         GameData.IsTutorial = true;
+        GameData.PlayerGoesFirst = true;
     }
     public void ContinueStory()
     {
         GameData.InAdventureMode = true;
         GameData.IsAIGame = true;
-        switch(GameData.AdventureProgress)
+        GameData.PlayerGoesFirst = true;
+        switch (GameData.AdventureProgress)
         {
             case 1:
                 GameData.AIDifficulty = "easy";
