@@ -16,7 +16,7 @@ public class GUIController : MonoBehaviour
         settingsPanel, helpPanel, confirmForfeitPanel, opponentDisconnectedPanel, opponentFofeitedPanel,
         disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
         adventureWinPanel, adventureLosePanel, moveTimerPanel,
-        storyBefore, storyAfter, chatHelpPanel, helpHelpPanel;
+        storyBefore, storyAfter, chatHelpPanel, helpHelpPanel, helpHelpWithoutChatPanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
@@ -77,12 +77,10 @@ public class GUIController : MonoBehaviour
         if (GameData.IsAIGame)
         {
             chatButton.gameObject.SetActive(false);
-            
-            //TODO:
-            //Get rid of the chat help panel and move up the Help help Panel
-            //Vector3 v = helpHelpPanel.transform.position;
-            //v.y += 50;
-            //helpHelpPanel.transform.position = v;
+            chatHelpPanel.SetActive(false);
+            helpHelpPanel.SetActive(false);
+            helpHelpWithoutChatPanel.SetActive(true);
+           
             chatHelpPanel.SetActive(false);            
         }
 
