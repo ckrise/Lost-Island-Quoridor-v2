@@ -10288,6 +10288,7 @@ MonoBehaviour:
   chatPanel: {fileID: 750238133}
   settingsPanel: {fileID: 1124664839}
   helpPanel: {fileID: 1511047626}
+  confirmForfeitPanel: {fileID: 0}
   opponentDisconnectedPanel: {fileID: 1948775848}
   opponentFofeitedPanel: {fileID: 0}
   disconnectedFromNetworkPanel: {fileID: 1827243289}
@@ -14320,12 +14321,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8300000, guid: b36805cc88c1d1e4fbad3b7c62d886da, type: 3}
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 775448461}
+        m_MethodName: PlayOneShot
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgument: {fileID: 8300000, guid: b36805cc88c1d1e4fbad3b7c62d886da,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
