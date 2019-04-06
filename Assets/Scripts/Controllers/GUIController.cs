@@ -575,6 +575,7 @@ public class GUIController : MonoBehaviour
     #region menu
     public void ShowChatMenu()
     {
+   
         if(!gameOver)
         {
             chatInputField.Select();
