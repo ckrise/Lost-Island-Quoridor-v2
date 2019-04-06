@@ -267,7 +267,7 @@ public class GUIController : MonoBehaviour
             EndTurn(playerMove);
             if (!GameData.IsAIGame)
             {
-               GameData.NetworkController.resetTimer();
+               //GameData.NetworkController.resetTimer();
             }
         }
         else
@@ -505,6 +505,7 @@ public class GUIController : MonoBehaviour
     public void openConfirmForfeit()
     {
         confirmForfeitPanel.SetActive(true);
+        GameData.NetworkController.onSendForfeitMessage();
     }
 
     public void closeConfirmForfeit()
@@ -689,18 +690,18 @@ public class GUIController : MonoBehaviour
     //}
     #endregion
     #region Move Timer panel
-    public void displayMoveTimerPanel()
-    {
-        if (!disconnectedFromNetworkPanel.activeSelf && !opponentDisconnectedPanel.activeSelf)
-        {
-            moveTimerPanel.SetActive(true);
-        }
-    }
+    //public void displayMoveTimerPanel()
+    //{
+    //    if (!disconnectedFromNetworkPanel.activeSelf && !opponentDisconnectedPanel.activeSelf)
+    //    {
+    //        moveTimerPanel.SetActive(true);
+    //    }
+    //}
 
-    public void closeMoveTimerPanel()
-    {
-        moveTimerPanel.SetActive(false);
-    }
+    //public void closeMoveTimerPanel()
+    //{
+    //    moveTimerPanel.SetActive(false);
+    //}
     #endregion
     #region story
     public void ContinueStory()
