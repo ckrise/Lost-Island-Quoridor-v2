@@ -372,6 +372,11 @@ public class NetworkController : MonoBehaviour
         photonView.RPC("forfeitMessage", PhotonTargets.Others);
     }
 
+    public void onSendNoQuitMessage()
+    {
+        photonView.RPC("noQuitMessage", PhotonTargets.Others);
+    }
+
     //this function is for people joining the game
     //It sets stuff up for sending messages and tells the 
     //"host" to start the game
@@ -411,6 +416,12 @@ public class NetworkController : MonoBehaviour
         //TODO gui part
         opponentForfeit = true;
         gameOver();
+    }
+
+    [PunRPC]
+    public void noQuitMessage()
+    {
+        opponentForfeit = false;
     }
 
     //"host" gets startgame message
