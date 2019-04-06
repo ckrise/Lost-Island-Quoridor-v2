@@ -369,7 +369,10 @@ public class NetworkController : MonoBehaviour
 
     public void onSendForfeitMessage()
     {
-        photonView.RPC("forfeitMessage", PhotonTargets.Others);
+        if (isNetworkingGame)
+        {
+            photonView.RPC("forfeitMessage", PhotonTargets.Others);
+        }
     }
 
     public void onSendNoQuitMessage()
