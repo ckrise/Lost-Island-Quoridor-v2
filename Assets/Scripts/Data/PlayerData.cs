@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public static class PlayerData
 {
     private static string playerName = "";
-    private static float musicVolume = 1;
-    private static float sfxVolume = 1;
+    private static float musicVolume = 0.5f;
+    private static float sfxVolume = 0.5f;
 
     public static string PlayerName
     {

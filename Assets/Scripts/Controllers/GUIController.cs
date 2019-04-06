@@ -13,7 +13,7 @@ public class GUIController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
-        settingsPanel, helpPanel, opponentDisconnectedPanel, opponentFofeitedPanel,
+        settingsPanel, helpPanel, confirmForfeitPanel, opponentDisconnectedPanel, opponentFofeitedPanel,
         disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
         adventureWinPanel, adventureLosePanel, moveTimerPanel,
         storyBefore, storyAfter, chatHelpPanel, helpHelpPanel, helpHelpWithoutChatPanel;
@@ -501,6 +501,17 @@ public class GUIController : MonoBehaviour
             }
         }
     }
+
+    public void openConfirmForfeit()
+    {
+        confirmForfeitPanel.SetActive(true);
+    }
+
+    public void closeConfirmForfeit()
+    {
+        confirmForfeitPanel.SetActive(false);
+    }
+
     public void LeaveGame()
     {
         if (!GameData.IsAIGame)
@@ -546,6 +557,10 @@ public class GUIController : MonoBehaviour
         if (moveTimerPanel.activeSelf)
         {
             moveTimerPanel.SetActive(false);
+        }
+        if(opponentDisconnectedPanel.activeSelf)
+        {
+            opponentDisconnectedPanel.SetActive(false);
         }
         disconnectedFromNetworkPanel.SetActive(true);
         
