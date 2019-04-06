@@ -517,7 +517,7 @@ public class GUIController : MonoBehaviour
         if (!GameData.IsAIGame)
         {
             Debug.Log("NetworkGame");
-            GameData.NetworkController.onSendForfeitMessage();
+            //GameData.NetworkController.onSendForfeitMessage();
             GameData.NetworkController.gameOver();
         }
         else if(GameData.InAdventureMode == true)
