@@ -227,7 +227,7 @@ public class GUIController : MonoBehaviour
     }
     public void PlacePlayerWall(Vector3 position, string move)
     {
-        if (!pawnClicked && playerTurn && animationFinished)
+        if (!pawnClicked && playerTurn && animationFinished && !pauseGame)
         {
             playerTurn = false;
             TakeFromWallPool(true);
