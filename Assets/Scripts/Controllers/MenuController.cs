@@ -13,7 +13,7 @@ public class MenuController : MonoBehaviour
         settingsButton, helpButton, backButton, easyButton, hardButton,
         joinRoom, createRoom;
     public GameObject mainPanel, multiplayerPanel, settingsPanel,
-        helpPanel, storyPanel, quickplayPanel, roomPanel,
+         storyPanel, quickplayPanel, roomPanel,
         connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab,
         storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
         settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel,
@@ -228,7 +228,6 @@ public class MenuController : MonoBehaviour
             multiplayerPanel.SetActive(false);
             storyPanel.SetActive(false);
             settingsPanel.SetActive(false);
-            helpPanel.SetActive(false);
             quickplayPanel.SetActive(false);
         }
     }
