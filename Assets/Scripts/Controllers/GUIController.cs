@@ -32,8 +32,12 @@ public class GUIController : MonoBehaviour
     #region private variables
     //tile objects that are invisible until pawn is clicked
     private string scene;
-    private List<GameObject> ghostPlayerMoves;
+    private bool pauseGame;
     private bool pawnClicked;
+    private string playerMove;
+    private musicScript musicReference;
+    private List<GameObject> ghostPlayerMoves;
+    private Stack<GameObject> opponentWallPoolStack, playerWallPoolStack;
     private readonly static Dictionary<char, float> COLUMN_MIDPOINT = new Dictionary<char, float>()
     {
         { 'a', .75f },
@@ -58,9 +62,6 @@ public class GUIController : MonoBehaviour
         { 8, 14.75f },
         { 9, 16.75f },
     };
-    private Stack<GameObject> opponentWallPoolStack, playerWallPoolStack;
-    private string playerMove;
-    private musicScript musicReference;
     #endregion
     #region unity
     void Awake()
@@ -68,6 +69,7 @@ public class GUIController : MonoBehaviour
         Instance = this;
         pawnClicked = false;
         playerTurn = false;
+        pauseGame = false;
         ghostPlayerMoves = new List<GameObject>();
         scene = SceneManager.GetActiveScene().name;
     }
@@ -240,7 +242,7 @@ public class GUIController : MonoBehaviour
     }
     public void MovePlayerPawn(GameObject ghost)
     {
-        if (playerTurn)
+        if (playerTurn && !pauseGame)
         {
             playerTurn = false;
             DestroyGhostMoves();
@@ -253,7 +255,7 @@ public class GUIController : MonoBehaviour
     }
     public bool IsPlayerTurn()
     {
-        return playerTurn && animationFinished;
+        return playerTurn && animationFinished && !pauseGame;
     }
     public bool IsCameraFinished()
     {
@@ -384,7 +386,7 @@ public class GUIController : MonoBehaviour
 
     public void ActivateGhostWall(Vector3 position, char orientation)
     {
-        if (playerTurn && !pawnClicked && animationFinished)
+        if (playerTurn && !pawnClicked && animationFinished && !pauseGame)
         {
             var transformation = GetPositionAndRotationFromHoverPad(position, orientation);
             ghostWall.transform.SetPositionAndRotation(transformation.Item1, transformation.Item2);
@@ -444,7 +446,7 @@ public class GUIController : MonoBehaviour
     }
     public void ShowGhostMoves()
     {
-        if (playerTurn && animationFinished)
+        if (playerTurn && animationFinished && !pauseGame)
         {
             playerPawn.GetComponent<MeshCollider>().enabled = pawnClicked;
             pawnClicked = !pawnClicked;
@@ -504,6 +506,7 @@ public class GUIController : MonoBehaviour
 
     public void openConfirmForfeit()
     {
+        pauseGame = true;
         confirmForfeitPanel.SetActive(true);
         if (!GameData.IsAIGame)
         {
@@ -513,6 +516,7 @@ public class GUIController : MonoBehaviour
 
     public void closeConfirmForfeit()
     {
+        pauseGame = false;
         confirmForfeitPanel.SetActive(false);
         if (!GameData.IsAIGame)
         {
