@@ -42,7 +42,6 @@ public class MenuController : MonoBehaviour
         quickPlayButton.onClick.AddListener(QuickPlay);
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
         settingsButton.onClick.AddListener(Settings);
-        helpButton.onClick.AddListener(Help);
         if (PlayerData.PlayerName != "")
         {
             continuePanel.SetActive(false);
@@ -244,60 +243,6 @@ public class MenuController : MonoBehaviour
         GameData.Scene = scene;
         Debug.Log("Scene: " + GameData.Scene);
     }
-
-    #region Help
-    void Help()
-    {
-        mainPanel.SetActive(false);
-        helpPanel.SetActive(true);
-        ShowHelpPanel(mainHelpPanel);
-    }
-    
-    private void HideAllHelp()
-    {
-        foreach (var panel in helpPanels)
-        {
-            panel.SetActive(false);
-        }
-    }
-
-    public void ShowHelpPanel(GameObject panel)
-    {
-        HideAllHelp();
-        panel.SetActive(true);
-    }    
-    public void ShowMultiplayerHelp()
-    {
-        multiplayerPanel.SetActive(false);
-        multiplayerPanelHelpPanel.SetActive(true);
-    }
-    public void HideMultiplayerHelp()
-    {
-        multiplayerPanelHelpPanel.SetActive(false);
-        multiplayerPanel.SetActive(true);
-    }
-    public void ShowQuickplayHelp()
-    {
-        quickplayPanel.SetActive(false);
-        quickplayPanelHelpPanel.SetActive(true);
-    }
-    public void HideQuickPlayHelp()
-    {
-        quickplayPanelHelpPanel.SetActive(false);
-        quickplayPanel.SetActive(true);
-    }
-    public void ShowStoryHelp()
-    {
-        storyPanel.SetActive(false);
-        storyPanelHelpPanel.SetActive(true);
-    }
-    public void HideStoryHelp()
-    {
-        storyPanelHelpPanel.SetActive(false);
-        storyPanel.SetActive(true);
-    }
-    
-    #endregion
 
     #region Networking Multiplayer
     public void MultiPlayer()
