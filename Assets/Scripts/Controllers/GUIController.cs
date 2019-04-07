@@ -505,12 +505,19 @@ public class GUIController : MonoBehaviour
     public void openConfirmForfeit()
     {
         confirmForfeitPanel.SetActive(true);
-        GameData.NetworkController.onSendForfeitMessage();
+        if (!GameData.IsAIGame)
+        {
+            GameData.NetworkController.onSendForfeitMessage();
+        }
     }
 
     public void closeConfirmForfeit()
     {
         confirmForfeitPanel.SetActive(false);
+        if (!GameData.IsAIGame)
+        {
+            GameData.NetworkController.onSendNoQuitMessage();
+        }
     }
 
     public void LeaveGame()
