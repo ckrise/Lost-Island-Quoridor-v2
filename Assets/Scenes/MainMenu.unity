@@ -24037,7 +24037,7 @@ MonoBehaviour:
   multiplayerLevelSelect: {fileID: 769699200}
   storyPanelHelpPanel: {fileID: 1829225410}
   nameEntryField: {fileID: 292048144}
-  lobbyText: {fileID: 1728632753}
+  roomText: {fileID: 1728632753}
   connectingText: {fileID: 55685080}
   nameErrorText: {fileID: 1244870127}
   nameUpdateText: {fileID: 689702995}

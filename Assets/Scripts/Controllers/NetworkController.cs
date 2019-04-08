@@ -166,7 +166,8 @@ public class NetworkController : MonoBehaviour
     private void OnCreatedRoom()
     {
         Debug.Log("CreatedRoom");
-        menuController.SetLobbyName(myRoom);
+        myRoom = PhotonNetwork.room.Name;
+        menuController.SetRoomName(myRoom);
         menuController.CreateRoom();
         //If you make room you are now master client, congrats
         PhotonNetwork.SetMasterClient(PhotonNetwork.player);
@@ -198,7 +199,7 @@ public class NetworkController : MonoBehaviour
         if(PhotonNetwork.player.IsMasterClient)
         {
             GameData.PlayerGoesFirst = true;
-            menuController.SetLobbyName(myRoom);
+            menuController.SetRoomName(myRoom);
             Debug.Log("GOING FIRST");
         }
         //You joined so you go second

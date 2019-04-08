@@ -17,7 +17,7 @@ public class MenuController : MonoBehaviour
         disconnectedFromMultiplayerPanel, levelPanel, multiplayerPanelHelpPanel, 
         quickplayPanelHelpPanel, multiplayerLevelSelect, storyPanelHelpPanel; 
     public InputField nameEntryField;
-    public Text lobbyText, connectingText, nameErrorText, nameUpdateText;
+    public Text roomText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
     public Slider musicVolumeSlider, sfxVolumeSlider;
     public Toggle fullscreenToggle;
@@ -290,9 +290,9 @@ public class MenuController : MonoBehaviour
         connectingText.text = loadText;
     }
 
-    public void SetLobbyName(string name)
+    public void SetRoomName(string name)
     {
-        lobbyText.text = name;
+        roomText.text = name.Substring(0, name.Length - 4);
     }
 
     public void CreatingRoom()
