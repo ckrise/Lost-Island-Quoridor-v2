@@ -312,6 +312,7 @@ public class NetworkController : MonoBehaviour
        if(PhotonNetwork.room.PlayerCount == 2)
         {
             networkGame();
+            PhotonNetwork.room.IsVisible = false;
             menuController.levelLoader.GetComponent<LevelLoader>().LoadLevel(GameData.Scene);
             //load level
         }
