@@ -21406,6 +21406,7 @@ MonoBehaviour:
   adventureWinPanel: {fileID: 930849103}
   adventureLosePanel: {fileID: 1483019583}
   moveTimerPanel: {fileID: 1575808582}
+  gameControlPanel: {fileID: 1344385545}
   storyBefore: {fileID: 1317160206}
   storyAfter: {fileID: 1608471739}
   chatHelpPanel: {fileID: 527992303}

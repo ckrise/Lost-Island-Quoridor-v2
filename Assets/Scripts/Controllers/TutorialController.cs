@@ -10,23 +10,21 @@ public class TutorialController : MonoBehaviour
     //Instances of gameboard objects that the controller must manipulate
     public static TutorialController Instance;
     public GameObject playerPawn, opponentPawn, ghostSpace,
-        ghostWall, wall, hoverpadMaster, winPanel,
+        ghostWall, wall, hoverpadMaster, winPanel, gameControlPanel,
         settingsPanel, helpPanel, playerTurnPanel, opponentTurnPanel,
         clickReceiverPanel, adventureWinPanel, storyOpening, storyTutorial;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
     public Text messageText;
-    public InputField chatInputField;
-    public Button winButton, chatButton;
-    public ScrollRect chatScrollRect;
+    public Button winButton;
     public Slider musicVolumeSlider, sfxVolumeSlider;
     public bool animationFinished = false;
     public bool gameOver = false;
     //tutorial panels
     public GameObject tutorialPanel;
-    public GameObject gameObjectivePanel, movingPawnPanel,  wallPlacementPanel, miscRulesPanel,
-        chatHelpPanel, helpHelpPanel, skipButton;
+    public GameObject gameObjectivePanel, movingPawnPanel,  wallPlacementPanel, 
+        miscRulesPanel, helpHelpPanel, skipButton;
     
     #endregion
 
@@ -87,7 +85,9 @@ public class TutorialController : MonoBehaviour
         if (GameData.InAdventureMode)
         {
             //display panels
-            storyOpening.SetActive(true);  
+            storyOpening.SetActive(true);
+            gameControlPanel.SetActive(false);
+            tutorialPanel.SetActive(false);
         }
         else
         {
@@ -683,6 +683,8 @@ public class TutorialController : MonoBehaviour
     {
         //continue
         storyTutorial.SetActive(false);
+        gameControlPanel.SetActive(true);
+        tutorialPanel.SetActive(true);
         CameraBehavior.reference.AnimateCamera();
     }
 
@@ -697,13 +699,6 @@ public class TutorialController : MonoBehaviour
         {
             helpPanel.SetActive(!helpPanel.activeSelf);
             settingsPanel.SetActive(false);
-
-            if(GameData.InAdventureMode)
-            {
-                chatHelpPanel.SetActive(false);
-                //todo:
-                //Move the help button panel up
-            }
         }
     }
 

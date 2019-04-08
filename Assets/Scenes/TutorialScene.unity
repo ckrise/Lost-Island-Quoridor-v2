@@ -22437,6 +22437,7 @@ MonoBehaviour:
   wall: {fileID: 392713234383485592, guid: 1ea670c069e4a68448d4626406e1f3d8, type: 3}
   hoverpadMaster: {fileID: 252905786}
   winPanel: {fileID: 1499383094}
+  gameControlPanel: {fileID: 1344385545}
   settingsPanel: {fileID: 1124664839}
   helpPanel: {fileID: 114690754}
   playerTurnPanel: {fileID: 71615856}
@@ -22450,10 +22451,7 @@ MonoBehaviour:
   levelLoader: {fileID: 1871655488}
   messageText: {fileID: 7662200659086568564, guid: 841df359a3433d64493f126102d554cd,
     type: 3}
-  chatInputField: {fileID: 0}
   winButton: {fileID: 1523273950}
-  chatButton: {fileID: 0}
-  chatScrollRect: {fileID: 0}
   musicVolumeSlider: {fileID: 2022177634}
   sfxVolumeSlider: {fileID: 575124229}
   animationFinished: 0
@@ -22463,7 +22461,6 @@ MonoBehaviour:
   movingPawnPanel: {fileID: 869152683}
   wallPlacementPanel: {fileID: 1856095694}
   miscRulesPanel: {fileID: 449165231}
-  chatHelpPanel: {fileID: 0}
   helpHelpPanel: {fileID: 792309674}
   skipButton: {fileID: 1829793616}
 --- !u!4 &1591136324

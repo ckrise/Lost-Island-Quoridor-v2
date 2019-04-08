@@ -15,7 +15,7 @@ public class GUIController : MonoBehaviour
         ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
         settingsPanel, helpPanel, confirmForfeitPanel, opponentDisconnectedPanel, opponentFofeitedPanel,
         disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
-        adventureWinPanel, adventureLosePanel, moveTimerPanel,
+        adventureWinPanel, adventureLosePanel, moveTimerPanel, gameControlPanel,
         storyBefore, storyAfter, chatHelpPanel, helpHelpPanel, helpHelpWithoutChatPanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
@@ -90,6 +90,11 @@ public class GUIController : MonoBehaviour
         {
             //display panels
             storyBefore.SetActive(true);
+            gameControlPanel.SetActive(false);
+            playerTurnPanel.SetActive(false);
+            opponentTurnPanel.SetActive(false);
+            pauseGame = true;
+
             //Start Beach scene camera on the board
             if (GameData.AdventureProgress == 1)
             {
@@ -215,7 +220,7 @@ public class GUIController : MonoBehaviour
             MoveOpponentPawn(move);
             animationFinished = false;
         }
-        else
+        else if (!pauseGame)
         {
             opponentTurnPanel.SetActive(false);
             playerTurnPanel.SetActive(true);
@@ -749,6 +754,9 @@ public class GUIController : MonoBehaviour
     public void ClickDismissStoryBefore()
     {
         storyBefore.SetActive(false);
+        gameControlPanel.SetActive(true);
+        playerTurnPanel.SetActive(true);
+        pauseGame = false;
         if (GameData.AdventureProgress != 1)
         {
             CameraBehavior.reference.AnimateCamera();
