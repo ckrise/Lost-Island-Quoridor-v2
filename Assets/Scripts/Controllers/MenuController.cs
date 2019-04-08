@@ -10,17 +10,13 @@ public class MenuController : MonoBehaviour
     #region public variables
     public static MenuController menu;
     public Button storyButton, quickPlayButton, multiplayerButton, 
-        settingsButton, helpButton, backButton, easyButton, hardButton,
-        joinRoom, createRoom;
-    public GameObject mainPanel, multiplayerPanel, settingsPanel,
-        helpPanel, storyPanel, quickplayPanel, roomPanel,
-        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab,
-        storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
-        settingsHelpPanel, helpHelpPanel, quitHelpPanel, mainHelpPanel, loadingPanel,
+        settingsButton, easyButton, hardButton, createRoom;
+    public GameObject mainPanel, multiplayerPanel, settingsPanel, storyPanel, quickplayPanel, roomPanel,
+        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab, loadingPanel,
         failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel, 
-        disconnectedFromMultiplayerPanel, levelPanel, helpArrow, multiplayerPanelHelpPanel, 
+        disconnectedFromMultiplayerPanel, levelPanel, multiplayerPanelHelpPanel, 
         quickplayPanelHelpPanel, multiplayerLevelSelect, storyPanelHelpPanel; 
-    public InputField createRoomField, joinRoomField, nameEntryField;
+    public InputField nameEntryField;
     public Text lobbyText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
     public Slider musicVolumeSlider, sfxVolumeSlider;
@@ -42,14 +38,11 @@ public class MenuController : MonoBehaviour
         quickPlayButton.onClick.AddListener(QuickPlay);
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
         settingsButton.onClick.AddListener(Settings);
-        helpButton.onClick.AddListener(Help);
         if (PlayerData.PlayerName != "")
         {
             continuePanel.SetActive(false);
             mainPanel.SetActive(true);
         }
-        helpPanels = new List<GameObject>{ storyHelpPanel, multiPlayerHelpPanel, quickPlayHelpPanel, tutorialHelpPanel,
-                                           settingsHelpPanel, helpHelpPanel, quitHelpPanel };
 
         //initialize fullscreen toggle
         fullscreenToggle.isOn = Screen.fullScreen;
@@ -229,7 +222,6 @@ public class MenuController : MonoBehaviour
             multiplayerPanel.SetActive(false);
             storyPanel.SetActive(false);
             settingsPanel.SetActive(false);
-            helpPanel.SetActive(false);
             quickplayPanel.SetActive(false);
         }
     }
@@ -244,60 +236,6 @@ public class MenuController : MonoBehaviour
         GameData.Scene = scene;
         Debug.Log("Scene: " + GameData.Scene);
     }
-
-    #region Help
-    void Help()
-    {
-        mainPanel.SetActive(false);
-        helpPanel.SetActive(true);
-        ShowHelpPanel(mainHelpPanel);
-    }
-    
-    private void HideAllHelp()
-    {
-        foreach (var panel in helpPanels)
-        {
-            panel.SetActive(false);
-        }
-    }
-
-    public void ShowHelpPanel(GameObject panel)
-    {
-        HideAllHelp();
-        panel.SetActive(true);
-    }    
-    public void ShowMultiplayerHelp()
-    {
-        multiplayerPanel.SetActive(false);
-        multiplayerPanelHelpPanel.SetActive(true);
-    }
-    public void HideMultiplayerHelp()
-    {
-        multiplayerPanelHelpPanel.SetActive(false);
-        multiplayerPanel.SetActive(true);
-    }
-    public void ShowQuickplayHelp()
-    {
-        quickplayPanel.SetActive(false);
-        quickplayPanelHelpPanel.SetActive(true);
-    }
-    public void HideQuickPlayHelp()
-    {
-        quickplayPanelHelpPanel.SetActive(false);
-        quickplayPanel.SetActive(true);
-    }
-    public void ShowStoryHelp()
-    {
-        storyPanel.SetActive(false);
-        storyPanelHelpPanel.SetActive(true);
-    }
-    public void HideStoryHelp()
-    {
-        storyPanelHelpPanel.SetActive(false);
-        storyPanel.SetActive(true);
-    }
-    
-    #endregion
 
     #region Networking Multiplayer
     public void MultiPlayer()

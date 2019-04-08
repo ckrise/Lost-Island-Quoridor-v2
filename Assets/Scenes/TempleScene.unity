@@ -44333,9 +44333,9 @@ PrefabInstance:
         you walk towards the temple steps another skeleton rises before you, the king!\r\n\t\"Oh
         no! The King! He will be stronger than all his minions before him. If you
         defeat him we can get into the temple and lift the curse from the skeletons,
-        freeing them and us from our conflict!\"\n\tThe King points his massive broadsword
-        towards you, his crown sparkling in the sunlight. \"I will show you the true
-        power the King of the Skeletons holds.\"\n"
+        freeing them and us from our conflict!\"\r\n\tThe King points his massive
+        broadsword towards you, his crown sparkling in the sunlight. \"I will show
+        you the true power the King of the Skeletons holds.\"\r"
       objectReference: {fileID: 0}
     - target: {fileID: 6303282290708214809, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -60735,16 +60735,16 @@ PrefabInstance:
         in his strength as the confines wrap around him. You and Corey stroll past
         him in confidence towards the temple. Inside shines a crystal, hovering in
         the air. It pulses a bright green light and you feel fear as you approach
-        it.\n\t\"That crystal holds the curse of the skeletons, if you shatter it
+        it.\r\n\t\"That crystal holds the curse of the skeletons. If you shatter it
         the curse will be broken!\" Corey exclaims. You grab a nearby hammer and approach
         the crystal with trepidation in your step. You hit it once and rebound, the
         temple shudders from the impact. You hit it again and boom! The crystal shatters
-        to pieces shaking the entire temple at it's foundation.\t\n\t\u201CYou did
+        to pieces shaking the entire temple at it's foundation.\t\r\n\t\u201CYou did
         it! You beat the curse once and for all! They will finally know peace from
-        their curse and us islanders will be able to live freely once more! Quickly
-        lets get out of here before the temple comes down around us!\u201D You and
-        Corey race to the exit as the temple crumbles. You emerge into the glory of
-        the island, victorious.\n"
+        their curse and us islanders will be able to live freely once more! Quickly,
+        let\u2019s get out of here before the temple comes down around us!\u201D You
+        and Corey race to the exit as the temple crumbles. You emerge into the glory
+        of the island, victorious.\r"
       objectReference: {fileID: 0}
     - target: {fileID: 6303282290708214809, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}

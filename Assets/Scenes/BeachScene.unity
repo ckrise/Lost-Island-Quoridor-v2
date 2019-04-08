@@ -12816,13 +12816,13 @@ PrefabInstance:
     - target: {fileID: 6303282290708214809, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_Text
-      value: "\t\"Oh no! Here comes one of the king's minions now! It's Berry the
-        flail user!\"\n\t\"Who's this Corey!? A human you enlisted to be defeated
+      value: "\t\"Oh no! Here comes one of the king's minions now! It's Barry the
+        flail user!\"\r\n\t\"Who's this Corey!? A human you enlisted to be defeated
         at my hands? You know you and your forest friends will never escape the tyranny
-        of the king!\" Berry swings his flail in circles, anticipating the game to
-        come.\n\t\"You will see Berry, my friend here is an expert.\" Corey turns
+        of the king!\" Barry swings his flail in circles, anticipating the game to
+        come.\r\n\t\"You will see, Barry! My friend here is an expert.\" Corey turns
         toward you, \"Good luck, you will fare better than us at Quoridor, I'm sure
-        of it.\"\n\t"
+        of it.\"\r"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
@@ -29285,12 +29285,12 @@ PrefabInstance:
     - target: {fileID: 6303282290708214809, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_Text
-      value: "\tBerry falls down in defeat after losing, he is bound by the curse
-        which confines him for losing a game. \"You may have beaten me but you won't
-        survive against what awaits you.\" Berry glares at you from his confines.
-        Corey pays him no heed and begins speaking to you.\n\t\u201CWow you are pretty
-        good at this! We might have a chance to defeat the king and put a stop to
-        the curse once and for all!\u201D"
+      value: "\tBarry falls down in defeat after losing. He is bound by the curse
+        which confines him for losing a game. \"You may have beaten me, but you won't
+        survive against what awaits you.\" Barry glares at you from his bindings.
+        Corey pays him no heed and begins speaking to you.\r\n\t\u201CWow you are
+        pretty good at this! We might have a chance to defeat the king and put a stop
+        to the curse once and for all!\u201D\r"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}

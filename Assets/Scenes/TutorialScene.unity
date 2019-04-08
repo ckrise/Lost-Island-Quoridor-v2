@@ -11476,7 +11476,7 @@ PrefabInstance:
     - target: {fileID: 6303282290708214809, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
       propertyPath: m_Text
-      value: "\t\"Us animals are no good at quoridor but I can teach you how to play
+      value: "\t\"Us animals are no good at quoridor, but I can teach you how to play
         it before you face the king's minions. It is pretty simple and I'm sure you
         will be able to pick it up no problem!\""
       objectReference: {fileID: 0}
@@ -31045,12 +31045,12 @@ PrefabInstance:
         your mouth and blink rapidly to try and clear the salt water from your eyes.
         Looking around, the island appears completely uninhabited, with no sign of
         passage on the shore. The beach seems to stretch endlessly in either direction
-        with a large forest looming before you. You begin to stumble towards the forest,
-        seeing no other alternative. After only taking a few steps a figure bursts
+        with a large forest looming before you. Seeing no other alternative, you begin
+        to stumble towards the forest. After only taking a few steps, a figure bursts
         from the forest running towards you. A crocodile! You began to back up in
         fear, but realize something is off. The crocodile is running towards you\u2026
         like a person. Just before reaching you, he falls face first into the sand.
-        What an oddly comedic creature.\r\n\tHe stands up and shakes of the sand.
+        What an oddly comedic creature.\r\n\tHe stands up and shakes off the sand.
         He then starts speaking. \u201CYou must help us! Our island is plagued by
         a curse! You must come with me!\u201D You\u2019re taken aback by the fact
         a crocodile is speaking and walking like a human, but he seems friendly enough.
@@ -31060,7 +31060,7 @@ PrefabInstance:
         center of the island. I went in on a dare and accidentally awoke the cursed
         Skeleton King and his minions. The king paid the price for eternal life many
         years ago, but in return, he has to play quoridor forever. He and his minions
-        are terrorizing us forest animals into playing quoridor against them.\u201D\r\n"
+        are terrorizing us forest animals into playing quoridor against them.\u201D\r"
       objectReference: {fileID: 0}
     - target: {fileID: 3931968876291483790, guid: d7ca8f796669a6c4ab33272b0646b1b4,
         type: 3}
