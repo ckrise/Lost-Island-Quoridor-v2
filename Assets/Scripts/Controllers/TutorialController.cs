@@ -251,6 +251,8 @@ public class TutorialController : MonoBehaviour
                 tutorialPanel.SetActive(false);
                 skipButton.SetActive(false);
                 gameControlPanel.SetActive(false);
+                opponentTurnPanel.SetActive(false);
+                playerTurnPanel.SetActive(false);
                 if(GameData.InAdventureMode)
                 {
                     adventureWinPanel.SetActive(true);
