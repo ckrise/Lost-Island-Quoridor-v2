@@ -6510,7 +6510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &422411833
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22155,11 +22155,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -24012,16 +24012,12 @@ MonoBehaviour:
   quickPlayButton: {fileID: 2143841696}
   multiplayerButton: {fileID: 1586846310}
   settingsButton: {fileID: 1027507874}
-  helpButton: {fileID: 0}
-  backButton: {fileID: 0}
   easyButton: {fileID: 924944973}
   hardButton: {fileID: 650922005}
-  joinRoom: {fileID: 0}
   createRoom: {fileID: 279618438}
   mainPanel: {fileID: 1355159284}
   multiplayerPanel: {fileID: 731070834}
   settingsPanel: {fileID: 1783596407}
-  helpPanel: {fileID: 0}
   storyPanel: {fileID: 1851455549}
   quickplayPanel: {fileID: 2082816387}
   roomPanel: {fileID: 1770827640}
@@ -24030,27 +24026,16 @@ MonoBehaviour:
   nameEntryPanel: {fileID: 1710170852}
   roomListingPrefab: {fileID: 4870684407407124809, guid: f31b17c4a8052c344a202e82b567e64e,
     type: 3}
-  storyHelpPanel: {fileID: 0}
-  multiPlayerHelpPanel: {fileID: 0}
-  quickPlayHelpPanel: {fileID: 0}
-  tutorialHelpPanel: {fileID: 0}
-  settingsHelpPanel: {fileID: 0}
-  helpHelpPanel: {fileID: 0}
-  quitHelpPanel: {fileID: 0}
-  mainHelpPanel: {fileID: 0}
   loadingPanel: {fileID: 354361287}
   failMultiplayerConnectionPanel: {fileID: 1416523305}
   failJoinRoomPanel: {fileID: 457270596}
   failCreateRoomPanel: {fileID: 2137804553}
   disconnectedFromMultiplayerPanel: {fileID: 926861603}
   levelPanel: {fileID: 968851020}
-  helpArrow: {fileID: 0}
   multiplayerPanelHelpPanel: {fileID: 141768650}
   quickplayPanelHelpPanel: {fileID: 780415655}
   multiplayerLevelSelect: {fileID: 769699200}
   storyPanelHelpPanel: {fileID: 1829225410}
-  createRoomField: {fileID: 0}
-  joinRoomField: {fileID: 0}
   nameEntryField: {fileID: 292048144}
   lobbyText: {fileID: 1728632753}
   connectingText: {fileID: 55685080}
@@ -24871,7 +24856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1355159285
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35216,11 +35201,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
