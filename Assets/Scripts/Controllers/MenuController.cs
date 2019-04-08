@@ -237,6 +237,39 @@ public class MenuController : MonoBehaviour
         Debug.Log("Scene: " + GameData.Scene);
     }
 
+    #region help
+    public void ShowMultiplayerHelp()
+    {
+        multiplayerPanel.SetActive(false);
+        multiplayerPanelHelpPanel.SetActive(true);
+    }
+    public void HideMultiplayerHelp()
+    {
+        multiplayerPanelHelpPanel.SetActive(false);
+        multiplayerPanel.SetActive(true);
+    }
+    public void ShowQuickplayHelp()
+    {
+        quickplayPanel.SetActive(false);
+        quickplayPanelHelpPanel.SetActive(true);
+    }
+    public void HideQuickPlayHelp()
+    {
+        quickplayPanelHelpPanel.SetActive(false);
+        quickplayPanel.SetActive(true);
+    }
+    public void ShowStoryHelp()
+    {
+        storyPanel.SetActive(false);
+        storyPanelHelpPanel.SetActive(true);
+    }
+    public void HideStoryHelp()
+    {
+        storyPanelHelpPanel.SetActive(false);
+        storyPanel.SetActive(true);
+    }
+    #endregion
+
     #region Networking Multiplayer
     public void MultiPlayer()
     {
