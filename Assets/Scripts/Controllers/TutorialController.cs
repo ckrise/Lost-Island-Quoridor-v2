@@ -250,6 +250,7 @@ public class TutorialController : MonoBehaviour
             case 4:
                 tutorialPanel.SetActive(false);
                 skipButton.SetActive(false);
+                gameControlPanel.SetActive(false);
                 if(GameData.InAdventureMode)
                 {
                     adventureWinPanel.SetActive(true);

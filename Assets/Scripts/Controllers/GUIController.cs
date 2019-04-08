@@ -482,6 +482,7 @@ public class GUIController : MonoBehaviour
         {
             MoveOpponentPawn(move);
         }
+        gameControlPanel.SetActive(false);
         if (isWinner)
         {
             musicReference.playWin();
