@@ -24,4 +24,8 @@ public class KingBehavior : MonoBehaviour
     {
         animator.SetTrigger("attack1");
     }
+    public void Lose()
+    {
+        animator.SetTrigger("die");
+    }
 }

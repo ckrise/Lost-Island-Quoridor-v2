@@ -16,7 +16,7 @@ public class GUIController : MonoBehaviour
         settingsPanel, helpPanel, confirmForfeitPanel, opponentDisconnectedPanel, opponentFofeitedPanel,
         disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
         adventureWinPanel, adventureLosePanel, moveTimerPanel, gameControlPanel,
-        storyBefore, storyAfter, chatHelpPanel, helpHelpPanel, helpHelpWithoutChatPanel;
+        storyBefore, storyAfter, chatHelpPanel, helpHelpPanel, helpHelpWithoutChatPanel, endStoryPanel;
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
@@ -337,28 +337,43 @@ public class GUIController : MonoBehaviour
         opponentPawn.GetComponent<PawnAnimation>().Animate(newPosition, false);
     }
 
+    
+
+    #endregion
+    #region opponent animations
+    private void PlayLose()
+    {
+        Debug.Log("Scene: " + scene);
+        if (scene == "JungleScene")
+        {
+            MageBehavior.Reference.Lose();
+        }
+        else if (scene == "BeachScene")
+        {
+            GruntBehavior.Reference.Lose();
+        }
+
+    }
     private void PlayRaiseWall()
     {
         Debug.Log("Scene: " + scene);
-        if(scene == "TempleScene")
+        if (scene == "TempleScene")
         {
             KingBehavior.Reference.RaiseWall();
         }
-        else if(scene == "JungleScene")
+        else if (scene == "JungleScene")
         {
             MageBehavior.Reference.RaiseWall();
         }
         else if (scene == "BeachScene")
         {
             GruntBehavior.Reference.RaiseWall();
-            //TODO:
-            //Add skeleton grunt animation
         }
-        
+
     }
 
     private void PlayMovePawn()
-    {        
+    {
         Debug.Log("Scene: " + scene);
         if (scene == "TempleScene")
         {
@@ -376,6 +391,24 @@ public class GUIController : MonoBehaviour
         }
 
     }
+    //private void PlayWin()
+    //{
+    //    Debug.Log("Scene: " + scene);
+    //    if (scene == "TempleScene")
+    //    {
+    //        KingBehavior.Reference.MovePawn();
+    //    }
+    //    else if (scene == "JungleScene")
+    //    {
+    //        MageBehavior.Reference.Lose();
+    //    }
+    //    else if (scene == "BeachScene")
+    //    {
+    //        GruntBehavior.Reference.Lose();
+
+    //    }
+
+    //}
 
     #endregion
 
@@ -487,6 +520,7 @@ public class GUIController : MonoBehaviour
         playerTurnPanel.SetActive(false);
         if (isWinner)
         {
+            PlayLose();
             musicReference.playWin();
             if (GameData.InAdventureMode)
             {
@@ -769,6 +803,11 @@ public class GUIController : MonoBehaviour
     {
         storyAfter.SetActive(false);
         AdvanceLevel();
+    }
+    public void ShowEndStoryPanel()
+    {
+        storyAfter.SetActive(false);
+        endStoryPanel.SetActive(true);
     }
     #endregion
 }

@@ -208,7 +208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400124, guid: 775d0185baada4f98a3a4be10bc76c65, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.06
       objectReference: {fileID: 0}
     - target: {fileID: 400124, guid: 775d0185baada4f98a3a4be10bc76c65, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13367,6 +13367,7 @@ MonoBehaviour:
   chatHelpPanel: {fileID: 625916010}
   helpHelpPanel: {fileID: 1752373128}
   helpHelpWithoutChatPanel: {fileID: 1957033797}
+  endStoryPanel: {fileID: 0}
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
   levelLoader: {fileID: 1871655488}

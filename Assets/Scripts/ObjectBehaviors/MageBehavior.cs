@@ -23,5 +23,9 @@ public class MageBehavior : MonoBehaviour
     public void MovePawn()
     {
         animator.SetTrigger("attack");
-    }   
+    }
+    public void Lose()
+    {
+        animator.SetTrigger("die");
+    }
 }

@@ -261,6 +261,7 @@ public class TutorialController : MonoBehaviour
                 {
                     winPanel.SetActive(true);
                 }
+                CrocBehavior.Reference.RaiseWall();
                 //end turorial panel pops up
                 break;
             default:
