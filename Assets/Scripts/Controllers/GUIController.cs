@@ -28,6 +28,7 @@ public class GUIController : MonoBehaviour
     public bool animationFinished = false;
     public bool gameOver = false;
     public bool playerTurn;
+    public AudioSource clickSound;
     #endregion
     #region private variables
     //tile objects that are invisible until pawn is clicked
@@ -486,6 +487,7 @@ public class GUIController : MonoBehaviour
     {
         if (playerTurn && animationFinished && !pauseGame)
         {
+            clickSound.Play();
             playerPawn.GetComponent<MeshCollider>().enabled = pawnClicked;
             pawnClicked = !pawnClicked;
             foreach (var space in ghostPlayerMoves)

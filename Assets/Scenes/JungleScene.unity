@@ -13382,6 +13382,7 @@ MonoBehaviour:
   animationFinished: 0
   gameOver: 0
   playerTurn: 0
+  clickSound: {fileID: 775448461}
 --- !u!1 &700187105
 GameObject:
   m_ObjectHideFlags: 0
@@ -32075,6 +32076,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 831551143, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 775448461}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
 --- !u!1 &1886603500 stripped

@@ -22463,6 +22463,7 @@ MonoBehaviour:
   miscRulesPanel: {fileID: 449165231}
   helpHelpPanel: {fileID: 792309674}
   skipButton: {fileID: 1829793616}
+  clickSound: {fileID: 775448461}
 --- !u!4 &1591136324
 Transform:
   m_ObjectHideFlags: 0
@@ -23138,6 +23139,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 831551143, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 775448461}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
 --- !u!1 &1637171192 stripped

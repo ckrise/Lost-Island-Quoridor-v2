@@ -25,6 +25,7 @@ public class TutorialController : MonoBehaviour
     public GameObject tutorialPanel;
     public GameObject gameObjectivePanel, movingPawnPanel,  wallPlacementPanel, 
         miscRulesPanel, helpHelpPanel, skipButton;
+    public AudioSource clickSound;
     
     #endregion
 
@@ -615,7 +616,7 @@ public class TutorialController : MonoBehaviour
         if (allowPawnClick && playerTurn && animationFinished)
         {
             Debug.Log("pawn was Clicked");
-           
+            clickSound.Play();
             pawnClicked = !pawnClicked;
             foreach (var space in ghostPlayerMoves)
             {

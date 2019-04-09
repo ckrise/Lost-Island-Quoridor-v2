@@ -10606,6 +10606,7 @@ MonoBehaviour:
   chatHelpPanel: {fileID: 1599629099}
   helpHelpPanel: {fileID: 798013572}
   helpHelpWithoutChatPanel: {fileID: 1323693360}
+  endStoryPanel: {fileID: 0}
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
   levelLoader: {fileID: 1871655488}
@@ -10620,6 +10621,7 @@ MonoBehaviour:
   animationFinished: 0
   gameOver: 0
   playerTurn: 0
+  clickSound: {fileID: 775448461}
 --- !u!1 &698811279
 GameObject:
   m_ObjectHideFlags: 0
@@ -30051,6 +30053,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 831551143, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 775448461}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9d701bd4bd2e6a459ed9c2f56f927e0, type: 3}
 --- !u!1 &1849270195 stripped
