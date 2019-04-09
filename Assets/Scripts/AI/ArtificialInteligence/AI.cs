@@ -17,19 +17,19 @@ namespace ArtificialInteligence
         //Does a game tree search 1 layer deep.
         public string GetEasyMove(string playerMove)
         {
-            float tempWeight;
+            float weight1;
             if (MoveNum < 4)
             {
-                tempWeight = 0;
+                weight1 = 0;
             }
             else if (MoveNum > 3 && MoveNum < 8)
             {
-                tempWeight = 2;
+                weight1 = 2;
             }
             else {
-                tempWeight = new Random().Next(0, 1);
+                weight1 = new Random().Next(0, 1);
             }
-            TreeNode.weights = new List<float> { tempWeight, 1f, 0f, 0f };
+            TreeNode.weights = new List<float> { weight1, 1f, 0f, 0f };
 
             HandlePlayerMove(playerMove);
 
@@ -101,7 +101,7 @@ namespace ArtificialInteligence
         //Initiates a minimax search 2 layers deep.
         public string GetHardMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { 1f, 1f, 1f, 1f };
+            TreeNode.weights = new List<float> { new Random().Next(0, 3), 1f, 0f, 0f };
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
