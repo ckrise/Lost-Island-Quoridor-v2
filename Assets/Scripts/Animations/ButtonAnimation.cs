@@ -15,7 +15,6 @@ public class ButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExit
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        Debug.Log(rectTransform);
     }
     
     public void OnPointerEnter(PointerEventData eventData)

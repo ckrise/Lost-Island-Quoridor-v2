@@ -23,7 +23,6 @@ public class LevelLoader : MonoBehaviour
             progress = Mathf.Clamp01(operation.progress / .90f);
             progressBar.value = progress;
             progressText.text = Mathf.FloorToInt(progress * 100f) + "%";
-            Debug.Log($"{i++}: {progressText.text}");
             if (i % 10 == 0)
             {
                 yield return null;

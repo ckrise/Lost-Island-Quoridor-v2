@@ -20,7 +20,6 @@ public class NetworkController : MonoBehaviour
     public GUIController guiController = null;
     public PhotonView photonView;
     private List<string> roomList = new List<string>();
-    private float moveTime = 30.0f;
     private static float timer = 0.0f;
     private static bool isNetworkingGame = false;
     private static bool opponentForfeit = false;

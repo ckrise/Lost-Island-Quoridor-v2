@@ -44,7 +44,6 @@ public class PawnAnimation : MonoBehaviour
         float delta = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(
             transform.position, destination, delta);
-        Debug.Log("this is getting called");
         if (destination == gameObject.transform.position)
         {
             if (GameData.IsTutorial)
@@ -55,7 +54,6 @@ public class PawnAnimation : MonoBehaviour
             else
             {
                 pawnMovementSound.Play();
-                Debug.Log("Played Sound");
                 GUIController.Instance.AnimationCompleted(isPlayer);
             }
         }
