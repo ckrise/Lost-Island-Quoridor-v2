@@ -26,11 +26,11 @@ public class PawnHighlight : MonoBehaviour
             GUIController.Instance.ShowGhostMoves();
         }           
     }
-    private void Hide()
+    public void Hide()
     {
         GetComponent<Renderer>().enabled = false;
     }
-    private void Show()
+    public void Show()
     {
         if (GameData.IsTutorial)
         {

@@ -30,4 +30,12 @@ public class PawnBehavior : MonoBehaviour
             GUIController.Instance.ShowGhostMoves();
         }
     }
+    private void OnMouseOver()
+    {
+        GetComponentInChildren<PawnHighlight>().Show();
+    }
+    private void OnMouseExit()
+    {
+        GetComponentInChildren<PawnHighlight>().Hide();
+    }
 }
