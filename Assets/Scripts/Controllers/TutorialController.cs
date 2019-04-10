@@ -207,7 +207,6 @@ public class TutorialController : MonoBehaviour
     public void SkipTutorial()
     {
         Debug.Log("Clicked: Skip");
-        Debug.Log("skipped");
         if (GameData.InAdventureMode)
         {
             //GameData.AdventureProgress++;
