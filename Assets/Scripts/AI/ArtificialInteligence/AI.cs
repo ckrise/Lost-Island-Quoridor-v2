@@ -101,7 +101,7 @@ namespace ArtificialInteligence
         //Initiates a minimax search 2 layers deep.
         public string GetHardMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { new Random().Next(0, 3), 1f, 0f, 0f };
+            TreeNode.weights = new List<float> { 1f, 1f, 0f, 0f };
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
@@ -116,16 +116,34 @@ namespace ArtificialInteligence
                 numLevelsSearched = 2;
             }
 
-            Dictionary<string, float> moveValues = IterateStart(rootNode, numLevelsSearched);
+            Dictionary<string, float> depthOneValues = IterateStart(rootNode, 1);
+            Dictionary<string, float> depthTwoValues = IterateStart(rootNode, 2);
 
-            string moveSelected = "error";
-            float max = float.NegativeInfinity;
-            foreach (KeyValuePair<string, float> move in moveValues) {
-                if (max < move.Value) {
-                    max = move.Value;
-                    moveSelected = move.Key;
+            Dictionary<string, float> moveValues = new Dictionary<string, float>(); 
+            foreach (KeyValuePair<string, float> move in depthOneValues) {
+                if (move.Value - depthTwoValues[move.Key] <= 5f)
+                {
+                    moveValues.Add(move.Key, move.Value);
                 }
             }
+            
+            float max = float.NegativeInfinity;
+            List<string> maxMoves = new List<string>();
+            foreach (KeyValuePair<string, float> move in moveValues)
+            {
+                if (move.Value > max)
+                {
+                    max = move.Value;
+                    maxMoves.Clear();
+                    maxMoves.Add(move.Key);
+
+                }
+                else if (move.Value == max) {
+                    maxMoves.Add(move.Key);
+                }
+            }
+
+            string moveSelected = maxMoves[new Random().Next(0, maxMoves.Count)];
 
             CurrentBoard.MakeMove(moveSelected);
 
