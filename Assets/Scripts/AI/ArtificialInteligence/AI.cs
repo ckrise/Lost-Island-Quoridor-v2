@@ -118,18 +118,17 @@ namespace ArtificialInteligence
 
             Dictionary<string, float> depthOneValues = IterateStart(rootNode, 1);
             Dictionary<string, float> depthTwoValues = IterateStart(rootNode, 2);
-
-            Dictionary<string, float> moveValues = new Dictionary<string, float>(); 
-            foreach (KeyValuePair<string, float> move in depthOneValues) {
-                if (move.Value - depthTwoValues[move.Key] <= 5f)
+            
+            foreach (KeyValuePair<string, float> move in new Dictionary<string,float>(depthOneValues)) {
+                if (move.Value - depthTwoValues[move.Key] > 5f)
                 {
-                    moveValues.Add(move.Key, move.Value);
+                    depthOneValues[move.Key] = depthTwoValues[move.Key];
                 }
             }
             
             float max = float.NegativeInfinity;
             List<string> maxMoves = new List<string>();
-            foreach (KeyValuePair<string, float> move in moveValues)
+            foreach (KeyValuePair<string, float> move in depthOneValues)
             {
                 if (move.Value > max)
                 {
