@@ -13618,7 +13618,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Click the button with the speach bubble to open the chat menu. This is where
+  m_Text: Click the button with the speech bubble to open the chat menu. This is where
     you can send messages to your opponent.
 --- !u!222 &700187108
 CanvasRenderer:
@@ -21291,9 +21291,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Clicking the space underneith the pawn will reveal blue highlighted spaces
+  m_Text: Clicking the space underneath the pawn will reveal blue highlighted spaces
     that are available for the pawn to move to. Click one of these spaces to move
-    the pawn to that space or click the space beneith the pawn to hide the blue spaces.
+    the pawn to that space or click the space beneath the pawn to hide the blue spaces.
 --- !u!222 &1160287400
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28252,7 +28252,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Placeing a Wall
+  m_text: Placing A Wall
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe97567b4096d7f4fbfbf748c041396d, type: 2}
   m_sharedMaterial: {fileID: 21598703329450510, guid: fe97567b4096d7f4fbfbf748c041396d,
@@ -28322,7 +28322,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1618262799}
-    characterCount: 15
+    characterCount: 14
     spriteCount: 0
     spaceCount: 2
     wordCount: 3
@@ -37034,7 +37034,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
