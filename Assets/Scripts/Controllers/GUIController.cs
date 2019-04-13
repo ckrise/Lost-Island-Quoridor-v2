@@ -647,6 +647,7 @@ public class GUIController : MonoBehaviour
     public void reloadForMultiplayer(string scene)
     {
         string currentScene = scene;
+        Debug.Log("scene + " + currentScene);
         levelLoader.GetComponent<LevelLoader>().LoadLevel(currentScene);
     }
 
