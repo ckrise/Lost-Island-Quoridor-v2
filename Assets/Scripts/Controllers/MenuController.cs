@@ -202,7 +202,9 @@ public class MenuController : MonoBehaviour
 
     void StoryMode()
     {
-        if(GameData.AdventureProgress == 0)
+        GameData.IsAIGame = true;
+        GameData.InAdventureMode = true;
+        if (GameData.AdventureProgress == 0)
         {
             StartNewStory();
             levelLoader.GetComponent<LevelLoader>().LoadLevel("TutorialScene");
