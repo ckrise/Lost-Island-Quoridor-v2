@@ -618,6 +618,7 @@ public class GUIController : MonoBehaviour
         {
             opponentDisconnectedPanel.SetActive(false);
         }
+        //if()
         disconnectedFromNetworkPanel.SetActive(true);
         
     }
