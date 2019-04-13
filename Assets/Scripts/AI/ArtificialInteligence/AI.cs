@@ -106,24 +106,11 @@ namespace ArtificialInteligence
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
 
-            int numLevelsSearched;
-            if (CurrentBoard.GetPlayerTwoNumWalls() == 0)
-            {
-                numLevelsSearched = 1;
-            }
-            else
-            {
-                numLevelsSearched = 2;
-            }
-
             Dictionary<string, float> depthOneValues = IterateStart(rootNode, 1);
             Dictionary<string, float> depthTwoValues = IterateStart(rootNode, 2);
             
             foreach (KeyValuePair<string, float> move in new Dictionary<string,float>(depthOneValues)) {
-                if (move.Value - depthTwoValues[move.Key] > 5f)
-                {
-                    depthOneValues[move.Key] = depthTwoValues[move.Key];
-                }
+                depthOneValues[move.Key] = 0.5f * depthOneValues[move.Key] + .5f * depthTwoValues[move.Key];
             }
             
             float max = float.NegativeInfinity;
@@ -147,6 +134,12 @@ namespace ArtificialInteligence
             CurrentBoard.MakeMove(moveSelected);
 
             return moveSelected;
+        }
+
+        private List<float> GetHardWeights(int p1sp, int p2sp, int p1nw, int p2nw, int turnNum) {
+            List<float> w = new List<float> { 1f, 1f, 1f, 1f };
+
+            return w;
         }
 
         //This handles game start logic and updating the board during the game.
