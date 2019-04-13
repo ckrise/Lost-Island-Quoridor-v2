@@ -2521,8 +2521,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1212593343}
   m_Horizontal: 0
-  m_Vertical: 1
-  m_MovementType: 0
+  m_Vertical: 0
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -24135,7 +24135,7 @@ MonoBehaviour:
   nameErrorText: {fileID: 1244870127}
   nameUpdateText: {fileID: 689702995}
   roomScrollView: {fileID: 153382366}
-  scrollContent: {fileID: 0}
+  scrollContent: {fileID: 1212593343}
   musicVolumeSlider: {fileID: 854829395}
   sfxVolumeSlider: {fileID: 503897841}
   fullscreenToggle: {fileID: 932279008}
