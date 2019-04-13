@@ -27,13 +27,19 @@ public class MenuController : MonoBehaviour
 
     private List<GameObject> roomListings = new List<GameObject>();
     private List<GameObject> helpPanels;
+    private List<GameObject> allPanels;
     #endregion
     #region unity
     // Start is called before the first frame update
     public void Start()
     {
         menu = this;
-        
+        allPanels = new List<GameObject>(){ mainPanel, multiplayerPanel, settingsPanel, storyPanel, quickplayPanel, roomPanel,
+        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab, loadingPanel,
+        failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel,
+        disconnectedFromMultiplayerPanel, levelPanel, multiplayerPanelHelpPanel,
+        quickplayPanelHelpPanel, multiplayerLevelSelect, storyPanelHelpPanel};
+
         storyButton.onClick.AddListener(StoryMode);
         quickPlayButton.onClick.AddListener(QuickPlay);
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
@@ -50,6 +56,7 @@ public class MenuController : MonoBehaviour
         //set music and sfx volume
         musicVolumeSlider.value = PlayerData.MusicVolume;
         sfxVolumeSlider.value = PlayerData.SfxVolume;
+        fullscreenToggle.isOn = Screen.fullScreen;
 
         //Not a tutorial unless I say it is!
         GameData.IsTutorial = false;
@@ -185,9 +192,20 @@ public class MenuController : MonoBehaviour
 
     #endregion
 
+    public void GoToMainMenu()
+    {
+        foreach (var panel in allPanels)
+        {
+            panel.SetActive(false);
+        }
+        mainPanel.SetActive(true);
+    }
+
     void StoryMode()
     {
-        if(GameData.AdventureProgress == 0)
+        GameData.IsAIGame = true;
+        GameData.InAdventureMode = true;
+        if (GameData.AdventureProgress == 0)
         {
             StartNewStory();
             levelLoader.GetComponent<LevelLoader>().LoadLevel("TutorialScene");
@@ -205,7 +223,8 @@ public class MenuController : MonoBehaviour
         if (roomPanel.activeSelf)
         {
             roomPanel.SetActive(false);
-            multiplayerPanel.SetActive(true);
+            connectingText.text = "Returning to Lobby...";
+            MultiPlayerConnect();
         }
         else if (levelPanel.activeSelf)
         {
@@ -219,11 +238,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
-            mainPanel.SetActive(true);
-            multiplayerPanel.SetActive(false);
-            storyPanel.SetActive(false);
-            settingsPanel.SetActive(false);
-            quickplayPanel.SetActive(false);
+            GoToMainMenu();
         }
     }
 
@@ -293,7 +308,8 @@ public class MenuController : MonoBehaviour
 
     public void SetRoomName(string name)
     {
-        roomText.text = name.Substring(0, name.Length - 4);
+        string text = name.Substring(0, name.Length - 4);
+        roomText.text = text + "'s Game";
     }
 
     public void CreatingRoom()
@@ -306,7 +322,6 @@ public class MenuController : MonoBehaviour
     public void MultiplayerSelectLevel()
     {
         multiplayerPanel.SetActive(false);
-        connectingPanel.SetActive(false);
         multiplayerLevelSelect.SetActive(true);
     }
 

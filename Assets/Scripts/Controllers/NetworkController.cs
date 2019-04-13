@@ -25,7 +25,7 @@ public class NetworkController : MonoBehaviour
     private static bool opponentForfeit = false;
     private static string sceneToLoad;
     private static bool opponentWantsReplay = false;
-    private static bool playerWantsReplay = true;
+    private static bool playerWantsReplay = false;
 
     #endregion
 
@@ -264,7 +264,7 @@ public class NetworkController : MonoBehaviour
             PhotonNetwork.LeaveRoom();
         }
         //We are leaving multiplayer
-        else if(PhotonNetwork.connected)
+        else if (PhotonNetwork.connected)
         {
             PhotonNetwork.Disconnect();
         }
@@ -315,6 +315,7 @@ public class NetworkController : MonoBehaviour
         {
             networkGame();
             PhotonNetwork.room.IsVisible = false;
+            sceneToLoad = GameData.Scene;
             menuController.levelLoader.GetComponent<LevelLoader>().LoadLevel(GameData.Scene);
             //load level
         }
@@ -370,7 +371,6 @@ public class NetworkController : MonoBehaviour
     {
         //Debug.Log(message);
         photonView.RPC("chatMessage", PhotonTargets.Others, message);
-      
     }
 
     public void onSendForfeitMessage()
@@ -398,7 +398,7 @@ public class NetworkController : MonoBehaviour
         photonView.RPC("sendReplayMessage", PhotonTargets.Others, message);
         if(checkForReplay())
         {
-
+            guiController.reloadForMultiplayer(sceneToLoad);
         }
     }
 
@@ -455,7 +455,7 @@ public class NetworkController : MonoBehaviour
         opponentWantsReplay = true;
         if(checkForReplay())
         {
-
+            guiController.reloadForMultiplayer(sceneToLoad);
         }
     }
 
