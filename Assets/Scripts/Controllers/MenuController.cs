@@ -222,7 +222,8 @@ public class MenuController : MonoBehaviour
         if (roomPanel.activeSelf)
         {
             roomPanel.SetActive(false);
-            multiplayerPanel.SetActive(true);
+            connectingText.text = "Returning to Lobby...";
+            MultiPlayerConnect();
         }
         else if (levelPanel.activeSelf)
         {
@@ -236,11 +237,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
-            mainPanel.SetActive(true);
-            multiplayerPanel.SetActive(false);
-            storyPanel.SetActive(false);
-            settingsPanel.SetActive(false);
-            quickplayPanel.SetActive(false);
+            GoToMainMenu();
         }
     }
 
@@ -323,7 +320,6 @@ public class MenuController : MonoBehaviour
     public void MultiplayerSelectLevel()
     {
         multiplayerPanel.SetActive(false);
-        connectingPanel.SetActive(false);
         multiplayerLevelSelect.SetActive(true);
     }
 

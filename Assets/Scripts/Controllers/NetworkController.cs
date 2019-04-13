@@ -264,7 +264,7 @@ public class NetworkController : MonoBehaviour
             PhotonNetwork.LeaveRoom();
         }
         //We are leaving multiplayer
-        else if(PhotonNetwork.connected)
+        else if (PhotonNetwork.connected)
         {
             PhotonNetwork.Disconnect();
         }
