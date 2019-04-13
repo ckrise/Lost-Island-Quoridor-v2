@@ -21745,6 +21745,7 @@ MonoBehaviour:
   rulesPanel: {fileID: 1440692828}
   gameplayPanel: {fileID: 1422841041}
   levelLoader: {fileID: 1871655488}
+  RestartGameButton: {fileID: 1741923158}
   messageText: {fileID: 7662200659086568564, guid: 841df359a3433d64493f126102d554cd,
     type: 3}
   chatInputField: {fileID: 322073772}
@@ -21756,6 +21757,7 @@ MonoBehaviour:
   animationFinished: 0
   gameOver: 0
   playerTurn: 0
+  fullscreenToggle: {fileID: 743853646}
   clickSound: {fileID: 775448461}
 --- !u!1 &696665618
 GameObject:
@@ -24107,7 +24109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &745470193
 MonoBehaviour:
   m_ObjectHideFlags: 0
