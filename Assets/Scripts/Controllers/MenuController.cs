@@ -308,7 +308,8 @@ public class MenuController : MonoBehaviour
 
     public void SetRoomName(string name)
     {
-        roomText.text = name.Substring(0, name.Length - 4);
+        string text = name.Substring(0, name.Length - 4);
+        roomText.text = text + "'s Game";
     }
 
     public void CreatingRoom()
