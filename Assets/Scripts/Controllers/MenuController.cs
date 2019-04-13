@@ -19,7 +19,6 @@ public class MenuController : MonoBehaviour
     public InputField nameEntryField;
     public Text roomText, connectingText, nameErrorText, nameUpdateText;
     public ScrollRect roomScrollView;
-    public RectTransform scrollContent;
     public Slider musicVolumeSlider, sfxVolumeSlider;
     public Toggle fullscreenToggle;
     public GameObject levelLoader;
@@ -341,8 +340,6 @@ public class MenuController : MonoBehaviour
             Destroy(room);
         }
         roomListings.Clear();
-        scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x,
-                                              roomNames.Count * 50);
         foreach (var room in roomNames)
         {
             GameObject newRoomListing = Instantiate(roomListingPrefab, roomScrollView.content);
@@ -354,8 +351,6 @@ public class MenuController : MonoBehaviour
                 JoinRoom(newRoomListing.name);
             });
             roomListings.Add(newRoomListing);
-            
-            newRoomListing.SetActive(true);
         }
     }
 
