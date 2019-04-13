@@ -56,6 +56,7 @@ public class MenuController : MonoBehaviour
         //set music and sfx volume
         musicVolumeSlider.value = PlayerData.MusicVolume;
         sfxVolumeSlider.value = PlayerData.SfxVolume;
+        fullscreenToggle.isOn = Screen.fullScreen;
 
         //Not a tutorial unless I say it is!
         GameData.IsTutorial = false;

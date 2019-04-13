@@ -10782,6 +10782,7 @@ MonoBehaviour:
   animationFinished: 0
   gameOver: 0
   playerTurn: 0
+  fullscreenToggle: {fileID: 123007536}
   clickSound: {fileID: 775448461}
 --- !u!1 &698811279
 GameObject:

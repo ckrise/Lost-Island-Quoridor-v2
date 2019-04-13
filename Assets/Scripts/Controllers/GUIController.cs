@@ -28,6 +28,7 @@ public class GUIController : MonoBehaviour
     public bool animationFinished = false;
     public bool gameOver = false;
     public bool playerTurn;
+    public Toggle fullscreenToggle;
     public AudioSource clickSound;
     #endregion
     #region private variables
@@ -114,6 +115,7 @@ public class GUIController : MonoBehaviour
         //set music and sfx volume
         musicVolumeSlider.value = PlayerData.MusicVolume;
         sfxVolumeSlider.value = PlayerData.SfxVolume;
+        fullscreenToggle.isOn = Screen.fullScreen;
     }
     #endregion
 
