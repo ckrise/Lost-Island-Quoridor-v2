@@ -20,6 +20,7 @@ public class GUIController : MonoBehaviour
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
+    public GameObject RestartGameButton;
     public Text messageText;
     public InputField chatInputField;
     public Button winButton, chatButton;
@@ -30,6 +31,7 @@ public class GUIController : MonoBehaviour
     public bool playerTurn;
     public Toggle fullscreenToggle;
     public AudioSource clickSound;
+  
     #endregion
     #region private variables
     //tile objects that are invisible until pawn is clicked
@@ -86,6 +88,10 @@ public class GUIController : MonoBehaviour
             helpHelpWithoutChatPanel.SetActive(true);
            
             chatHelpPanel.SetActive(false);            
+        }
+        else
+        {
+            RestartGameButton.SetActive(false);
         }
 
         if (GameData.InAdventureMode)
