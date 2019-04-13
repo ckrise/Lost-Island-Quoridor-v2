@@ -135,6 +135,8 @@ public class MenuController : MonoBehaviour
     #region quickplay
     void QuickPlay()
     {
+        GameData.IsAIGame = true;
+        GameData.InAdventureMode = false;
         mainPanel.SetActive(false);
         quickplayPanel.SetActive(true);
     }
@@ -146,8 +148,7 @@ public class MenuController : MonoBehaviour
     }
 
     public void ToggleGoFirst()
-    {
-        
+    {        
         GameData.PlayerGoesFirst = !GameData.PlayerGoesFirst;
         Debug.Log(GameData.PlayerGoesFirst);
     }

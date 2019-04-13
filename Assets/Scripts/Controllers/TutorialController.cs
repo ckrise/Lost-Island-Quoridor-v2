@@ -22,7 +22,7 @@ public class TutorialController : MonoBehaviour
     public bool animationFinished = false;
     public bool gameOver = false;
     //tutorial panels
-    public GameObject tutorialPanel;
+    public GameObject tutorialPanel, confirmForfeitPanel;
     public GameObject gameObjectivePanel, movingPawnPanel,  wallPlacementPanel, 
         miscRulesPanel, helpHelpPanel, skipButton;
     public AudioSource clickSound;
@@ -207,7 +207,6 @@ public class TutorialController : MonoBehaviour
     public void SkipTutorial()
     {
         Debug.Log("Clicked: Skip");
-        Debug.Log("skipped");
         if (GameData.InAdventureMode)
         {
             //GameData.AdventureProgress++;
@@ -754,7 +753,25 @@ public class TutorialController : MonoBehaviour
         Screen.SetResolution(width, height, isFullscreen.isOn);
     }
 
+    public void openConfirmForfeit()
+    {
+        confirmForfeitPanel.SetActive(true);
+        if (!GameData.IsAIGame)
+        {
+            GameData.NetworkController.onSendForfeitMessage();
+        }
+    }
+
+    public void closeConfirmForfeit()
+    {
+        confirmForfeitPanel.SetActive(false);
+        if (!GameData.IsAIGame)
+        {
+            GameData.NetworkController.onSendNoQuitMessage();
+        }
+    }
+
     #endregion
 
- 
+
 }

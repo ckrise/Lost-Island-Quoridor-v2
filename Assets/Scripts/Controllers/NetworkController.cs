@@ -24,6 +24,8 @@ public class NetworkController : MonoBehaviour
     private static bool isNetworkingGame = false;
     private static bool opponentForfeit = false;
     private static string sceneToLoad;
+    private static bool opponentWantsReplay = false;
+    private static bool playerWantsReplay = true;
 
     #endregion
 
@@ -389,6 +391,17 @@ public class NetworkController : MonoBehaviour
         }
     }
 
+    public void onSendReplayMessage()
+    {
+        playerWantsReplay = true;
+        string message = "Replay";
+        photonView.RPC("sendReplayMessage", PhotonTargets.Others, message);
+        if(checkForReplay())
+        {
+
+        }
+    }
+
     //this function is for people joining the game
     //It sets stuff up for sending messages and tells the 
     //"host" to start the game
@@ -434,6 +447,16 @@ public class NetworkController : MonoBehaviour
     public void noQuitMessage(string message)
     {
         opponentForfeit = false;
+    }
+
+    [PunRPC]
+    public void sendReplayMessage(string message)
+    {
+        opponentWantsReplay = true;
+        if(checkForReplay())
+        {
+
+        }
     }
 
     //"host" gets startgame message
@@ -498,7 +521,7 @@ public class NetworkController : MonoBehaviour
     //}
     #endregion
 
-    #region Reconnect
+    #region Reconnect and Replay
     public void tryReconnect()
     {
         if(PhotonNetwork.ReconnectAndRejoin())
@@ -519,5 +542,16 @@ public class NetworkController : MonoBehaviour
             }
         }
     }
+
+    private bool checkForReplay()
+    {
+        bool result = false;
+        if(opponentWantsReplay && playerWantsReplay)
+        {
+            result = true;
+        }
+        return result;
+    }
+    
     #endregion
 }
