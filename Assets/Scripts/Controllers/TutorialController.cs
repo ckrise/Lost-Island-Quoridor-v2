@@ -26,7 +26,7 @@ public class TutorialController : MonoBehaviour
     public GameObject gameObjectivePanel, movingPawnPanel,  wallPlacementPanel, 
         miscRulesPanel, helpHelpPanel, skipButton;
     public AudioSource clickSound;
-    
+    public Toggle fullscreenToggle;
     #endregion
 
     #region private variables
@@ -101,6 +101,7 @@ public class TutorialController : MonoBehaviour
         //set music and sfx volume
         musicVolumeSlider.value = PlayerData.MusicVolume;
         sfxVolumeSlider.value = PlayerData.SfxVolume;
+        fullscreenToggle.isOn = Screen.fullScreen;
 
         //create tutorial panel queue
         tutorialPanelQueue.Add(gameObjectivePanel);
