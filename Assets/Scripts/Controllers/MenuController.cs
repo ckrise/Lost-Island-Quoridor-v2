@@ -27,13 +27,19 @@ public class MenuController : MonoBehaviour
 
     private List<GameObject> roomListings = new List<GameObject>();
     private List<GameObject> helpPanels;
+    private List<GameObject> allPanels;
     #endregion
     #region unity
     // Start is called before the first frame update
     public void Start()
     {
         menu = this;
-        
+        allPanels = new List<GameObject>(){ mainPanel, multiplayerPanel, settingsPanel, storyPanel, quickplayPanel, roomPanel,
+        connectingPanel, continuePanel, nameEntryPanel, roomListingPrefab, loadingPanel,
+        failMultiplayerConnectionPanel, failJoinRoomPanel, failCreateRoomPanel,
+        disconnectedFromMultiplayerPanel, levelPanel, multiplayerPanelHelpPanel,
+        quickplayPanelHelpPanel, multiplayerLevelSelect, storyPanelHelpPanel};
+
         storyButton.onClick.AddListener(StoryMode);
         quickPlayButton.onClick.AddListener(QuickPlay);
         multiplayerButton.onClick.AddListener(MultiPlayerConnect);
@@ -183,6 +189,15 @@ public class MenuController : MonoBehaviour
     }
 
     #endregion
+
+    public void GoToMainMenu()
+    {
+        foreach (var panel in allPanels)
+        {
+            panel.SetActive(false);
+        }
+        mainPanel.SetActive(true);
+    }
 
     void StoryMode()
     {
