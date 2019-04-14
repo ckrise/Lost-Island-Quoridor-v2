@@ -143,8 +143,8 @@ namespace ArtificialInteligence
             //Calculates factors of interest and calculates the value.
             else
             {
-                int P1SP = BoardAnalysis.EstimateShortestPath(Board, true);
-                int P2SP = BoardAnalysis.EstimateShortestPath(Board, false);
+                int P1SP = BoardAnalysis.FindShortestPath(Board, true);
+                int P2SP = BoardAnalysis.FindShortestPath(Board, false);
                 int P1NumWalls = Board.GetPlayerOneNumWalls();
                 int P2NumWalls = Board.GetPlayerTwoNumWalls();
 

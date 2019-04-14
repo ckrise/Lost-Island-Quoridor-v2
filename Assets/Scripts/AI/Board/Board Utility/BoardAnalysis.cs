@@ -23,7 +23,7 @@ namespace Board.Util
         }
 
         //Finds shortest path for the chosen player to the end of the board and returns it.
-        public static int EstimateShortestPath(AIBoard board, bool isPlayerOne)
+        public static int FindShortestPath(AIBoard board, bool isPlayerOne)
         {
             Queue<SearchNode> spaces = new Queue<SearchNode>();
             HashSet<string> movesToBeVisited = new HashSet<string>();
@@ -48,6 +48,44 @@ namespace Board.Util
                 if (HasDirectPath(board, isPlayerOne, currentNode.space))
                 {
                     result = currentNode.depth + FindDirectDistance(currentNode.space, isPlayerOne);
+                    break;
+                }
+
+                //Get a list of moves from the current node location.
+                //If the node has not already been visited by this branch it is added to the queue.
+                List<string> movesFromSpace = board.GetAdjacentMoves(currentNode.space);
+                foreach (string move in movesFromSpace)
+                {
+                    if (!movesToBeVisited.Contains(move))
+                    {
+                        spaces.Enqueue(new SearchNode(move, currentNode.depth));
+                        movesToBeVisited.Add(move);
+                    }
+                }
+
+            }
+            return result;
+        }
+
+        //Finds shortest path for the chosen player to the end of the board and returns it.
+        public static int FindDistanceBetween(AIBoard board, string locationOne, string locationTwo)
+        {
+            Queue<SearchNode> spaces = new Queue<SearchNode>();
+            HashSet<string> movesToBeVisited = new HashSet<string>();
+            int result = -1;
+            spaces.Enqueue(new SearchNode(locationOne));
+            movesToBeVisited.Add(spaces.Peek().space);
+
+            //Will exit after all paths return without finding end or 
+            //break out of loop when first path to finish is found.
+            while (spaces.Count != 0 && result == -1)
+            {
+                SearchNode currentNode = spaces.Dequeue();
+
+                //Checks for easy direct path
+                if (currentNode.Equals(locationTwo))
+                {
+                    result = currentNode.depth;
                     break;
                 }
 

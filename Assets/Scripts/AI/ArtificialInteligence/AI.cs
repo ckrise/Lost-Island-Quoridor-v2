@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Board;
+using Board.Util;
 using System;
 
 namespace ArtificialInteligence
@@ -26,7 +27,8 @@ namespace ArtificialInteligence
             {
                 weight1 = 2;
             }
-            else {
+            else
+            {
                 weight1 = new Random().Next(0, 1);
             }
             TreeNode.weights = new List<float> { weight1, 1f, 0f, 0f };
@@ -43,13 +45,15 @@ namespace ArtificialInteligence
             foreach (KeyValuePair<string, float> move in depthOneValues)
             {
                 float moveValue;
-                if (depthTwoValues[move.Key] > 1000 || depthTwoValues[move.Key] < -1000) {
+                if (depthTwoValues[move.Key] > 1000 || depthTwoValues[move.Key] < -1000)
+                {
                     moveValue = depthTwoValues[move.Key];
                 }
-                else {
+                else
+                {
                     moveValue = move.Value;
                 }
-                
+
                 if (max < moveValue)
                 {
                     max = moveValue;
@@ -62,8 +66,9 @@ namespace ArtificialInteligence
             MoveNum++;
             return moveSelected;
         }
-        
-        public string GetIntermediateMove(string playerMove) {
+
+        public string GetIntermediateMove(string playerMove)
+        {
             TreeNode.weights = new List<float> { new Random().Next(0, 3), 1f, 0f, 0f };
             HandlePlayerMove(playerMove);
 
@@ -101,31 +106,19 @@ namespace ArtificialInteligence
         //Initiates a minimax search 2 layers deep.
         public string GetHardMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { 1f, 1f, 0f, 0f };
+            
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
-
-            int numLevelsSearched;
-            if (CurrentBoard.GetPlayerTwoNumWalls() == 0)
-            {
-                numLevelsSearched = 1;
-            }
-            else
-            {
-                numLevelsSearched = 2;
-            }
-
+            TreeNode.weights = GetHardWeights(CurrentBoard, MoveNum);
             Dictionary<string, float> depthOneValues = IterateStart(rootNode, 1);
             Dictionary<string, float> depthTwoValues = IterateStart(rootNode, 2);
-            
-            foreach (KeyValuePair<string, float> move in new Dictionary<string,float>(depthOneValues)) {
-                if (move.Value - depthTwoValues[move.Key] > 5f)
-                {
-                    depthOneValues[move.Key] = depthTwoValues[move.Key];
-                }
+
+            foreach (KeyValuePair<string, float> move in new Dictionary<string, float>(depthOneValues))
+            {
+                depthOneValues[move.Key] = 0.1f * depthOneValues[move.Key] + 0.9f * depthTwoValues[move.Key];
             }
-            
+
             float max = float.NegativeInfinity;
             List<string> maxMoves = new List<string>();
             foreach (KeyValuePair<string, float> move in depthOneValues)
@@ -137,7 +130,8 @@ namespace ArtificialInteligence
                     maxMoves.Add(move.Key);
 
                 }
-                else if (move.Value == max) {
+                else if (move.Value == max)
+                {
                     maxMoves.Add(move.Key);
                 }
             }
@@ -147,6 +141,34 @@ namespace ArtificialInteligence
             CurrentBoard.MakeMove(moveSelected);
 
             return moveSelected;
+        }
+
+        private List<float> GetHardWeights(AIBoard board, int turnNum)
+        {
+            float p1spWeight = 1f;
+            float p2spWeight = 1f;
+            float p1nwWeight = 0f;
+            float p2nwWeight = 0f;
+
+            //Variables used in weight calculations.
+            int playerOneSP = BoardAnalysis.FindShortestPath(board, true);
+            int playerTwoSP = BoardAnalysis.FindShortestPath(board, true);
+            int playerTwoNumWalls = CurrentBoard.GetPlayerTwoNumWalls();
+            int distanceBetweenPlayers = BoardAnalysis.FindDistanceBetween(CurrentBoard, CurrentBoard.GetPlayerOnePos(), CurrentBoard.GetPlayerTwoPos());
+
+            if (playerOneSP < 4) {
+                p1spWeight = 4 - playerOneSP;
+            }
+            if (playerTwoSP < 3) {
+                p2spWeight = 3 - playerTwoSP;
+            }
+            if (playerTwoNumWalls < 4) {
+                p2nwWeight = 6 - playerTwoNumWalls;
+            }
+
+
+            List<float> w = new List<float> { p1spWeight, p2spWeight, p2nwWeight, p1nwWeight };
+            return w;
         }
 
         //This handles game start logic and updating the board during the game.
@@ -222,14 +244,16 @@ namespace ArtificialInteligence
         }
 
         //If risk is very high will return 1, low risk is higher return value.
-        private int GetMoveRisk(string move) {
+        private int GetMoveRisk(string move)
+        {
             int riskValue = 100;
             AIBoard tempBoard = new AIBoard(CurrentBoard);
             tempBoard.MakeMove(move);
             WallDiffNode rootNode = new WallDiffNode(tempBoard);
 
             List<string> wallPlacements = tempBoard.GetWallMoves();
-            foreach (string wall in wallPlacements) {
+            foreach (string wall in wallPlacements)
+            {
                 riskValue = Math.Min(riskValue, RiskIterate(new WallDiffNode(rootNode, wall), 0));
             }
 
@@ -237,7 +261,8 @@ namespace ArtificialInteligence
         }
 
         private static int changeThreshhold = 3;
-        private int RiskIterate(WallDiffNode node, int depth, int maxDepth = 4) {
+        private int RiskIterate(WallDiffNode node, int depth, int maxDepth = 4)
+        {
             //NumMoves is the number of moves it takes before a significant change in shortest path is found.
             int changeInDiff = node.CalcChangeInDiff();
             int numMoves = 1000;
@@ -245,17 +270,20 @@ namespace ArtificialInteligence
             {
                 numMoves = depth;
             }
-            else if (depth > maxDepth) {
+            else if (depth > maxDepth)
+            {
                 numMoves = depth;
             }
-            else {
+            else
+            {
                 List<WallDiffNode> children = node.GetChildren();
-                foreach (WallDiffNode child in children) {
+                foreach (WallDiffNode child in children)
+                {
                     numMoves = Math.Min(numMoves, RiskIterate(child, depth + 1));
                 }
             }
-            return numMoves;   
+            return numMoves;
         }
-        
+
     }
 }

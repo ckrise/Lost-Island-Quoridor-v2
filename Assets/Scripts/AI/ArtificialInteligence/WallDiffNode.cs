@@ -24,7 +24,7 @@ namespace ArtificialInteligence
             Board = new AIBoard(copy);
             Depth = 0;
             MoveMade = "rootnode";
-            Diff = BoardAnalysis.EstimateShortestPath(Board, true) - BoardAnalysis.EstimateShortestPath(Board, false);
+            Diff = BoardAnalysis.FindShortestPath(Board, true) - BoardAnalysis.FindShortestPath(Board, false);
         }
         
         //Used for creating children
@@ -54,7 +54,7 @@ namespace ArtificialInteligence
 
         //If it is positive P2SP's path got that much shorter.
         public int CalcChangeInDiff() {
-            Diff = BoardAnalysis.EstimateShortestPath(Board, true) - BoardAnalysis.EstimateShortestPath(Board, false);
+            Diff = BoardAnalysis.FindShortestPath(Board, true) - BoardAnalysis.FindShortestPath(Board, false);
             return PreviousDiff - Diff;
         }
     }
