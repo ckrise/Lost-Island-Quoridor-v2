@@ -12,7 +12,7 @@ public class GUIController : MonoBehaviour
     public static GUIController Instance;
     //Instances of gameboard objects that the controller must manipulate
     public GameObject playerPawn, opponentPawn, ghostSpace,
-        ghostWall, wall, hoverpadMaster, winPanel, losePanel, chatPanel,
+        ghostWall, wall, hoverpadMaster, winComputerPanel, winOnlinePanel, loseComputerPanel, loseOnlinePanel, chatPanel,
         settingsPanel, helpPanel, confirmForfeitPanel, opponentDisconnectedPanel, opponentFofeitedPanel,
         disconnectedFromNetworkPanel, playerTurnPanel, opponentTurnPanel,
         adventureWinPanel, adventureLosePanel, moveTimerPanel, gameControlPanel,
@@ -20,16 +20,18 @@ public class GUIController : MonoBehaviour
     //panels in the help panel tab view
     public GameObject rulesPanel, gameplayPanel;
     public GameObject levelLoader;
+    public GameObject RestartGameButton;
     public Text messageText;
     public InputField chatInputField;
     public Button winButton, chatButton;
-    public ScrollRect chatScrollRect;
+    public ScrollRect chatScrollRect, scrollContent;
     public Slider musicVolumeSlider, sfxVolumeSlider;
     public bool animationFinished = false;
     public bool gameOver = false;
     public bool playerTurn;
     public Toggle fullscreenToggle;
     public AudioSource clickSound;
+  
     #endregion
     #region private variables
     //tile objects that are invisible until pawn is clicked
@@ -86,6 +88,10 @@ public class GUIController : MonoBehaviour
             helpHelpWithoutChatPanel.SetActive(true);
            
             chatHelpPanel.SetActive(false);            
+        }
+        else
+        {
+            RestartGameButton.SetActive(false);
         }
 
         if (GameData.InAdventureMode)
@@ -531,9 +537,13 @@ public class GUIController : MonoBehaviour
                 GameData.AdventureProgress++;
                 adventureWinPanel.SetActive(true);
             }
+            else if(GameData.IsAIGame)
+            {
+                winComputerPanel.SetActive(true);
+            }
             else
             {
-                winPanel.SetActive(true);
+                winOnlinePanel.SetActive(true);
             }
         }
         else
@@ -543,9 +553,13 @@ public class GUIController : MonoBehaviour
             {
                 adventureLosePanel.SetActive(true);
             }
+            else if(GameData.IsAIGame)
+            {
+                loseComputerPanel.SetActive(true);
+            }
             else
             {
-                losePanel.SetActive(true);
+                loseOnlinePanel.SetActive(true);
             }
         }
     }
@@ -620,6 +634,7 @@ public class GUIController : MonoBehaviour
         {
             opponentDisconnectedPanel.SetActive(false);
         }
+        //if()
         disconnectedFromNetworkPanel.SetActive(true);
         
     }
@@ -627,6 +642,18 @@ public class GUIController : MonoBehaviour
     public void closeLostConnectionPanel()
     {
         disconnectedFromNetworkPanel.SetActive(false);
+    }
+
+    public void reloadForMultiplayer(string scene)
+    {
+        string currentScene = scene;
+        Debug.Log("scene + " + currentScene);
+        levelLoader.GetComponent<LevelLoader>().LoadLevel(currentScene);
+    }
+
+    public void onClickPlayAgain()
+    {
+        GameData.NetworkController.onSendReplayMessage();
     }
     #endregion
 

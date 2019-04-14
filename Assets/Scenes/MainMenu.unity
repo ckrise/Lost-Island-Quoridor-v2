@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39303547, g: 0.4348344, b: 0.49600065, a: 1}
+  m_IndirectSpecularColor: {r: 0.39305365, g: 0.43482763, b: 0.49597704, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2521,7 +2521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1212593343}
   m_Horizontal: 0
-  m_Vertical: 1
+  m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
@@ -6599,7 +6599,6 @@ GameObject:
   - component: {fileID: 422411836}
   - component: {fileID: 422411835}
   - component: {fileID: 422411834}
-  - component: {fileID: 422411837}
   m_Layer: 5
   m_Name: Start Panel
   m_TagString: Untagged
@@ -6708,20 +6707,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422411832}
   m_CullTransparentMesh: 0
---- !u!114 &422411837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 422411832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates: []
-  delegates: []
 --- !u!1 &423305940
 GameObject:
   m_ObjectHideFlags: 0
@@ -22420,8 +22405,8 @@ RectTransform:
   m_Father: {fileID: 863506840}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.06245375}
-  m_AnchorMax: {x: 1, y: 0.9999537}
+  m_AnchorMin: {x: 0, y: 0.061758943}
+  m_AnchorMax: {x: 1, y: 0.9992589}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22495,7 +22480,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.018544894}
+  m_AnchoredPosition: {x: 0, y: 0.29643795}
   m_SizeDelta: {x: 0, y: 400}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1212593344
@@ -24150,6 +24135,7 @@ MonoBehaviour:
   nameErrorText: {fileID: 1244870127}
   nameUpdateText: {fileID: 689702995}
   roomScrollView: {fileID: 153382366}
+  scrollContent: {fileID: 1212593343}
   musicVolumeSlider: {fileID: 854829395}
   sfxVolumeSlider: {fileID: 503897841}
   fullscreenToggle: {fileID: 932279008}
@@ -24311,7 +24297,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1210731028}
   m_HandleRect: {fileID: 1210731027}
   m_Direction: 2
-  m_Value: 0.99925905
+  m_Value: 0.98814213
   m_Size: 0.93749994
   m_NumberOfSteps: 0
   m_OnValueChanged:
