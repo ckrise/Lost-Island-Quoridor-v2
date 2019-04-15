@@ -8,7 +8,7 @@ public class CameraRotate : MonoBehaviour
     public float speed;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // https://forum.unity.com/threads/rotate-the-camera-around-the-object.47353/
         transform.Translate(Vector3.left * Time.deltaTime * speed);

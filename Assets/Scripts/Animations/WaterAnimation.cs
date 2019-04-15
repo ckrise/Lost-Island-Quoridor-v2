@@ -20,17 +20,17 @@ public class WaterAnimation : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (pause == 0)
         {
             if (rise)
             {
-                transform.Translate(upIncrement);
+                transform.Translate(upIncrement * Time.deltaTime);
             }
             else
             {
-                transform.Translate(downIncrement);
+                transform.Translate(downIncrement * Time.deltaTime);
             }
             if (transform.position.y >= maxLevel ||
                 transform.position.y <= minLevel)
