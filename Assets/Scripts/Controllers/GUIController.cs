@@ -24,7 +24,7 @@ public class GUIController : MonoBehaviour
     public Text messageText;
     public InputField chatInputField;
     public Button winButton, chatButton;
-    public ScrollRect chatScrollRect, scrollContent;
+    public ScrollRect chatScrollRect;
     public Slider musicVolumeSlider, sfxVolumeSlider;
     public bool animationFinished = false;
     public bool gameOver = false;

@@ -30,5 +30,5 @@ public class musicScript : MonoBehaviour
     public void Volume(float volume)
     {
         mainGameMusic.volume = defeatMusic.volume = winMusic.volume = volume;
-}
+    }
 }
