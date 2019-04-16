@@ -31,7 +31,8 @@ namespace ArtificialInteligence
             {
                 weight1 = new Random().Next(0, 1);
             }
-            TreeNode.weights = new List<float> { weight1, 1f, 0f, 0f };
+            TreeNode.weights = new List<float> { weight1, 1f };
+            TreeNode.wallValues = new List<float> { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f }; 
 
             HandlePlayerMove(playerMove);
 
@@ -69,7 +70,8 @@ namespace ArtificialInteligence
 
         public string GetIntermediateMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { new Random().Next(0, 3), 1f, 0f, 0f };
+            TreeNode.weights = new List<float> { new Random().Next(0, 3), 1f };
+            TreeNode.wallValues = new List<float> { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
             HandlePlayerMove(playerMove);
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
@@ -106,7 +108,8 @@ namespace ArtificialInteligence
         //Initiates a minimax search 2 layers deep.
         public string GetHardMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { 1f, 1f, 0f, 0f };
+            TreeNode.weights = new List<float> { 1f, 1f };
+            TreeNode.wallValues = new List<float> { 5f, 3f, 3f, 2f, 2f, 0f, 0f, 0f, 0f, 0f };
 
             //AI starts on e9 and makes the first move of the game.
             if (playerMove == "gamestart") { CurrentBoard.PlayerTwoGoesFirst(); }
@@ -155,7 +158,11 @@ namespace ArtificialInteligence
 
             selectedMove = movesSelected[new Random().Next(0, movesSelected.Count)];
 
-            if (!(selectedMove.EndsWith("h") || selectedMove.EndsWith("v"))) {
+            //If selected move isn't a wall then use the pawn moves single level evaluation.
+            //And if jump next move isn't a possibility.
+            bool isPawnMove = !(selectedMove.EndsWith("h") || selectedMove.EndsWith("v"));
+            bool jumpPossible = BoardAnalysis.FindDistanceBetween(CurrentBoard, CurrentBoard.GetPlayerOnePos(), CurrentBoard.GetPlayerTwoPos()) == 2;
+            if (isPawnMove && !jumpPossible) {
                 List<string> pawnMoves = CurrentBoard.GetPawnMoves();
                 value = float.NegativeInfinity;
                 selectedMove = "none2";

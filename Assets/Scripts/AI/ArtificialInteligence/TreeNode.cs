@@ -6,7 +6,8 @@ namespace ArtificialInteligence
 {
     public class TreeNode
     {
-        public static List<float> weights = new List<float> { 1f, 1f, 1f, 1f };
+        public static List<float> weights = new List<float> { 1f, 1f };
+        public static List<float> wallValues = new List<float> { 6f, 4f, 2f, 3f, 3f, 0f, 0f, 0f, 1f, 1f };
 
         //Will use static weights in real implementation to avoid overhead of copying to all nodes.
         private AIBoard Board { get; set; }
@@ -20,6 +21,7 @@ namespace ArtificialInteligence
         {
             Board = new AIBoard(copy);
             MoveMade = "rootnode";
+            value = 0;
         }
 
         //Used in the creating of children of a treenode.
@@ -27,6 +29,7 @@ namespace ArtificialInteligence
         {
             Board = new AIBoard(copy);
             MoveMade = move;
+            value = 0;
         }
 
         //Constructs a list of treenodes that result from every move made that is possible.
@@ -138,6 +141,8 @@ namespace ArtificialInteligence
         //Static evaluation function of the gameboard.
         private void EvaluateNode()
         {
+            value = 0;
+
             //If a player won, assigns node proper value and then returns.
             if (EvaluateWinPossibility(ref value)) { }
             //Calculates factors of interest and calculates the value.
@@ -147,8 +152,11 @@ namespace ArtificialInteligence
                 int P2SP = BoardAnalysis.FindShortestPath(Board, false);
                 int P1NumWalls = Board.GetPlayerOneNumWalls();
                 int P2NumWalls = Board.GetPlayerTwoNumWalls();
+                for (int i = 0; i < P2NumWalls; ++i) {
+                    value += wallValues[i];
+                }
 
-                value = weights[0] * P1SP - weights[1] * P2SP + weights[2] * P2NumWalls - weights[3] * P1NumWalls;
+                value += (weights[0] * P1SP - weights[1] * P2SP);
             }
         }
 
