@@ -7,6 +7,7 @@ public class LevelLoader : MonoBehaviour
     public GameObject loadingPanel;
     public Slider progressBar;
     public Text progressText;
+  
     public void LoadLevel(string sceneName)
     {
         StartCoroutine(LoadAsynchrously(sceneName));

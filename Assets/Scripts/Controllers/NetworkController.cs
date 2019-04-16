@@ -26,6 +26,7 @@ public class NetworkController : MonoBehaviour
     private static string sceneToLoad;
     private static bool opponentWantsReplay = false;
     private static bool playerWantsReplay = false;
+    private static LevelLoader levelLoaderInstance;
 
     #endregion
 
@@ -36,7 +37,6 @@ public class NetworkController : MonoBehaviour
         networkController = this;
         gameController = GameController.GCInstance;
         guiController = GUIController.Instance;
-       
     }
     #endregion
     //this is only used for timer
@@ -324,6 +324,7 @@ public class NetworkController : MonoBehaviour
     //This does some very important things for the online games to work
     public void networkGame()
     {
+        opponentWantsReplay = playerWantsReplay = opponentForfeit = false;
         //this allows us to send things
         photonView = PhotonView.Get(this);
         guiController = GUIController.Instance;
@@ -333,6 +334,7 @@ public class NetworkController : MonoBehaviour
             Debug.Log("null object");
         }
         isNetworkingGame = true;
+        levelLoaderInstance = LevelLoader.levelLoader;
     }
     #endregion
 
@@ -384,6 +386,7 @@ public class NetworkController : MonoBehaviour
 
     public void onSendNoQuitMessage()
     {
+        Debug.Log("sending no quit message");
         string message = "no forfeit";
         if (isNetworkingGame)
         {
@@ -395,10 +398,12 @@ public class NetworkController : MonoBehaviour
     {
         playerWantsReplay = true;
         string message = "Replay";
+        Debug.Log("Sending replay message");
         photonView.RPC("sendReplayMessage", PhotonTargets.Others, message);
         if(checkForReplay())
         {
-            guiController.reloadForMultiplayer(sceneToLoad);
+            opponentWantsReplay = playerWantsReplay = false;
+            SceneManager.LoadScene(sceneToLoad);
         }
     }
 
@@ -446,16 +451,19 @@ public class NetworkController : MonoBehaviour
     [PunRPC]
     public void noQuitMessage(string message)
     {
+        Debug.Log("foreit set to false");
         opponentForfeit = false;
     }
 
     [PunRPC]
     public void sendReplayMessage(string message)
     {
+        Debug.Log("received replay message");
         opponentWantsReplay = true;
         if(checkForReplay())
         {
-            guiController.reloadForMultiplayer(sceneToLoad);
+            opponentWantsReplay = playerWantsReplay = false;
+            SceneManager.LoadScene(sceneToLoad);
         }
     }
 
@@ -548,6 +556,7 @@ public class NetworkController : MonoBehaviour
         bool result = false;
         if(opponentWantsReplay && playerWantsReplay)
         {
+            Debug.Log("ready for replay");
             result = true;
         }
         return result;

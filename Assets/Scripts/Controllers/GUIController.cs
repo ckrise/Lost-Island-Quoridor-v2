@@ -644,13 +644,6 @@ public class GUIController : MonoBehaviour
         disconnectedFromNetworkPanel.SetActive(false);
     }
 
-    public void reloadForMultiplayer(string scene)
-    {
-        string currentScene = scene;
-        Debug.Log("scene + " + currentScene);
-        levelLoader.GetComponent<LevelLoader>().LoadLevel(currentScene);
-    }
-
     public void onClickPlayAgain()
     {
         GameData.NetworkController.onSendReplayMessage();
