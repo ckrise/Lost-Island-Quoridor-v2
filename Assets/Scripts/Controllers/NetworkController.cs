@@ -347,6 +347,7 @@ public class NetworkController : MonoBehaviour
     //Dido
     public void OnPhotonPlayerDisconnected()
     {
+        Debug.Log("player left");
         if(PhotonNetwork.room.PlayerCount == 1)
         {
             guiController.OpponentLeft(opponentForfeit);

@@ -605,21 +605,21 @@ public class GUIController : MonoBehaviour
         
         //lock UI
         playerTurn = false;
-        if (!gameOver)
+     
+        gameOver = true;
+        if(moveTimerPanel.activeSelf)
         {
-            gameOver = true;
-            if(moveTimerPanel.activeSelf)
-            {
-                moveTimerPanel.SetActive(false);
-            }
-            if (!opponentForfeit)
-            {
-                opponentDisconnectedPanel.SetActive(true);
-            }
-            else
-            {
-                opponentFofeitedPanel.SetActive(true);
-            }
+            moveTimerPanel.SetActive(false);
+        }
+        if (!opponentForfeit)
+        {
+            opponentDisconnectedPanel.SetActive(true);
+            loseOnlinePanel.SetActive(false);
+            winOnlinePanel.SetActive(false);
+        }
+        else
+        {
+            opponentFofeitedPanel.SetActive(true);
         }
         
     }
