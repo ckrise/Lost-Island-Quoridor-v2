@@ -123,6 +123,7 @@ namespace ArtificialInteligence
 
             List<TreeNode> possibleMoves = rootNode.GetChildren();
 
+            //Create dictionary of all useful values of first two levels of analysis.
             Dictionary<string, MoveInfo> moveValues = new Dictionary<string, MoveInfo>();
             foreach (TreeNode moveNode in possibleMoves)
             {
@@ -134,6 +135,9 @@ namespace ArtificialInteligence
                 moveValues.Add(moveNode.GetMoveMade(), thisMovesInfo);
             }
 
+            string selectedMove = "none1";
+
+            //Minimax of the first two levels.
             List<string> movesSelected = new List<string>();
             float value = float.NegativeInfinity;
             foreach (KeyValuePair<string, MoveInfo> pair in moveValues) {
@@ -149,7 +153,21 @@ namespace ArtificialInteligence
                 }
             }
 
-            string selectedMove = movesSelected[new Random().Next(0, movesSelected.Count)];
+            selectedMove = movesSelected[new Random().Next(0, movesSelected.Count)];
+
+            if (!(selectedMove.EndsWith("h") || selectedMove.EndsWith("v"))) {
+                List<string> pawnMoves = CurrentBoard.GetPawnMoves();
+                value = float.NegativeInfinity;
+                selectedMove = "none2";
+                foreach (string pm in pawnMoves) {
+                    float tempVal = moveValues[pm].singleLevelValue;
+                    if (tempVal > value) {
+                        selectedMove = pm;
+                        value = tempVal;
+                    }
+                }
+            }
+
             CurrentBoard.MakeMove(selectedMove);
             return selectedMove;
         }
