@@ -106,41 +106,79 @@ namespace ArtificialInteligence
         //Initiates a minimax search 2 layers deep.
         public string GetHardMove(string playerMove)
         {
-            
-            HandlePlayerMove(playerMove);
+            TreeNode.weights = new List<float> { 1f, 1f, 0f, 0f };
+
+            //AI starts on e9 and makes the first move of the game.
+            if (playerMove == "gamestart") { CurrentBoard.PlayerTwoGoesFirst(); }
+            //AI starts on e1 and makes the first move of the game.
+            else if (playerMove == "") { }
+            //Updates the board with the player's move.
+            else
+            {
+                CurrentBoard.MakeMove(playerMove);
+            }
 
             TreeNode rootNode = new TreeNode(CurrentBoard);
-            TreeNode.weights = GetHardWeights(CurrentBoard, MoveNum);
-            Dictionary<string, float> depthOneValues = IterateStart(rootNode, 1);
-            Dictionary<string, float> depthTwoValues = IterateStart(rootNode, 2);
+            float rootNodeValue = rootNode.CalcValue();
 
-            foreach (KeyValuePair<string, float> move in new Dictionary<string, float>(depthOneValues))
+            List<TreeNode> possibleMoves = rootNode.GetChildren();
+
+            Dictionary<string, MoveInfo> moveValues = new Dictionary<string, MoveInfo>();
+            foreach (TreeNode moveNode in possibleMoves)
             {
-                depthOneValues[move.Key] = 0.1f * depthOneValues[move.Key] + 0.9f * depthTwoValues[move.Key];
+                MoveInfo thisMovesInfo = new MoveInfo();
+                foreach (TreeNode childNode in moveNode.GetChildren())
+                {
+                    thisMovesInfo.UpdateValues(childNode.CalcValue(), moveNode.CalcValue());
+                }
+                moveValues.Add(moveNode.GetMoveMade(), thisMovesInfo);
             }
 
-            float max = float.NegativeInfinity;
-            List<string> maxMoves = new List<string>();
-            foreach (KeyValuePair<string, float> move in depthOneValues)
-            {
-                if (move.Value > max)
+            List<string> movesSelected = new List<string>();
+            float value = float.NegativeInfinity;
+            foreach (KeyValuePair<string, MoveInfo> pair in moveValues) {
+                if (pair.Value.min > value)
                 {
-                    max = move.Value;
-                    maxMoves.Clear();
-                    maxMoves.Add(move.Key);
-
+                    value = pair.Value.min;
+                    movesSelected.Clear();
+                    movesSelected.Add(pair.Key);
                 }
-                else if (move.Value == max)
+                else if (pair.Value.min == value)
                 {
-                    maxMoves.Add(move.Key);
+                    movesSelected.Add(pair.Key);
                 }
             }
 
-            string moveSelected = maxMoves[new Random().Next(0, maxMoves.Count)];
+            string selectedMove = movesSelected[new Random().Next(0, movesSelected.Count)];
+            CurrentBoard.MakeMove(selectedMove);
+            return selectedMove;
+        }
 
-            CurrentBoard.MakeMove(moveSelected);
+        class MoveInfo
+        {
+            public float min, max, singleLevelValue;
+            List<float> allChildValues;
 
-            return moveSelected;
+            public MoveInfo()
+            {
+                min = float.PositiveInfinity;
+                max = float.NegativeInfinity;
+                allChildValues = new List<float>();
+            }
+
+            public void UpdateValues(float m, float slv)
+            {
+                singleLevelValue = slv;
+                allChildValues.Add(m);
+                if (m < min)
+                {
+                    min = m;
+                }
+                if (m > max)
+                {
+                    max = m;
+                }
+            }
         }
 
         private List<float> GetHardWeights(AIBoard board, int turnNum)
