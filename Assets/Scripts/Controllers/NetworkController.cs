@@ -26,7 +26,6 @@ public class NetworkController : MonoBehaviour
     private static string sceneToLoad;
     private static bool opponentWantsReplay = false;
     private static bool playerWantsReplay = false;
-    private static LevelLoader levelLoaderInstance;
 
     #endregion
 
@@ -334,7 +333,6 @@ public class NetworkController : MonoBehaviour
             Debug.Log("null object");
         }
         isNetworkingGame = true;
-        levelLoaderInstance = LevelLoader.levelLoader;
     }
     #endregion
 
