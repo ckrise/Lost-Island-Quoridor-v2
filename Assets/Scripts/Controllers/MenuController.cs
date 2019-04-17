@@ -125,13 +125,21 @@ public class MenuController : MonoBehaviour
 
     public void ToggleFullscreen(Toggle isFullscreen)
     {
-        if (isFullscreen.isOn)
+        if (isFullscreen.isOn != Screen.fullScreen)
         {
-            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-        }
-        else
-        {
-            Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
+            if (isFullscreen.isOn)
+            {
+                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+                var rezs = Screen.resolutions;
+                int width = rezs[rezs.Length - 1].width;
+                int height = rezs[rezs.Length - 1].height;
+                Screen.SetResolution(width, height, true);
+            }
+            else
+            {
+                Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
+                Screen.fullScreen = false;
+            }
         }
     }
     #endregion

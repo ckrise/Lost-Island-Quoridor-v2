@@ -751,10 +751,15 @@ public class TutorialController : MonoBehaviour
         if (isFullscreen.isOn)
         {
             Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            var rezs = Screen.resolutions;
+            int width = rezs[rezs.Length - 1].width;
+            int height = rezs[rezs.Length - 1].height;
+            Screen.SetResolution(width, height, true);
         }
         else
         {
             Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
+            Screen.fullScreen = false;
         }
     }
 
