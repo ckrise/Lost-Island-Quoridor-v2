@@ -134,16 +134,17 @@ namespace ArtificialInteligence
             Dictionary<string, MoveInfo> moveValues = new Dictionary<string, MoveInfo>();
             foreach (TreeNode moveNode in possibleMoves)
             {
-                if (DateTime.Now.Subtract(startTime).Seconds >= 5)
+                if (DateTime.Now.Subtract(startTime).TotalMilliseconds >= 5500)
                 {
                     Debug.Log("AI Broke From Loop");
                     break;
                 }
                 MoveInfo thisMovesInfo = new MoveInfo();
+                float moveNodeValue = moveNode.CalcValue(); //is this it?
                 foreach (TreeNode childNode in moveNode.GetChildren())
                 {
                     //DIFFICULT
-                    thisMovesInfo.UpdateValues(childNode.CalcValue(), moveNode.CalcValue());
+                    thisMovesInfo.UpdateValues(childNode.CalcValue(), moveNodeValue);
                 }
                 moveValues.Add(moveNode.GetMoveMade(), thisMovesInfo);
             }
@@ -240,7 +241,7 @@ namespace ArtificialInteligence
             }
             
             CurrentBoard.MakeMove(selectedMove);
-            Debug.Log($"AI Move Time in seconds: {DateTime.Now.Subtract(startTime).Seconds}");
+            Debug.Log($"AI Move Time in ms: {DateTime.Now.Subtract(startTime).TotalMilliseconds}");
             return selectedMove;
         }
 
