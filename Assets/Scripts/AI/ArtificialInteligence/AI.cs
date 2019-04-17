@@ -184,17 +184,49 @@ namespace ArtificialInteligence
             float testVal = value - rootNodeValue;
             if (value - rootNodeValue < 3)
             {
+                float currentPotential = float.NegativeInfinity;
+                float currentRisk = float.NegativeInfinity;
+                movesSelected.Clear();
                 foreach (KeyValuePair<string, MoveInfo> pair in moveValues)
                 {
-                    float optimisticPotential = pair.Value.max - rootNodeValue;
-                    float pessemisticPotential = pair.Value.min - rootNodeValue;
-                    float risk = optimisticPotential - pessemisticPotential;
-                    if (risk < 5 && optimisticPotential > 2)
+                    if (pair.Key.EndsWith("h") || pair.Key.EndsWith("v"))
                     {
-                        selectedMove = pair.Key;
+                        float optimisticPotential = pair.Value.max - rootNodeValue;
+                        float pessemisticPotential = pair.Value.min - rootNodeValue;
+                        float risk = optimisticPotential - pessemisticPotential;
+                        if (optimisticPotential > 2)
+                        {
+                            if (optimisticPotential > currentPotential)
+                            {
+                                movesSelected.Clear();
+                                movesSelected.Add(pair.Key);
+                                currentPotential = optimisticPotential;
+                                currentRisk = risk;
+                            }
+                            else if (optimisticPotential == currentPotential)
+                            {
+                                if (risk < currentRisk)
+                                {
+                                    movesSelected.Clear();
+                                    movesSelected.Add(pair.Key);
+                                    currentPotential = optimisticPotential;
+                                    currentRisk = risk;
+                                }
+                                else if (risk == currentRisk)
+                                {
+                                    movesSelected.Add(pair.Key);
+                                }
+                            }
+                        }
                     }
                 }
+                if (movesSelected.Count > 0)
+                {
+                    selectedMove = movesSelected[new Random().Next(0, movesSelected.Count)];
+                }
             }
+
+            
 
             CurrentBoard.MakeMove(selectedMove);
             return selectedMove;
@@ -243,7 +275,7 @@ namespace ArtificialInteligence
                 p1spWeight = 5;
             }
             else if (playerOneSP < 5) {
-                p1spWeight = 3;
+                p1spWeight = 2;
             }
 
 
