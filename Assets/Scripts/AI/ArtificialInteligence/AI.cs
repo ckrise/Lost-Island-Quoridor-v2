@@ -182,27 +182,51 @@ namespace ArtificialInteligence
             }
 
             float testVal = value - rootNodeValue;
-            if (!isPawnMove)
+            if (value - rootNodeValue < 3)
             {
-                if (value - rootNodeValue < 3)
+                float currentPotential = float.NegativeInfinity;
+                float currentRisk = float.NegativeInfinity;
+                movesSelected.Clear();
+                foreach (KeyValuePair<string, MoveInfo> pair in moveValues)
                 {
-                    float currentPotential = float.NegativeInfinity;
-                    foreach (KeyValuePair<string, MoveInfo> pair in moveValues)
+                    if (pair.Key.EndsWith("h") || pair.Key.EndsWith("v"))
                     {
                         float optimisticPotential = pair.Value.max - rootNodeValue;
                         float pessemisticPotential = pair.Value.min - rootNodeValue;
                         float risk = optimisticPotential - pessemisticPotential;
-                        if (risk < 5 && optimisticPotential > 2)
+                        if (optimisticPotential > 2)
                         {
                             if (optimisticPotential > currentPotential)
                             {
-                                selectedMove = pair.Key;
+                                movesSelected.Clear();
+                                movesSelected.Add(pair.Key);
                                 currentPotential = optimisticPotential;
+                                currentRisk = risk;
+                            }
+                            else if (optimisticPotential == currentPotential)
+                            {
+                                if (risk < currentRisk)
+                                {
+                                    movesSelected.Clear();
+                                    movesSelected.Add(pair.Key);
+                                    currentPotential = optimisticPotential;
+                                    currentRisk = risk;
+                                }
+                                else if (risk == currentRisk)
+                                {
+                                    movesSelected.Add(pair.Key);
+                                }
                             }
                         }
                     }
                 }
+                if (movesSelected.Count > 0)
+                {
+                    selectedMove = movesSelected[new Random().Next(0, movesSelected.Count)];
+                }
             }
+
+            
 
             CurrentBoard.MakeMove(selectedMove);
             return selectedMove;
