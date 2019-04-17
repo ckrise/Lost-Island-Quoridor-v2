@@ -121,7 +121,11 @@ public class GUIController : MonoBehaviour
         //set music and sfx volume
         musicVolumeSlider.value = PlayerData.MusicVolume;
         sfxVolumeSlider.value = PlayerData.SfxVolume;
-        fullscreenToggle.isOn = Screen.fullScreen;
+        //initialize fullscreen toggle
+        if (Screen.fullScreen)
+        {
+            fullscreenToggle.isOn = true;
+        }
     }
     #endregion
 
@@ -713,14 +717,14 @@ public class GUIController : MonoBehaviour
     }
     public void ToggleFullscreen(Toggle isFullscreen)
     {
-        var rezs = Screen.resolutions;
-        foreach (var rez in rezs)
+        if (isFullscreen.isOn)
         {
-            Debug.Log(rez);
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
         }
-        int width = rezs[rezs.Length - 1].width;
-        int height = rezs[rezs.Length - 1].height;
-        Screen.SetResolution(width, height, isFullscreen.isOn);
+        else
+        {
+            Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
+        }
     }
     #endregion
 

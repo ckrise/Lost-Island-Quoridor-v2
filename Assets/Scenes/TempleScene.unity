@@ -24868,7 +24868,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &744322301
 GameObject:
   m_ObjectHideFlags: 0
@@ -32502,7 +32502,7 @@ RectTransform:
   - {fileID: 109017353}
   - {fileID: 888352994}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 19
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -39376,10 +39376,10 @@ RectTransform:
   - {fileID: 1575808583}
   - {fileID: 984003701}
   - {fileID: 1344385546}
-  - {fileID: 1317160205}
-  - {fileID: 1608471738}
   - {fileID: 1275901732}
   - {fileID: 928714191}
+  - {fileID: 1317160205}
+  - {fileID: 1608471738}
   - {fileID: 1027456823}
   - {fileID: 742803665}
   - {fileID: 1049640968}
@@ -45107,7 +45107,7 @@ RectTransform:
   - {fileID: 1805872538}
   - {fileID: 904945076}
   m_Father: {fileID: 1124254119}
-  m_RootOrder: 18
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
