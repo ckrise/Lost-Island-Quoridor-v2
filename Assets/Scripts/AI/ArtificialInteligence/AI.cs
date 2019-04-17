@@ -2,7 +2,7 @@
 using Board;
 using Board.Util;
 using System;
-using System.Diagnostics;
+using UnityEngine;
 
 namespace ArtificialInteligence
 {
@@ -10,12 +10,10 @@ namespace ArtificialInteligence
     {
         private AIBoard CurrentBoard { get; set; }
         private int MoveNum { get; set; }
-        private Stopwatch timer;
 
         public AI()
         {
             CurrentBoard = new AIBoard();
-            timer = new Stopwatch();
         }
 
         //Does a game tree search 1 layer deep.
@@ -111,7 +109,8 @@ namespace ArtificialInteligence
         //Initiates a minimax search 2 layers deep.
         public string GetHardMove(string playerMove)
         {
-            timer.Start();
+            DateTime startTime = DateTime.Now;
+
             TreeNode.weights = GetHardWeights(CurrentBoard);
             TreeNode.wallValues = new List<float> { 2f, 2f, 2f, 2f, 1f, 1f, 1f, 1f, 1f, 0f };
 
@@ -130,16 +129,20 @@ namespace ArtificialInteligence
 
             List<TreeNode> possibleMoves = rootNode.GetChildren();
             
+            //LONG LOOP
             //Create dictionary of all useful values of first two levels of analysis.
             Dictionary<string, MoveInfo> moveValues = new Dictionary<string, MoveInfo>();
             foreach (TreeNode moveNode in possibleMoves)
             {
-                if (timer.ElapsedMilliseconds > 5980) {
+                if (DateTime.Now.Subtract(startTime).Seconds >= 5)
+                {
+                    Debug.Log("AI Broke From Loop");
                     break;
                 }
                 MoveInfo thisMovesInfo = new MoveInfo();
                 foreach (TreeNode childNode in moveNode.GetChildren())
                 {
+                    //DIFFICULT
                     thisMovesInfo.UpdateValues(childNode.CalcValue(), moveNode.CalcValue());
                 }
                 moveValues.Add(moveNode.GetMoveMade(), thisMovesInfo);
@@ -235,9 +238,9 @@ namespace ArtificialInteligence
                     selectedMove = movesSelected[new System.Random().Next(0, movesSelected.Count)];
                 }
             }
-
-            timer.Reset();
+            
             CurrentBoard.MakeMove(selectedMove);
+            Debug.Log($"AI Move Time in seconds: {DateTime.Now.Subtract(startTime).Seconds}");
             return selectedMove;
         }
 
