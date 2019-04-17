@@ -109,7 +109,7 @@ namespace ArtificialInteligence
         public string GetHardMove(string playerMove)
         {
             TreeNode.weights = new List<float> { 1f, 1f };
-            TreeNode.wallValues = new List<float> { 5f, 3f, 3f, 2f, 2f, 0f, 0f, 0f, 0f, 0f };
+            TreeNode.wallValues = new List<float> { 3f, 3f, 3f, 2f, 1f, 1f, 1f, 1f, 1f, 0f };
 
             //AI starts on e9 and makes the first move of the game.
             if (playerMove == "gamestart") { CurrentBoard.PlayerTwoGoesFirst(); }
@@ -155,7 +155,7 @@ namespace ArtificialInteligence
                     movesSelected.Add(pair.Key);
                 }
             }
-
+            
             selectedMove = movesSelected[new Random().Next(0, movesSelected.Count)];
 
             //If selected move isn't a wall then use the pawn moves single level evaluation.
@@ -171,6 +171,20 @@ namespace ArtificialInteligence
                     if (tempVal > value) {
                         selectedMove = pm;
                         value = tempVal;
+                    }
+                }
+            }
+            float testVal = value - rootNodeValue;
+            if (value - rootNodeValue < 3)
+            {
+                foreach (KeyValuePair<string, MoveInfo> pair in moveValues)
+                {
+                    float optimisticPotential = pair.Value.max - rootNodeValue;
+                    float pessemisticPotential = pair.Value.min - rootNodeValue;
+                    float risk = optimisticPotential - pessemisticPotential;
+                    if (risk < 5 && optimisticPotential > 2)
+                    {
+                        selectedMove = pair.Key;
                     }
                 }
             }
@@ -284,10 +298,10 @@ namespace ArtificialInteligence
                 foreach (TreeNode child in node.GetChildren())
                 {
                     alpha = System.Math.Max(alpha, ABIterate(child, depth - 1, alpha, beta, !isMaxPlayer));
-                    if (beta > alpha)
-                    {
-                        break;
-                    }
+                    //if (beta > alpha)
+                    //{
+                    //    break;
+                    //}
                 }
 
                 return alpha;
@@ -297,10 +311,10 @@ namespace ArtificialInteligence
                 foreach (TreeNode child in node.GetChildren())
                 {
                     beta = System.Math.Min(beta, ABIterate(child, depth - 1, alpha, beta, !isMaxPlayer));
-                    if (beta < alpha)
-                    {
-                        break;
-                    }
+                    //if (beta < alpha)
+                    //{
+                    //    break;
+                    //}
                 }
                 return beta;
             }
