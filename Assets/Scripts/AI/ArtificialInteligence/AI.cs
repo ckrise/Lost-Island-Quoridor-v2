@@ -182,16 +182,24 @@ namespace ArtificialInteligence
             }
 
             float testVal = value - rootNodeValue;
-            if (value - rootNodeValue < 3)
+            if (!isPawnMove)
             {
-                foreach (KeyValuePair<string, MoveInfo> pair in moveValues)
+                if (value - rootNodeValue < 3)
                 {
-                    float optimisticPotential = pair.Value.max - rootNodeValue;
-                    float pessemisticPotential = pair.Value.min - rootNodeValue;
-                    float risk = optimisticPotential - pessemisticPotential;
-                    if (risk < 5 && optimisticPotential > 2)
+                    float currentPotential = float.NegativeInfinity;
+                    foreach (KeyValuePair<string, MoveInfo> pair in moveValues)
                     {
-                        selectedMove = pair.Key;
+                        float optimisticPotential = pair.Value.max - rootNodeValue;
+                        float pessemisticPotential = pair.Value.min - rootNodeValue;
+                        float risk = optimisticPotential - pessemisticPotential;
+                        if (risk < 5 && optimisticPotential > 2)
+                        {
+                            if (optimisticPotential > currentPotential)
+                            {
+                                selectedMove = pair.Key;
+                                currentPotential = optimisticPotential;
+                            }
+                        }
                     }
                 }
             }
@@ -243,7 +251,7 @@ namespace ArtificialInteligence
                 p1spWeight = 5;
             }
             else if (playerOneSP < 5) {
-                p1spWeight = 3;
+                p1spWeight = 2;
             }
 
 
