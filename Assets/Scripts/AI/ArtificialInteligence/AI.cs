@@ -108,8 +108,8 @@ namespace ArtificialInteligence
         //Initiates a minimax search 2 layers deep.
         public string GetHardMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { 1f, 1f };
-            TreeNode.wallValues = new List<float> { 3f, 3f, 3f, 2f, 1f, 1f, 1f, 1f, 1f, 0f };
+            TreeNode.weights = GetHardWeights(CurrentBoard);
+            TreeNode.wallValues = new List<float> { 2f, 2f, 2f, 2f, 1f, 1f, 1f, 1f, 1f, 0f };
 
             //AI starts on e9 and makes the first move of the game.
             if (playerMove == "gamestart") { CurrentBoard.PlayerTwoGoesFirst(); }
@@ -144,6 +144,12 @@ namespace ArtificialInteligence
             List<string> movesSelected = new List<string>();
             float value = float.NegativeInfinity;
             foreach (KeyValuePair<string, MoveInfo> pair in moveValues) {
+                if (pair.Value.singleLevelValue > 10000) {
+                    value = pair.Value.singleLevelValue;
+                    movesSelected.Clear();
+                    movesSelected.Add(pair.Key);
+                    break;
+                }
                 if (pair.Value.min > value)
                 {
                     value = pair.Value.min;
@@ -174,6 +180,7 @@ namespace ArtificialInteligence
                     }
                 }
             }
+
             float testVal = value - rootNodeValue;
             if (value - rootNodeValue < 3)
             {
@@ -220,12 +227,10 @@ namespace ArtificialInteligence
             }
         }
 
-        private List<float> GetHardWeights(AIBoard board, int turnNum)
+        private List<float> GetHardWeights(AIBoard board)
         {
             float p1spWeight = 1f;
             float p2spWeight = 1f;
-            float p1nwWeight = 0f;
-            float p2nwWeight = 0f;
 
             //Variables used in weight calculations.
             int playerOneSP = BoardAnalysis.FindShortestPath(board, true);
@@ -233,18 +238,16 @@ namespace ArtificialInteligence
             int playerTwoNumWalls = CurrentBoard.GetPlayerTwoNumWalls();
             int distanceBetweenPlayers = BoardAnalysis.FindDistanceBetween(CurrentBoard, CurrentBoard.GetPlayerOnePos(), CurrentBoard.GetPlayerTwoPos());
 
-            if (playerOneSP < 4) {
-                p1spWeight = 4 - playerOneSP;
+            if (playerOneSP - playerTwoSP > 2)
+            {
+                p1spWeight = 5;
             }
-            if (playerTwoSP < 3) {
-                p2spWeight = 3 - playerTwoSP;
-            }
-            if (playerTwoNumWalls < 4) {
-                p2nwWeight = 6 - playerTwoNumWalls;
+            else if (playerOneSP < 5) {
+                p1spWeight = 3;
             }
 
 
-            List<float> w = new List<float> { p1spWeight, p2spWeight, p2nwWeight, p1nwWeight };
+            List<float> w = new List<float> { p1spWeight, p2spWeight };
             return w;
         }
 
