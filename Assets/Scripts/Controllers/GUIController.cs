@@ -677,7 +677,6 @@ public class GUIController : MonoBehaviour
             helpPanel.SetActive(!helpPanel.activeSelf);
             settingsPanel.SetActive(false);
             chatPanel.SetActive(false);
-           
         }
     }
 
