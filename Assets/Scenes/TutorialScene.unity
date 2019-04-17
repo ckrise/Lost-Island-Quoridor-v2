@@ -8899,6 +8899,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1637171196}
+        m_MethodName: set_volume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1654792544}
+        m_MethodName: set_volume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1001 &583176833
@@ -24356,6 +24378,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1637171191}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1637171196 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 831551144, guid: b9d701bd4bd2e6a459ed9c2f56f927e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1637171191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1643250753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24530,6 +24558,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9da2b1bfd3f74348b62ce3a1e2b5b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &1654792544 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1654792541, guid: c20c21a5d1c0dbe4c980160a20a33cba,
+    type: 3}
+  m_PrefabInstance: {fileID: 1654792539}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1656288708
 GameObject:
   m_ObjectHideFlags: 0
