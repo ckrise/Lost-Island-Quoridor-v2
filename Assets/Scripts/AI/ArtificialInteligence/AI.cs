@@ -145,6 +145,11 @@ namespace ArtificialInteligence
                 {
                     //DIFFICULT
                     thisMovesInfo.UpdateValues(childNode.CalcValue(), moveNodeValue);
+                    if (DateTime.Now.Subtract(startTime).TotalMilliseconds >= 5500)
+                    {
+                        Debug.Log("AI Broke From Loop");
+                        break;
+                    }
                 }
                 moveValues.Add(moveNode.GetMoveMade(), thisMovesInfo);
             }
@@ -248,19 +253,16 @@ namespace ArtificialInteligence
         class MoveInfo
         {
             public float min, max, singleLevelValue;
-            List<float> allChildValues;
 
             public MoveInfo()
             {
                 min = float.PositiveInfinity;
                 max = float.NegativeInfinity;
-                allChildValues = new List<float>();
             }
 
             public void UpdateValues(float m, float slv)
             {
                 singleLevelValue = slv;
-                allChildValues.Add(m);
                 if (m < min)
                 {
                     min = m;
@@ -346,10 +348,10 @@ namespace ArtificialInteligence
                 foreach (TreeNode child in node.GetChildren())
                 {
                     alpha = System.Math.Max(alpha, ABIterate(child, depth - 1, alpha, beta, !isMaxPlayer));
-                    //if (beta > alpha)
-                    //{
-                    //    break;
-                    //}
+                    if (beta > alpha)
+                    {
+                        break;
+                    }
                 }
 
                 return alpha;
@@ -359,56 +361,13 @@ namespace ArtificialInteligence
                 foreach (TreeNode child in node.GetChildren())
                 {
                     beta = System.Math.Min(beta, ABIterate(child, depth - 1, alpha, beta, !isMaxPlayer));
-                    //if (beta < alpha)
-                    //{
-                    //    break;
-                    //}
+                    if (beta < alpha)
+                    {
+                        break;
+                    }
                 }
                 return beta;
             }
         }
-
-        //If risk is very high will return 1, low risk is higher return value.
-        private int GetMoveRisk(string move)
-        {
-            int riskValue = 100;
-            AIBoard tempBoard = new AIBoard(CurrentBoard);
-            tempBoard.MakeMove(move);
-            WallDiffNode rootNode = new WallDiffNode(tempBoard);
-
-            List<string> wallPlacements = tempBoard.GetWallMoves();
-            foreach (string wall in wallPlacements)
-            {
-                riskValue = Math.Min(riskValue, RiskIterate(new WallDiffNode(rootNode, wall), 0));
-            }
-
-            return riskValue;
-        }
-
-        private static int changeThreshhold = 3;
-        private int RiskIterate(WallDiffNode node, int depth, int maxDepth = 4)
-        {
-            //NumMoves is the number of moves it takes before a significant change in shortest path is found.
-            int changeInDiff = node.CalcChangeInDiff();
-            int numMoves = 1000;
-            if (changeInDiff > changeThreshhold)
-            {
-                numMoves = depth;
-            }
-            else if (depth > maxDepth)
-            {
-                numMoves = depth;
-            }
-            else
-            {
-                List<WallDiffNode> children = node.GetChildren();
-                foreach (WallDiffNode child in children)
-                {
-                    numMoves = Math.Min(numMoves, RiskIterate(child, depth + 1));
-                }
-            }
-            return numMoves;
-        }
-
     }
 }
