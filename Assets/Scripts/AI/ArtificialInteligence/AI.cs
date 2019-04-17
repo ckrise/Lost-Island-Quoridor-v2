@@ -2,6 +2,7 @@
 using Board;
 using Board.Util;
 using System;
+using System.Diagnostics;
 
 namespace ArtificialInteligence
 {
@@ -9,10 +10,12 @@ namespace ArtificialInteligence
     {
         private AIBoard CurrentBoard { get; set; }
         private int MoveNum { get; set; }
+        private Stopwatch timer;
 
         public AI()
         {
             CurrentBoard = new AIBoard();
+            timer = new Stopwatch();
         }
 
         //Does a game tree search 1 layer deep.
@@ -29,7 +32,7 @@ namespace ArtificialInteligence
             }
             else
             {
-                weight1 = new Random().Next(0, 1);
+                weight1 = new System.Random().Next(0, 1);
             }
             TreeNode.weights = new List<float> { weight1, 1f };
             TreeNode.wallValues = new List<float> { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f }; 
@@ -70,7 +73,7 @@ namespace ArtificialInteligence
 
         public string GetIntermediateMove(string playerMove)
         {
-            TreeNode.weights = new List<float> { new Random().Next(0, 3), 1f };
+            TreeNode.weights = new List<float> { new System.Random().Next(0, 3), 1f };
             TreeNode.wallValues = new List<float> { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
             HandlePlayerMove(playerMove);
 
@@ -104,10 +107,11 @@ namespace ArtificialInteligence
 
             return moveSelected;
         }
-
+        
         //Initiates a minimax search 2 layers deep.
         public string GetHardMove(string playerMove)
         {
+            timer.Start();
             TreeNode.weights = GetHardWeights(CurrentBoard);
             TreeNode.wallValues = new List<float> { 2f, 2f, 2f, 2f, 1f, 1f, 1f, 1f, 1f, 0f };
 
@@ -125,11 +129,14 @@ namespace ArtificialInteligence
             float rootNodeValue = rootNode.CalcValue();
 
             List<TreeNode> possibleMoves = rootNode.GetChildren();
-
+            
             //Create dictionary of all useful values of first two levels of analysis.
             Dictionary<string, MoveInfo> moveValues = new Dictionary<string, MoveInfo>();
             foreach (TreeNode moveNode in possibleMoves)
             {
+                if (timer.ElapsedMilliseconds > 5980) {
+                    break;
+                }
                 MoveInfo thisMovesInfo = new MoveInfo();
                 foreach (TreeNode childNode in moveNode.GetChildren())
                 {
@@ -139,7 +146,7 @@ namespace ArtificialInteligence
             }
 
             string selectedMove = "none1";
-
+            
             //Minimax of the first two levels.
             List<string> movesSelected = new List<string>();
             float value = float.NegativeInfinity;
@@ -161,20 +168,23 @@ namespace ArtificialInteligence
                     movesSelected.Add(pair.Key);
                 }
             }
-            
-            selectedMove = movesSelected[new Random().Next(0, movesSelected.Count)];
 
+            selectedMove = movesSelected[new System.Random().Next(0, movesSelected.Count)];
+            
             //If selected move isn't a wall then use the pawn moves single level evaluation.
             //And if jump next move isn't a possibility.
             bool isPawnMove = !(selectedMove.EndsWith("h") || selectedMove.EndsWith("v"));
             bool jumpPossible = BoardAnalysis.FindDistanceBetween(CurrentBoard, CurrentBoard.GetPlayerOnePos(), CurrentBoard.GetPlayerTwoPos()) == 2;
-            if (isPawnMove && !jumpPossible) {
+            if (isPawnMove && !jumpPossible)
+            {
                 List<string> pawnMoves = CurrentBoard.GetPawnMoves();
                 value = float.NegativeInfinity;
                 selectedMove = "none2";
-                foreach (string pm in pawnMoves) {
+                foreach (string pm in pawnMoves)
+                {
                     float tempVal = moveValues[pm].singleLevelValue;
-                    if (tempVal > value) {
+                    if (tempVal > value)
+                    {
                         selectedMove = pm;
                         value = tempVal;
                     }
@@ -222,12 +232,11 @@ namespace ArtificialInteligence
                 }
                 if (movesSelected.Count > 0)
                 {
-                    selectedMove = movesSelected[new Random().Next(0, movesSelected.Count)];
+                    selectedMove = movesSelected[new System.Random().Next(0, movesSelected.Count)];
                 }
             }
 
-            
-
+            timer.Reset();
             CurrentBoard.MakeMove(selectedMove);
             return selectedMove;
         }
